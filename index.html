@@ -6366,17 +6366,17 @@
                             </div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate">3. PO uniqueness<small><a href="#section-tech-po-uniqueness-heading">BEESEDI-48956</a> · poNumber + VendorAccountID + delivery date</small></div>
+                                <div class="e2e-gate">3. Delivery date validation<small><a href="#section-tech-delivery-dates-heading">BEESEDI-48929</a> · Range + Frequency · BEES Delivery Window</small></div>
                                 <div class="e2e-arr">→</div>
-                                <div class="e2e-onfail is-blocked"><strong>On fail · Blocked</strong>PO duplicated · hold for retailer / broker confirmation · log <em>Duplicated order. OrderId: &lt;id&gt;</em></div>
+                                <div class="e2e-onfail is-rejected"><strong>On fail · Rejected</strong>Invalid delivery range / invalid delivery window · log range / frequency reason</div>
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-onpass"><strong>On pass</strong>Continue</div>
                             </div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate">4. Delivery date validation<small><a href="#section-tech-delivery-dates-heading">BEESEDI-48929</a> · Range + Frequency · BEES Delivery Window</small></div>
+                                <div class="e2e-gate">4. PO uniqueness<small><a href="#section-tech-po-uniqueness-heading">BEESEDI-48956</a> · poNumber + VendorAccountID + delivery date</small></div>
                                 <div class="e2e-arr">→</div>
-                                <div class="e2e-onfail is-rejected"><strong>On fail · Rejected</strong>Invalid delivery range / invalid delivery window · log range / frequency reason</div>
+                                <div class="e2e-onfail is-blocked"><strong>On fail · Blocked</strong>PO duplicated · hold for retailer / broker confirmation · log <em>Duplicated order. OrderId: &lt;id&gt;</em></div>
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-onpass"><strong>On pass</strong>Continue to line-level gates</div>
                             </div>
@@ -8768,17 +8768,17 @@
                             </div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate">3. Unicidad de PO<small><a href="#section-tech-po-uniqueness-heading-es">BEESEDI-48956</a> · poNumber + VendorAccountID + fecha de entrega</small></div>
+                                <div class="e2e-gate">3. Validación de fechas de entrega<small><a href="#section-tech-delivery-dates-heading-es">BEESEDI-48929</a> · Rango + Frecuencia · BEES Delivery Window</small></div>
                                 <div class="e2e-arr">→</div>
-                                <div class="e2e-onfail is-blocked"><strong>Al fallar · Bloqueado</strong>PO duplicado · hold para confirmar con minorista / broker · log <em>Duplicated order. OrderId: &lt;id&gt;</em></div>
+                                <div class="e2e-onfail is-rejected"><strong>Al fallar · Rechazado</strong>Rango de entrega inválido / ventana de entrega inválida · log motivo (rango / frecuencia)</div>
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-onpass"><strong>Al pasar</strong>Continuar</div>
                             </div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate">4. Validación de fechas de entrega<small><a href="#section-tech-delivery-dates-heading-es">BEESEDI-48929</a> · Rango + Frecuencia · BEES Delivery Window</small></div>
+                                <div class="e2e-gate">4. Unicidad de PO<small><a href="#section-tech-po-uniqueness-heading-es">BEESEDI-48956</a> · poNumber + VendorAccountID + fecha de entrega</small></div>
                                 <div class="e2e-arr">→</div>
-                                <div class="e2e-onfail is-rejected"><strong>Al fallar · Rechazado</strong>Rango de entrega inválido / ventana de entrega inválida · log motivo (rango / frecuencia)</div>
+                                <div class="e2e-onfail is-blocked"><strong>Al fallar · Bloqueado</strong>PO duplicado · hold para confirmar con minorista / broker · log <em>Duplicated order. OrderId: &lt;id&gt;</em></div>
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-onpass"><strong>Al pasar</strong>Continuar a compuertas de línea</div>
                             </div>
