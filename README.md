@@ -8,20 +8,30 @@ Self-contained HTML executive summary for the **BEES Link BRE — EDI Order Vali
 https://abinbev-silvarenan.github.io/edi-exec-summary/
 ```
 
-## GitHub Pages — setup from zero
+## GitHub Pages — reset from zero
 
-Use **one** publish path only: **GitHub Actions** (do not use branch deploy or a `gh-pages` branch).
+This repo is a **static site**. There is **no build step** and **no GitHub Actions workflow**. Publishing is handled entirely by GitHub Pages from the `main` branch.
+
+### One-time setup (do exactly this)
 
 1. Open **Settings → Pages** for this repo.
-2. Under **Build and deployment → Source**, choose **GitHub Actions**.
-3. Save.
-4. Push to `main`, or go to **Actions → Deploy to GitHub Pages → Run workflow**.
+2. Under **Build and deployment**:
+   - **Source:** `Deploy from a branch`
+   - **Branch:** `main`
+   - **Folder:** `/ (root)`
+3. Click **Save**.
+4. Wait 2–5 minutes, then open the live URL above.
 
-The workflow (`.github/workflows/deploy-pages.yml`) publishes only `index.html` and `.nojekyll`. Allow 1–2 minutes after a green run for the URL above to update.
+### Do not use
 
-### If deploys were failing before
+| Setting | Why |
+| --- | --- |
+| **GitHub Actions** as Pages source | No workflow is configured; deploy will hang or fail. |
+| **`gh-pages` branch** | Removed; this repo publishes from `main` only. |
 
-Earlier setups mixed **branch deploy**, a **`gh-pages` branch**, and **custom workflows**, which caused conflicting runs and timeouts. This repo now uses **GitHub Actions only**. In **Settings → Pages**, confirm the source is **GitHub Actions**, not **Deploy from a branch**.
+### Updating the site
+
+Edit `index.html`, commit, and push to `main`. GitHub Pages republishes automatically.
 
 ## Files
 
@@ -41,10 +51,6 @@ node edi-bre-exec-summary/tools/merge_bu_matrix.mjs
 ```
 
 Then adjust any one-off copy in `index.html` if needed and push to `main`.
-
-## Updating the document
-
-Edit `index.html`, push to `main`, and wait for the **Deploy to GitHub Pages** workflow to finish.
 
 ## Contents
 
