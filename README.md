@@ -2,6 +2,27 @@
 
 Self-contained HTML executive summary for the **BEES Link BRE — EDI Order Validation** initiative (English & Spanish, single file). **Typography:** loads **Barlow** and **Work Sans** from Google Fonts (same pairing as the BU business-rules matrix). All other assets are inline.
 
+## Live site
+
+```
+https://abinbev-silvarenan.github.io/edi-exec-summary/
+```
+
+## GitHub Pages — setup from zero
+
+Use **one** publish path only: **GitHub Actions** (do not use branch deploy or a `gh-pages` branch).
+
+1. Open **Settings → Pages** for this repo.
+2. Under **Build and deployment → Source**, choose **GitHub Actions**.
+3. Save.
+4. Push to `main`, or go to **Actions → Deploy to GitHub Pages → Run workflow**.
+
+The workflow (`.github/workflows/deploy-pages.yml`) publishes only `index.html` and `.nojekyll`. Allow 1–2 minutes after a green run for the URL above to update.
+
+### If deploys were failing before
+
+Earlier setups mixed **branch deploy**, a **`gh-pages` branch**, and **custom workflows**, which caused conflicting runs and timeouts. This repo now uses **GitHub Actions only**. In **Settings → Pages**, confirm the source is **GitHub Actions**, not **Deploy from a branch**.
+
 ## Files
 
 | File | Purpose |
@@ -19,34 +40,11 @@ The **Technical requirements** tab opens with the **Business rules matrix** (BLK
 node edi-bre-exec-summary/tools/merge_bu_matrix.mjs
 ```
 
-Then adjust any one-off copy in `index.html` if needed and push.
-
-## View it online
-
-Once GitHub Pages is enabled for this repo, the latest version will be available at:
-
-```
-https://abinbev-silvarenan.github.io/edi-exec-summary/
-```
-
-After changing **Settings → Pages**, allow 2–5 minutes for the first publish. Pushes to `main` update the live site automatically (no GitHub Actions workflow required).
-
-## Enable GitHub Pages (one-time)
-
-1. Open this repo on GitHub.
-2. Go to **Settings → Pages**.
-3. Under **Build and deployment**:
-   - **Source:** Deploy from a branch.
-   - **Branch:** `main` / `/ (root)`.
-4. Save. The site should be live in 1–2 minutes at the URL above.
-
-**Important:** Use **`main`**, not `gh-pages`. This repo publishes `index.html` directly from `main`; a separate `gh-pages` branch or Actions workflow is not needed and can cause failing deploy checks.
-
-If you previously selected `gh-pages` or **GitHub Actions**, switch the source to **Deploy from a branch → `main` / `(root)`**.
+Then adjust any one-off copy in `index.html` if needed and push to `main`.
 
 ## Updating the document
 
-Replace `index.html` (and, optionally, bump the versioned file name) and push to `main`. GitHub Pages will publish the new version automatically.
+Edit `index.html`, push to `main`, and wait for the **Deploy to GitHub Pages** workflow to finish.
 
 ## Contents
 
