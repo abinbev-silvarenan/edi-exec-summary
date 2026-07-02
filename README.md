@@ -29,6 +29,8 @@ Once GitHub Pages is enabled for this repo, the latest version will be available
 https://abinbev-silvarenan.github.io/edi-exec-summary/
 ```
 
+After changing **Settings → Pages**, allow 2–5 minutes for the first publish. Pushes to `main` refresh the `gh-pages` branch via the **Deploy GitHub Pages** workflow.
+
 ## Enable GitHub Pages (one-time)
 
 1. Open this repo on GitHub.
