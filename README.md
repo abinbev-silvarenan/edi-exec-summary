@@ -10,20 +10,17 @@ https://abinbev-silvarenan.github.io/edi-exec-summary/
 
 ## GitHub Pages — publish & redeploy
 
-This repo publishes **directly from `main`** — no custom workflow. GitHub Pages serves `index.html` and `.nojekyll` from the repository root.
+The **Deploy GitHub Pages** workflow (`.github/workflows/deploy-pages.yml`) publishes `index.html` on every push to `main`.
 
 ### One-time setup
 
 1. Open **Settings → Pages** for this repo.
-2. Under **Build and deployment**:
-   - **Source:** `Deploy from a branch`
-   - **Branch:** `main`
-   - **Folder:** `/ (root)`
-3. Click **Save**. Wait 2–5 minutes, then open the live URL above.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+3. After the first successful workflow run, the live URL above will serve the latest `main` content.
 
 ### Redeploy
 
-Commit and push to `main`. GitHub runs **pages build and deployment** automatically. The live site updates after the workflow completes (typically 1–2 minutes).
+Commit and push to `main`, or run **Actions → Deploy GitHub Pages → Run workflow**.
 
 ## Files
 
