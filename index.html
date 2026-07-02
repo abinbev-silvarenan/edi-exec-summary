@@ -3881,7 +3881,7 @@
         }
     </style>
 </head>
-<body>
+<body class="doc-toc-collapsed">
     <div class="doc-lang-bar doc-lang-bar--floating" id="doc-lang-bar" role="region" aria-labelledby="doc-lang-bar-heading">
         <div class="doc-lang-bar-inner">
             <span class="doc-lang-bar-icon" aria-hidden="true">
@@ -3904,7 +3904,7 @@
     <nav class="doc-toc" id="doc-toc" aria-label="Document contents">
         <div class="doc-toc-header">
             <span class="doc-toc-title" id="doc-toc-heading"><span class="doc-i18n doc-i18n--en">Contents</span><span class="doc-i18n doc-i18n--es">Contenido</span></span>
-            <button type="button" class="doc-toc-toggle" id="doc-toc-toggle" aria-expanded="true" aria-controls="doc-toc-panel" title="Collapse contents">‹</button>
+            <button type="button" class="doc-toc-toggle" id="doc-toc-toggle" aria-expanded="false" aria-controls="doc-toc-panel" title="Expand contents">&#8250;</button>
         </div>
         <div class="doc-toc-nav" id="doc-toc-panel" role="region" aria-labelledby="doc-toc-heading">
                         <ul class="doc-toc-list">
@@ -10893,7 +10893,7 @@
             btn.textContent = collapsed ? '\u203a' : '\u2039';
         }
 
-        apply(localStorage.getItem(KEY) === '1');
+        apply(localStorage.getItem(KEY) !== '0');
 
         btn.addEventListener('click', function () {
             var collapsed = !body.classList.contains('doc-toc-collapsed');
