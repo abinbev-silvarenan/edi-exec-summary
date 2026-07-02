@@ -29,7 +29,7 @@ Once GitHub Pages is enabled for this repo, the latest version will be available
 https://abinbev-silvarenan.github.io/edi-exec-summary/
 ```
 
-After changing **Settings → Pages**, allow 2–5 minutes for the first publish. Pushes to `main` refresh the `gh-pages` branch via the **Deploy GitHub Pages** workflow.
+After changing **Settings → Pages**, allow 2–5 minutes for the first publish. Pushes to `main` update the live site automatically (no GitHub Actions workflow required).
 
 ## Enable GitHub Pages (one-time)
 
@@ -37,10 +37,12 @@ After changing **Settings → Pages**, allow 2–5 minutes for the first publish
 2. Go to **Settings → Pages**.
 3. Under **Build and deployment**:
    - **Source:** Deploy from a branch.
-   - **Branch:** `gh-pages` / `/ (root)`.
-4. Save. After the **Deploy GitHub Pages** workflow finishes on `main`, the site should be live in 1–2 minutes at the URL above.
+   - **Branch:** `main` / `/ (root)`.
+4. Save. The site should be live in 1–2 minutes at the URL above.
 
-If Pages was previously set to **GitHub Actions**, switch the source to **Deploy from a branch** and select `gh-pages` so it matches `.github/workflows/pages.yml`.
+**Important:** Use **`main`**, not `gh-pages`. This repo publishes `index.html` directly from `main`; a separate `gh-pages` branch or Actions workflow is not needed and can cause failing deploy checks.
+
+If you previously selected `gh-pages` or **GitHub Actions**, switch the source to **Deploy from a branch → `main` / `(root)`**.
 
 ## Updating the document
 
