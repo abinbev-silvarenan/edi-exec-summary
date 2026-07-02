@@ -26,7 +26,7 @@ Then adjust any one-off copy in `index.html` if needed and push.
 Once GitHub Pages is enabled for this repo, the latest version will be available at:
 
 ```
-https://silarerenan-cmyk.github.io/edi-bre-exec-summary/
+https://abinbev-silvarenan.github.io/edi-exec-summary/
 ```
 
 ## Enable GitHub Pages (one-time)

@@ -77,6 +77,15 @@
         }
 
         .container { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+        @media (min-width: 902px) {
+            .container.doc-main,
+            .doc-hero .container {
+                max-width: calc(100vw - var(--doc-toc-w) - 64px);
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
 
         /* ── Executive Summary ── */
         .exec-summary {
@@ -2004,7 +2013,7 @@
         }
         .doc-view-switch-inner {
             display: inline-flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             justify-content: center;
             gap: 3px;
             padding: 3px;
@@ -2025,10 +2034,10 @@
             background: transparent;
             color: var(--bees-gray);
             transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
-            white-space: normal;
+            white-space: nowrap;
             line-height: 1.25;
             text-align: center;
-            max-width: 11rem;
+            max-width: none;
         }
         .doc-view-switch-inner button:hover {
             color: var(--bees-black);
@@ -3550,6 +3559,11 @@
         .hero-meta strong { color: rgba(255,255,255,0.75); }
         .yellow-divider { height: 3px; background: var(--yellow); margin: 0; }
         .doc-main { padding-top: 2rem; padding-bottom: 3rem; }
+        @media (min-width: 902px) {
+            body {
+                padding-right: var(--doc-hero-gutter);
+            }
+        }
         .doc-hero .doc-view-switch { justify-content: flex-start; margin: 0; max-width: none; }
         .doc-hero .doc-view-switch .doc-view-label { color: rgba(255,255,255,0.45); width: auto; text-align: left; }
         .doc-hero .doc-view-switch-inner {
@@ -3557,7 +3571,7 @@
             border-color: rgba(255,255,255,0.12);
             box-shadow: none;
         }
-        .doc-hero .doc-view-switch-inner button { color: rgba(255,255,255,0.55); }
+        .doc-hero .doc-view-switch-inner button { color: rgba(255,255,255,0.55); white-space: nowrap; max-width: none; }
         .doc-hero .doc-view-switch-inner button:hover { color: var(--white); background: rgba(255,255,255,0.1); }
         .doc-hero .doc-view-switch-inner button[aria-selected="true"] {
             background: var(--yellow);
@@ -3602,7 +3616,7 @@
             position: relative;
             overflow: hidden;
         }
-        .bre-bu-matrix .hero .in { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; }
+        .bre-bu-matrix .hero .in { position: relative; z-index: 2; max-width: none; margin: 0; }
         .bre-bu-matrix .hex {
             position: absolute;
             right: -2rem;
@@ -3648,8 +3662,12 @@
         .bre-bu-matrix .hero p {
             color: #cfcfcf;
             font-size: 1rem;
-            max-width: 56rem;
+            max-width: none;
             margin: 0;
+        }
+        .bre-bu-matrix .hero p strong {
+            color: #ffffff;
+            font-weight: 700;
         }
         .bre-bu-matrix .hero .meta {
             margin-top: 1.25rem;
@@ -3662,8 +3680,8 @@
         .bre-bu-matrix .hero .meta b { color: #e0e0e0; font-weight: 600; }
         .bre-bu-matrix .hero a { color: #e0e0e0; }
         .bre-bu-matrix .wrap {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: none;
+            margin: 0;
             padding: 1.5rem 1.25rem 2rem;
             background: var(--bm-n100);
         }
@@ -3727,10 +3745,19 @@
         }
         .bre-bu-matrix table {
             width: 100%;
-            min-width: 760px;
+            min-width: 0;
             border-collapse: collapse;
             font-size: 0.86rem;
+            table-layout: fixed;
         }
+        .bre-bu-matrix th:nth-child(1),
+        .bre-bu-matrix td:nth-child(1) { width: 13%; }
+        .bre-bu-matrix th:nth-child(2),
+        .bre-bu-matrix td:nth-child(2) { width: 18%; }
+        .bre-bu-matrix th:nth-child(3),
+        .bre-bu-matrix td:nth-child(3) { width: 42%; }
+        .bre-bu-matrix th:nth-child(4),
+        .bre-bu-matrix td:nth-child(4) { width: 27%; }
         .bre-bu-matrix th {
             font-family: var(--font-work);
             text-align: left;
@@ -3751,7 +3778,15 @@
             color: var(--bm-n700);
         }
         .bre-bu-matrix td b,
-        .bre-bu-matrix th:first-child { color: var(--bm-n900); }
+        .bre-bu-matrix th:first-child { color: var(--bm-n900); font-weight: 700; }
+        .bre-bu-matrix td strong,
+        .bre-bu-matrix .card strong,
+        .bre-bu-matrix .card b,
+        .bre-bu-matrix .pull strong,
+        .bre-bu-matrix .pull b {
+            color: var(--bm-n900);
+            font-weight: 700;
+        }
         .bre-bu-matrix tr:last-child td { border-bottom: none; }
         .bre-bu-matrix table td ol li { margin: 0 0 0.35rem; }
         .bre-bu-matrix ul.prereq { margin: 0; padding-left: 1.1em; }
@@ -3782,16 +3817,33 @@
             color: var(--bm-n500);
             font-size: 0.78rem;
         }
-        /* Override global .slide paragraph colour inside embedded matrix */
-        .slide.slide--bre-matrix .bre-bu-matrix p,
-        .slide.slide--bre-matrix .bre-bu-matrix li {
+        /* Override global .slide paragraph colour inside embedded matrix (wrap body only — not hero) */
+        .slide.slide--bre-matrix .bre-bu-matrix .wrap p,
+        .slide.slide--bre-matrix .bre-bu-matrix .wrap li {
             color: var(--mtx-n700);
+        }
+        .slide.slide--bre-matrix .bre-bu-matrix td strong,
+        .slide.slide--bre-matrix .bre-bu-matrix td b,
+        .slide.slide--bre-matrix .bre-bu-matrix .card strong,
+        .slide.slide--bre-matrix .bre-bu-matrix .card b,
+        .slide.slide--bre-matrix .bre-bu-matrix .pull strong,
+        .slide.slide--bre-matrix .bre-bu-matrix .pull b {
+            color: var(--bm-n900);
+            font-weight: 700;
         }
         .slide.slide--bre-matrix .bre-bu-matrix .hero p {
             color: #cfcfcf;
         }
+        .slide.slide--bre-matrix .bre-bu-matrix .hero p strong {
+            color: #ffffff;
+            font-weight: 700;
+        }
         .slide.slide--bre-matrix .bre-bu-matrix td {
             color: var(--mtx-n700);
+        }
+        .slide.slide--bre-matrix .bre-bu-matrix td code {
+            color: var(--bm-n900);
+            font-weight: 600;
         }
 
         html[data-doc-lang="es"] .doc-i18n--en,
@@ -6154,7 +6206,7 @@
 
 <h2>Matrix — validation rules</h2>
 <div class="lead">Business rule · short description · scope · prerequisites</div>
-<p class="draft-note">Content below reflects <strong>Confluence MCP</strong> reads of BLK HLR pages (IDs cited in footer). <strong>MOQ, MAX, SKU availability:</strong> no matching “EDI order validator MVP” HLR title was returned from the same Confluence searches used for sibling rules; rows are marked <em>TBD</em> pending the published 3rd-layer HLRs. <strong>Central Tracking</strong> is not a validator rule — see the companion table after this one.</p>
+<p class="draft-note">Content below reflects stakeholder-approved scope for <strong>SKU availability</strong>, <strong>Minimum order quantity</strong>, and <strong>Maximum order quantity</strong> (3rd-layer rules), plus published BLK HLRs for layers 1–2. <strong>Central Tracking</strong> is not a validator rule — see the companion table after this one.</p>
 
 <div class="table-scroll">
 <table>
@@ -6306,37 +6358,49 @@
     </tr>
     <tr>
       <td><b>SKU availability</b></td>
-      <td><em>TBD in BLK.</em> Intended to ensure ordered quantities can be served from the availability signal BEES trusts for the POC/DC context.</td>
+      <td>Validate if the SKUs / products from the order have available stock.</td>
       <td>
-        <p style="margin:0"><strong>No “EDI order validator MVP — SKU availability” HLR</strong> was found in the Feb–Jun 2026 Confluence search alongside the other validator HLRs. Behaviour, toggles, and outcomes remain <strong>product/engineering TBD</strong> until the 3rd-layer page is published under BLK.</p>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>When <strong>country + vendor</strong> is enabled and the retailer is <strong>not blacklisted</strong> for this rule, the application must validate whether the requested products have available stock.</li>
+          <li>If the product has enough stock to fulfill the requested quantity, the product is <strong>accepted</strong>.</li>
+          <li>If the product has partial stock, the ordered quantity must be <strong>adjusted to the available quantity</strong> in stock.</li>
+          <li>Purchased products without stock are <strong>removed from the order</strong>.</li>
+          <li>If no product from the order has stock, the <strong>entire order is rejected</strong>.</li>
+        </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>BUs should pre-position <strong>ATP / inventory feeds</strong> and cut-off alignment with warehouse systems so the future rule can bind to a trustworthy signal.</li>
+          <li>The Vendor / BU must ensure that all products available in the catalog have updated stock in the <strong>BEES ATP / Inventory</strong> configuration.</li>
         </ul>
       </td>
     </tr>
     <tr>
       <td><b>Minimum order quantity</b></td>
-      <td><em>TBD in BLK.</em> Intended to enforce account-level minimums on the validated order aggregate.</td>
+      <td>Validate whether the purchased quantity respects the minimum order quantity of the POC / store.</td>
       <td>
-        <p style="margin:0">Referenced as a <strong>rejection reason</strong> in the <strong>EDI Central Tracking — Operational Tool</strong> HLR, but a dedicated <strong>EDI order validator MVP — MOQ</strong> HLR was not returned from the same Confluence query set used for other layers. Treat pipeline position, toggles, and rejection vs hold as <strong>TBD</strong> until the 3rd-layer HLR is available.</p>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>When <strong>country + vendor</strong> is enabled and the retailer is <strong>not blacklisted</strong> for this rule, the application must validate whether the purchased quantity is equal to or higher than the minimum order quantity registered for the store.</li>
+          <li>If the purchased quantity matches the <strong>MinOQ</strong>, the order is <strong>accepted</strong>. If it does not match the MinOQ, the order is <strong>rejected</strong>.</li>
+        </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>Legacy BLK material on MOQ feature activation stresses <strong>Accounts Relay V2</strong> + <strong>BEES Sync</strong> feeding MOQ inputs — use as a dependency hint until superseded by the EDI-specific HLR.</li>
+          <li>The Vendor / BU must ensure that all stores that require this validation have the <strong>minimum order quantity</strong> configured in <strong>BEES</strong>.</li>
         </ul>
       </td>
     </tr>
     <tr>
       <td><b>Maximum order quantity</b></td>
-      <td><em>TBD in BLK.</em> Intended to cap the validated order aggregate for credit or supply constraints.</td>
+      <td>Validate whether the purchased quantity respects the maximum order quantity of the POC / store.</td>
       <td>
-        <p style="margin:0">Same status as MOQ: named in Central Tracking ops taxonomy; <strong>no matching validator MVP HLR</strong> retrieved via Confluence MCP in this review. Await published requirements for exact behaviour.</p>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>When <strong>country + vendor</strong> is enabled and the retailer is <strong>not blacklisted</strong> for this rule, the application must validate whether the purchased quantity is equal to or lower than the maximum order quantity registered for the store.</li>
+          <li>If the purchased quantity matches the <strong>MaxOQ</strong>, the order is <strong>accepted</strong>. If it does not match the MaxOQ, the order is <strong>rejected</strong>.</li>
+        </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>BUs should keep <strong>account-level maxima</strong> accurate in BEES account structures so future wiring inherits clean data.</li>
+          <li>The Vendor / BU must ensure that all stores that require this validation have the <strong>maximum order quantity</strong> configured in <strong>BEES</strong>.</li>
         </ul>
       </td>
     </tr>
@@ -8271,7 +8335,7 @@
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight">What we count on the BU for</h3>
                 <div class="tech-bu-req">
-                    <div class="tech-bu-req-head"><span class="tech-bu-req-badge">BU role</span> A few things we need from the BU side so every order line can be matched to a BEES product</div>
+                    <div class="tech-bu-req-head"><span class="tech-bu-req-badge">BU role</span> Dependencies on the BU/Partner</div>
                     <ul>
                         <li><strong>A clean BEES catalog.</strong> The SKUs you sell to a retailer should be in the BEES catalog with the <strong>exact</strong> code the retailer sends — we don't auto-correct missing zeros, format differences, or pack hierarchies. Out-of-date or missing entries are the #1 reason lines get rejected, so this list deserves attention.</li>
                         <li><strong>POC-level mapping when retailers use their own codes.</strong> When a retailer uses internal codes that don't exist in the catalog, you can register a "this code = that BEES item" mapping at the <strong>vendor + POC</strong> level. You can create, edit, look up and deactivate these mappings yourselves; there's no separate approval workflow, but we log every change for audit.</li>
@@ -8557,7 +8621,7 @@
                         <p class="draft-note">Las tablas siguientes conservan el texto de celda en inglés (citas HLR). Encabezados de tabla localizados donde aplica.</p>
                         <h2>Matriz — reglas de validación</h2>
                         <div class="lead">Regla · descripción corta · alcance · prerrequisitos</div>
-                        <p class="draft-note">MOQ / MAX / SKU: <em>TBD</em> hasta publicar el HLR de tercera capa en BLK.</p>
+                        <p class="draft-note">SKU availability, MOQ y MAX: alcance y prerrequisitos actualizados (3ª capa). Resto de celdas en inglés (citas HLR).</p>
 
 <div class="table-scroll">
 <table>
@@ -8709,37 +8773,49 @@
     </tr>
     <tr>
       <td><b>SKU availability</b></td>
-      <td><em>TBD in BLK.</em> Intended to ensure ordered quantities can be served from the availability signal BEES trusts for the POC/DC context.</td>
+      <td>Validate if the SKUs / products from the order have available stock.</td>
       <td>
-        <p style="margin:0"><strong>No “EDI order validator MVP — SKU availability” HLR</strong> was found in the Feb–Jun 2026 Confluence search alongside the other validator HLRs. Behaviour, toggles, and outcomes remain <strong>product/engineering TBD</strong> until the 3rd-layer page is published under BLK.</p>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>When <strong>country + vendor</strong> is enabled and the retailer is <strong>not blacklisted</strong> for this rule, the application must validate whether the requested products have available stock.</li>
+          <li>If the product has enough stock to fulfill the requested quantity, the product is <strong>accepted</strong>.</li>
+          <li>If the product has partial stock, the ordered quantity must be <strong>adjusted to the available quantity</strong> in stock.</li>
+          <li>Purchased products without stock are <strong>removed from the order</strong>.</li>
+          <li>If no product from the order has stock, the <strong>entire order is rejected</strong>.</li>
+        </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>BUs should pre-position <strong>ATP / inventory feeds</strong> and cut-off alignment with warehouse systems so the future rule can bind to a trustworthy signal.</li>
+          <li>The Vendor / BU must ensure that all products available in the catalog have updated stock in the <strong>BEES ATP / Inventory</strong> configuration.</li>
         </ul>
       </td>
     </tr>
     <tr>
       <td><b>Minimum order quantity</b></td>
-      <td><em>TBD in BLK.</em> Intended to enforce account-level minimums on the validated order aggregate.</td>
+      <td>Validate whether the purchased quantity respects the minimum order quantity of the POC / store.</td>
       <td>
-        <p style="margin:0">Referenced as a <strong>rejection reason</strong> in the <strong>EDI Central Tracking — Operational Tool</strong> HLR, but a dedicated <strong>EDI order validator MVP — MOQ</strong> HLR was not returned from the same Confluence query set used for other layers. Treat pipeline position, toggles, and rejection vs hold as <strong>TBD</strong> until the 3rd-layer HLR is available.</p>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>When <strong>country + vendor</strong> is enabled and the retailer is <strong>not blacklisted</strong> for this rule, the application must validate whether the purchased quantity is equal to or higher than the minimum order quantity registered for the store.</li>
+          <li>If the purchased quantity matches the <strong>MinOQ</strong>, the order is <strong>accepted</strong>. If it does not match the MinOQ, the order is <strong>rejected</strong>.</li>
+        </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>Legacy BLK material on MOQ feature activation stresses <strong>Accounts Relay V2</strong> + <strong>BEES Sync</strong> feeding MOQ inputs — use as a dependency hint until superseded by the EDI-specific HLR.</li>
+          <li>The Vendor / BU must ensure that all stores that require this validation have the <strong>minimum order quantity</strong> configured in <strong>BEES</strong>.</li>
         </ul>
       </td>
     </tr>
     <tr>
       <td><b>Maximum order quantity</b></td>
-      <td><em>TBD in BLK.</em> Intended to cap the validated order aggregate for credit or supply constraints.</td>
+      <td>Validate whether the purchased quantity respects the maximum order quantity of the POC / store.</td>
       <td>
-        <p style="margin:0">Same status as MOQ: named in Central Tracking ops taxonomy; <strong>no matching validator MVP HLR</strong> retrieved via Confluence MCP in this review. Await published requirements for exact behaviour.</p>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>When <strong>country + vendor</strong> is enabled and the retailer is <strong>not blacklisted</strong> for this rule, the application must validate whether the purchased quantity is equal to or lower than the maximum order quantity registered for the store.</li>
+          <li>If the purchased quantity matches the <strong>MaxOQ</strong>, the order is <strong>accepted</strong>. If it does not match the MaxOQ, the order is <strong>rejected</strong>.</li>
+        </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>BUs should keep <strong>account-level maxima</strong> accurate in BEES account structures so future wiring inherits clean data.</li>
+          <li>The Vendor / BU must ensure that all stores that require this validation have the <strong>maximum order quantity</strong> configured in <strong>BEES</strong>.</li>
         </ul>
       </td>
     </tr>
@@ -10501,7 +10577,7 @@
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight">Lo que necesitamos del BU</h3>
                 <div class="tech-bu-req">
-                    <div class="tech-bu-req-head"><span class="tech-bu-req-badge">Rol del BU</span> Unas pocas cosas que necesitamos del lado del BU para que cada línea de pedido pueda matchearse con un producto BEES</div>
+                    <div class="tech-bu-req-head"><span class="tech-bu-req-badge">Rol del BU</span> Dependencias del BU / partner</div>
                     <ul>
                         <li><strong>Un catálogo BEES limpio.</strong> Los SKUs que le vendés a un minorista deben estar en el catálogo BEES con el código <strong>exacto</strong> que el minorista envía — no autocorregimos ceros faltantes, diferencias de formato ni jerarquías de empaque. Datos desactualizados o faltantes son la causa #1 de líneas rechazadas, así que esa lista merece atención.</li>
                         <li><strong>Mapeo a nivel POC cuando los minoristas usan sus propios códigos.</strong> Cuando un minorista usa códigos internos que no existen en el catálogo, podés registrar un mapeo "este código = aquel item BEES" a nivel <strong>vendor + POC</strong>. Podés crear, editar, buscar y desactivar esos mapeos vos mismo; no hay workflow de aprobación, pero registramos cada cambio para auditoría.</li>
