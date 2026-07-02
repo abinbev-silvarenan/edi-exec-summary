@@ -8,30 +8,24 @@ Self-contained HTML executive summary for the **BEES Link BRE — EDI Order Vali
 https://abinbev-silvarenan.github.io/edi-exec-summary/
 ```
 
-## GitHub Pages — reset from zero
+## GitHub Pages — publish & redeploy
 
-This repo is a **static site**. There is **no build step** and **no GitHub Actions workflow**. Publishing is handled entirely by GitHub Pages from the `main` branch.
+The **Publish site** workflow (`.github/workflows/publish-pages.yml`) copies `index.html` and `.nojekyll` to the **`gh-pages`** branch on every push to `main`.
 
-### One-time setup (do exactly this)
+### One-time setup
 
 1. Open **Settings → Pages** for this repo.
 2. Under **Build and deployment**:
    - **Source:** `Deploy from a branch`
-   - **Branch:** `main`
+   - **Branch:** `gh-pages`
    - **Folder:** `/ (root)`
-3. Click **Save**.
-4. Wait 2–5 minutes, then open the live URL above.
+3. Click **Save**. Wait 2–5 minutes, then open the live URL above.
 
-### Do not use
+If Pages is disabled, deploy workflows fail with **404 — ensure GitHub Pages has been enabled** in Settings.
 
-| Setting | Why |
-| --- | --- |
-| **GitHub Actions** as Pages source | No workflow is configured; deploy will hang or fail. |
-| **`gh-pages` branch** | Removed; this repo publishes from `main` only. |
+### Redeploy
 
-### Updating the site
-
-Edit `index.html`, commit, and push to `main`. GitHub Pages republishes automatically.
+Push to `main`, or run **Actions → Publish site → Run workflow**. The live site updates after the workflow finishes and Pages propagates (1–2 minutes).
 
 ## Files
 
