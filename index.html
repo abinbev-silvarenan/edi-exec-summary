@@ -2,6 +2,17 @@
 <html lang="en" data-doc-lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+    (function () {
+        var lang = 'en';
+        try {
+            var stored = localStorage.getItem('breDocUiLang');
+            if (stored === 'es' || stored === 'en') lang = stored;
+        } catch (e) {}
+        document.documentElement.setAttribute('data-doc-lang', lang);
+        document.documentElement.setAttribute('lang', lang === 'es' ? 'es' : 'en');
+    })();
+    </script>
     <title>BEES BRE &#8212; Order validation scope | Bilingual executive brief</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
@@ -3849,6 +3860,24 @@
         html[data-doc-lang="es"] .doc-i18n--en,
         html[data-doc-lang="en"] .doc-i18n--es {
             display: none !important;
+        }
+        /* Full content blocks — always block layout when visible */
+        div.doc-i18n.doc-i18n--en,
+        div.doc-i18n.doc-i18n--es {
+            display: block;
+        }
+        html[data-doc-lang="en"] div.doc-i18n.doc-i18n--es,
+        html[data-doc-lang="es"] div.doc-i18n.doc-i18n--en {
+            display: none !important;
+        }
+        div.doc-i18n.doc-i18n--en[hidden],
+        div.doc-i18n.doc-i18n--es[hidden] {
+            display: none !important;
+        }
+        /* Inline chrome labels stay inline when visible */
+        html[data-doc-lang="en"] span.doc-i18n.doc-i18n--en,
+        html[data-doc-lang="es"] span.doc-i18n.doc-i18n--es {
+            display: inline !important;
         }
     </style>
 </head>
@@ -8908,7 +8937,6 @@
 </footer>
 
 </div>
-                    </div>
                 </div>
 </section>
 <section class="slide" id="section-tech-overview-es">
@@ -10991,6 +11019,9 @@
             var es = lang === 'es';
             html.setAttribute('lang', es ? 'es' : 'en');
             html.setAttribute('data-doc-lang', lang);
+            document.querySelectorAll('div.doc-i18n[data-doc-lang]').forEach(function (el) {
+                el.hidden = el.getAttribute('data-doc-lang') !== lang;
+            });
             var btnEn = document.getElementById('doc-lang-en');
             var btnEs = document.getElementById('doc-lang-es');
             if (btnEn) {
@@ -11019,8 +11050,12 @@
             var stored = localStorage.getItem(LANG_KEY);
             if (stored === 'es' || stored === 'en') {
                 applyDocLang(stored);
+            } else {
+                applyDocLang(html.getAttribute('data-doc-lang') || 'en');
             }
-        } catch (e) {}
+        } catch (e) {
+            applyDocLang(html.getAttribute('data-doc-lang') || 'en');
+        }
 
         var bEn = document.getElementById('doc-lang-en');
         var bEs = document.getElementById('doc-lang-es');
