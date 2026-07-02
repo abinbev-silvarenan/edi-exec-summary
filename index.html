@@ -178,7 +178,8 @@
             line-height: 1.7;
             font-size: 14px;
             color: var(--text-muted);
-            max-width: 820px;
+            max-width: none;
+            width: 100%;
         }
 
         .main-panel-exec .doc-i18n > .slide:nth-of-type(even) {
@@ -2197,7 +2198,7 @@
         }
         .e2e-row {
             display: grid;
-            grid-template-columns: minmax(160px, 1.2fr) 24px minmax(160px, 1.5fr) 24px minmax(160px, 1.3fr);
+            grid-template-columns: minmax(0, 1.35fr) 24px minmax(0, 1.55fr) 24px minmax(0, 1.4fr);
             gap: 0.5rem;
             align-items: center;
         }
@@ -2223,6 +2224,8 @@
             text-align: left;
             line-height: 1.3;
             min-height: 56px;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
         .e2e-gate small {
             display: block;
@@ -2274,6 +2277,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
         .e2e-onfail strong { display: block; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--bees-gray); margin-bottom: 0.15rem; }
         /* Blocked = on hold, can still recover before the deadline. */
@@ -2314,6 +2319,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
         .e2e-onpass strong { display: block; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--bees-yellow-dark); margin-bottom: 0.15rem; }
         .e2e-arr {
@@ -2387,6 +2394,17 @@
             color: var(--bees-black);
             font-size: 1rem;
             line-height: 1.7;
+        }
+
+        .main-panel-tech .slide h2 {
+            max-width: none;
+            text-wrap: pretty;
+        }
+        .main-panel-tech .tech-diagram-intro,
+        .main-panel-tech .tech-req-note,
+        .main-panel-tech .tech-json-callout {
+            max-width: none;
+            width: 100%;
         }
 
         .tech-epic-strip {
@@ -2488,12 +2506,14 @@
             font-size: 0.85rem;
             letter-spacing: 0.04em;
             border-bottom: 3px solid var(--bees-yellow);
+            line-height: 1.35;
+            white-space: normal;
         }
         .edi-integ-flow-body {
             position: relative;
             padding: 1.25rem 1.25rem 1.4rem;
             background: linear-gradient(160deg, #f3f3f3 0%, #fafafa 40%, var(--bees-white) 100%);
-            --edi-flow-node-w: 199px;
+            --edi-flow-node-w: 240px;
         }
         .edi-if-visual {
             display: flex;
@@ -2800,6 +2820,9 @@
             font-weight: 800;
             color: var(--bees-black);
             line-height: 1.25;
+            width: 100%;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
         .edi-vi-lbl-sub {
             display: block;
@@ -2808,6 +2831,9 @@
             color: var(--bees-gray);
             margin-top: 0.26rem;
             line-height: 1.28;
+            width: 100%;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
         .edi-vi-arrow {
             width: 5px;
@@ -2828,21 +2854,25 @@
             border-top: 9px solid #333;
         }
         .edi-vi-diamond {
-            width: 150px;
-            height: 80px;
+            width: 178px;
+            height: 96px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             font-weight: 800;
-            line-height: 1.22;
+            line-height: 1.18;
             background: var(--bees-yellow);
             border: 2px solid var(--bees-black);
             clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
             color: var(--bees-black);
             margin: 0.28rem 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+            padding: 0.35rem 0.45rem;
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
         .edi-vi-fork-arm {
             display: flex;
@@ -2850,7 +2880,7 @@
             align-items: center;
             gap: 0.28rem;
             min-width: 0;
-            max-width: 132px;
+            max-width: 168px;
             width: 100%;
         }
         .edi-vi-tag {
@@ -2865,17 +2895,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 3.25rem;
+            min-height: 3.6rem;
             box-sizing: border-box;
         }
         .edi-vi-pill {
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             font-weight: 700;
-            padding: 0.46rem 0.5rem;
+            padding: 0.42rem 0.48rem;
             border-radius: 11px;
             text-align: center;
-            line-height: 1.28;
+            line-height: 1.22;
             width: 100%;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
         .edi-vi-pill--err {
             background: var(--fill-grey-08);
@@ -2934,7 +2966,8 @@
             color: var(--bees-gray);
             line-height: 1.45;
             margin: -0.35rem 0 0.65rem;
-            max-width: 36rem;
+            max-width: none;
+            width: 100%;
         }
         /* Full-width technical intros (flow diagram, payload example, etc.) */
         .tech-diagram-intro.tech-diagram-intro--flow-section {
@@ -6210,11 +6243,10 @@
     <div class="brandmark"><span class="dot"></span> BEES Link</div>
     <div class="kicker">EDI · Business Rules Engine (BRE)</div>
     <h1>Business rules — BU scope &amp; prerequisites</h1>
-    <p>Single view for stakeholders: each row separates <strong>business intent</strong> (short description), <strong>product behaviour</strong> (scope — what is evaluated and how), and <strong>BU master-data obligations</strong> (prerequisites). Matrix cells are aligned to published <strong>BLK</strong> HLRs under the BEES Link EDI validator folders (1st / 2nd / 3rd layer validations and Central Tracking). Executive brief material may differ where HLRs are newer — <strong>HLR wins</strong>.</p>
+    <p>Single view for stakeholders: each row separates <strong>business intent</strong> (short description), <strong>product behaviour</strong> (scope — what is evaluated and how), and <strong>BU master-data obligations</strong> (prerequisites). Matrix cells are aligned to published <strong>BLK</strong> HLRs under the BEES Link EDI validator folders (1st / 2nd / 3rd layer validations and Central Tracking). <strong>HLR wins</strong> where sources differ.</p>
     <div class="hero meta">
       <span><b>Audience:</b> Product · Operations · Finance · IT · Market leads</span>
       <span><b>Primary source:</b> <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/folder/5769003728" style="color:#e0e0e0">BLK — EDI BRE folder tree</a> (1st / 2nd / 3rd layer + Central Tracking)</span>
-      <span><b>Context:</b> <a href="https://silarerenan-cmyk.github.io/edi-bre-exec-summary/" style="color:#e0e0e0">Exec summary</a> (orientation only)</span>
       <span><b>Updated:</b> Feb 2026</span>
     </div>
   </div>
@@ -6224,14 +6256,6 @@
 
 <h2>How to use this page</h2>
 <div class="lead">One row per rule — three stakeholder-facing columns.</div>
-<div class="card accent">
-  <h3>What each column means</h3>
-  <p><strong>Short description</strong> — Business-facing “what”: the outcome or intent of the rule in plain language (not engineering status or delivery quarter).</p>
-  <p><strong>Scope</strong> — What the product considers for that rule and <strong>how it will work</strong>: inputs, decision order (e.g. primary lookup then fallback), and the behavioural outcome (reject order vs skip line vs branch path). This is the place for stepwise logic like “first X, then Y.”</p>
-  <p><strong>Prerequisites</strong> — What each <strong>BU must guarantee in data management and ingestion</strong> so BRE can run the validation: which BEES structures must be populated, who keeps them current, and any broker/ERP hygiene the market owns. Prefer concrete artefacts (e.g. Account Documents, Delivery Window, canonical JSON) over generic “alignment.”</p>
-</div>
-
-<div class="pull"><b>Sign-off checklist:</b> BU leads attest <b>Prerequisites</b> (master data &amp; ingestion ready / owned). Product + ops attest <b>Scope</b> (how the rule behaves). Commercial / finance attest implications captured in <b>Short description</b> where the rule touches price, credit, or contract min/max.</div>
 
 <h2>Matrix — validation rules</h2>
 <div class="lead">Business rule · short description · scope · prerequisites</div>
@@ -6512,13 +6536,8 @@
   <p><strong>Holds vs rejects:</strong> Package validation and Price validation introduce <strong>blocked</strong> states; DC validation blocks when DC is missing. Align retailer messaging and ops SLAs across those HLRs and Central Tracking.</p>
 </div>
 
-<div class="card">
-  <h3>HLR page IDs (BLK) used in this matrix</h3>
-  <p style="font-size:14px;margin:0">Order integration <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5981536297">5981536297</a> · POC direct <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5791453558">5791453558</a> · POC external IDs <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220054719">6220054719</a> · Delivery dates (range + frequency) <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5791453572">5791453572</a> · PO uniqueness <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5792306185">5792306185</a> · UPC matching <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6140789875">6140789875</a> · Package validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6219956551">6219956551</a> · Price validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6217368312">6217368312</a> · DC validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6222381057">6222381057</a> · Central tracking retailer <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220185829">6220185829</a> · Central tracking ops <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6218907975">6218907975</a></p>
-</div>
-
 <footer>
-  BEES / AB InBev — internal alignment. Visual tokens: BEES Link one-pager reference. Validation matrix updated from <strong>Atlassian Confluence BLK</strong> HLRs (via MCP) for EDI order validator MVP + Central Tracking; MOQ / MAX / SKU rows marked TBD where no sibling HLR was found in the same search. Executive summary retained only for macro context. Not a legal or contractual substitute for signed HLRs in Jira/Confluence.
+  BEES / AB InBev — internal alignment. Visual tokens: BEES Link one-pager reference. Validation matrix updated from <strong>Atlassian Confluence BLK</strong> HLRs (via MCP) for EDI order validator MVP + Central Tracking; MOQ / MAX / SKU rows marked TBD where no sibling HLR was found in the same search. Not a legal or contractual substitute for signed HLRs in Jira/Confluence.
 </footer>
 
 </div>
@@ -6567,7 +6586,7 @@
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-gate is-intake">Broker sends the order file<small>EDI → JSON · POST to BEES Sync</small></div>
                                 <div class="e2e-arr">→</div>
-                                <div class="e2e-gate is-intake">Link BRE app receives the order<small>Canonical JSON, traceId, country header</small></div>
+                                <div class="e2e-gate is-intake">Link BRE app<br>receives the order<small>Canonical JSON, traceId, country header</small></div>
                             </div>
 
                             <!-- Stage 1: Order-level gates -->
@@ -6805,7 +6824,7 @@
                                 <div class="edi-if-cell edi-if-cell--fork-arm-no">
                                     <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
                                         <span class="edi-vi-tag">No</span>
-                                        <div class="edi-vi-pill edi-vi-pill--err">Rejected at Sync · HTTP · stop</div>
+                                        <div class="edi-vi-pill edi-vi-pill--err">Rejected at Sync<br>· HTTP · stop</div>
                                         <div class="edi-vi-terminus">
                                             <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                             <span class="edi-vi-terminus-lbl">End</span>
@@ -7173,7 +7192,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--bre">
                                         <span class="edi-vi-bubble">1</span>
-                                        <span class="edi-vi-lbl">Link BRE app receives the order</span>
+                                        <span class="edi-vi-lbl">Link BRE app<br>receives the order</span>
                                     </div>
                                 </div>
                             </div>
@@ -7220,7 +7239,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--accounts">
                                         <span class="edi-vi-bubble">4</span>
-                                        <span class="edi-vi-lbl">Get account by <code>CustomerAccountID</code></span>
+                                        <span class="edi-vi-lbl">Get account by<br><code>CustomerAccountID</code></span>
                                         <span class="edi-vi-lbl-sub">Accounts Service</span>
                                     </div>
                                 </div>
@@ -7265,7 +7284,7 @@
                                 <div class="edi-if-cell edi-if-cell--fork-arm-yes">
                                     <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
                                         <span class="edi-vi-tag">Yes</span>
-                                        <div class="edi-vi-pill edi-vi-pill--ok">Use <code>VendorAccountID</code> + next rules</div>
+                                        <div class="edi-vi-pill edi-vi-pill--ok">Use <code>VendorAccountID</code><br>+ next rules</div>
                                         <div class="edi-vi-terminus edi-vi-terminus--continue">
                                             <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                             <span class="edi-vi-terminus-lbl">Branch</span>
@@ -7321,7 +7340,7 @@
                                         <div class="edi-if-row edi-if-row--poc-node">
                                             <div class="edi-if-cell edi-if-cell--graph">
                                                 <div class="edi-vi-node edi-vi-node--bre">
-                                                    <span class="edi-vi-lbl">Substitute customer’s account ID with <code>VendorAccountID</code></span>
+                                                    <span class="edi-vi-lbl">Substitute account ID with<br><code>VendorAccountID</code></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -7375,7 +7394,7 @@
                                     <div class="edi-if-cell edi-if-cell--graph">
                                         <div class="edi-vi-node edi-vi-node--start">
                                             <span class="edi-vi-bubble">·</span>
-                                            <span class="edi-vi-lbl">Enter on direct-match failure</span>
+                                            <span class="edi-vi-lbl">Enter on direct-<br>match failure</span>
                                         </div>
                                     </div>
                                     <div class="edi-if-cell edi-if-cell--note-side">
@@ -7438,7 +7457,7 @@
                                     <div class="edi-if-cell edi-if-cell--graph">
                                         <div class="edi-vi-node edi-vi-node--accounts">
                                             <span class="edi-vi-bubble">2</span>
-                                            <span class="edi-vi-lbl">Lookup by <code>RFC</code> + <code>SUC</code>/<code>Subsidiary</code></span>
+                                            <span class="edi-vi-lbl">Lookup by <code>RFC</code> +<br><code>SUC</code>/<code>Subsidiary</code></span>
                                             <span class="edi-vi-lbl-sub">Composite key (legal entity + store)</span>
                                         </div>
                                     </div>
@@ -7483,7 +7502,7 @@
                                     <div class="edi-if-cell edi-if-cell--fork-arm-yes">
                                         <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
                                             <span class="edi-vi-tag">Yes</span>
-                                            <div class="edi-vi-pill edi-vi-pill--ok">Carry <code>VendorAccountID</code> + next rules</div>
+                                            <div class="edi-vi-pill edi-vi-pill--ok">Carry <code>VendorAccountID</code><br>+ next rules</div>
                                             <div class="edi-vi-terminus edi-vi-terminus--continue">
                                                 <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                                 <span class="edi-vi-terminus-lbl">Continue</span>
@@ -7584,7 +7603,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--accounts">
                                         <span class="edi-vi-bubble">2</span>
-                                        <span class="edi-vi-lbl">Search orders by PO + <code>VendorAccountID</code></span>
+                                        <span class="edi-vi-lbl">Search orders by PO +<br><code>VendorAccountID</code></span>
                                         <span class="edi-vi-lbl-sub">Orders base</span>
                                     </div>
                                 </div>
@@ -7619,7 +7638,7 @@
                                 <div class="edi-if-cell edi-if-cell--fork-arm-no">
                                     <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
                                         <span class="edi-vi-tag">No</span>
-                                        <div class="edi-vi-pill edi-vi-pill--err">Duplicate · log + Blocked</div>
+                                        <div class="edi-vi-pill edi-vi-pill--err">Duplicate · log<br>+ Blocked</div>
                                         <div class="edi-vi-terminus">
                                             <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                             <span class="edi-vi-terminus-lbl">Branch</span>
@@ -7650,7 +7669,7 @@
                                         <div class="edi-if-row edi-if-row--poc-node">
                                             <div class="edi-if-cell edi-if-cell--graph">
                                                 <div class="edi-vi-node edi-vi-node--bre">
-                                                    <span class="edi-vi-lbl">Log failure (reason incl. <code>OrderId</code>)</span>
+                                                    <span class="edi-vi-lbl">Log failure<br>(reason incl. <code>OrderId</code>)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -7660,7 +7679,7 @@
                                         <div class="edi-if-row edi-if-row--poc-node">
                                             <div class="edi-if-cell edi-if-cell--graph">
                                                 <div class="edi-vi-node edi-vi-node--bre">
-                                                    <span class="edi-vi-lbl">Block the order (on hold for operator)</span>
+                                                    <span class="edi-vi-lbl">Block the order<br>(on hold for operator)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -7832,7 +7851,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--bre">
                                         <span class="edi-vi-bubble">1</span>
-                                        <span class="edi-vi-lbl">Link BRE loads dates &amp; configuration</span>
+                                        <span class="edi-vi-lbl">Link BRE loads dates<br>&amp; configuration</span>
                                     </div>
                                 </div>
                             </div>
@@ -7990,7 +8009,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--accounts">
                                         <span class="edi-vi-bubble">2</span>
-                                        <span class="edi-vi-lbl">Fetch authorized delivery dates</span>
+                                        <span class="edi-vi-lbl">Fetch authorized<br>delivery dates</span>
                                         <span class="edi-vi-lbl-sub">POC / Delivery Window</span>
                                     </div>
                                 </div>
@@ -8238,7 +8257,7 @@
                                     <div class="edi-if-cell edi-if-cell--graph">
                                         <div class="edi-vi-node edi-vi-node--accounts">
                                             <span class="edi-vi-bubble">1</span>
-                                            <span class="edi-vi-lbl">Lookup line in <strong>BEES catalog</strong></span>
+                                            <span class="edi-vi-lbl">Lookup line in<br><strong>BEES catalog</strong></span>
                                             <span class="edi-vi-lbl-sub">Exact code (no normalization)</span>
                                         </div>
                                     </div>
@@ -8270,7 +8289,7 @@
                                     <div class="edi-if-cell edi-if-cell--graph">
                                         <div class="edi-vi-node edi-vi-node--accounts">
                                             <span class="edi-vi-bubble">2</span>
-                                            <span class="edi-vi-lbl">Lookup line in <strong>POC mapping</strong></span>
+                                            <span class="edi-vi-lbl">Lookup line in<br><strong>POC mapping</strong></span>
                                             <span class="edi-vi-lbl-sub">Vendor-scoped UPC → BEES item</span>
                                         </div>
                                     </div>
@@ -8329,7 +8348,7 @@
                                     <div class="edi-if-cell edi-if-cell--fork-arm-yes">
                                         <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
                                             <span class="edi-vi-tag">≥1</span>
-                                            <div class="edi-vi-pill edi-vi-pill--ok"><code>order_continued</code> · keep survivors</div>
+                                            <div class="edi-vi-pill edi-vi-pill--ok"><code>order_continued</code><br>· keep survivors</div>
                                             <div class="edi-vi-terminus edi-vi-terminus--continue">
                                                 <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                                 <span class="edi-vi-terminus-lbl">Next rule</span>
@@ -8544,7 +8563,7 @@
                                     <div class="edi-if-cell edi-if-cell--fork-arm-no">
                                         <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
                                             <span class="edi-vi-tag">Flag</span>
-                                            <div class="edi-vi-pill edi-vi-pill--err">Block order · on hold until D-1</div>
+                                            <div class="edi-vi-pill edi-vi-pill--err">Block order · on hold<br>until D-1</div>
                                             <div class="edi-vi-terminus">
                                                 <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                                 <span class="edi-vi-terminus-lbl">Held</span>
@@ -8628,7 +8647,7 @@
                             <div class="brandmark"><span class="dot"></span> BEES Link</div>
                             <div class="kicker">EDI · Motor de reglas de negocio (BRE)</div>
                             <h1>Reglas de negocio — alcance BU y prerrequisitos</h1>
-                            <p>Vista única para stakeholders: cada fila separa la <strong>intención de negocio</strong> (descripción corta), el <strong>comportamiento del producto</strong> (alcance) y las <strong>obligaciones de datos maestros de la BU</strong> (prerrequisitos). Alineado a <strong>HLR</strong> BLK (carpetas 1ª / 2ª / 3ª capa y Central Tracking). Si el resumen ejecutivo difiere, <strong>prevalece el HLR</strong>.</p>
+                            <p>Vista única para stakeholders: cada fila separa la <strong>intención de negocio</strong> (descripción corta), el <strong>comportamiento del producto</strong> (alcance) y las <strong>obligaciones de datos maestros de la BU</strong> (prerrequisitos). Alineado a <strong>HLR</strong> BLK (carpetas 1ª / 2ª / 3ª capa y Central Tracking). <strong>Prevalece el HLR</strong> donde las fuentes difieran.</p>
                             <div class="hero meta">
                                 <span><b>Audiencia:</b> Producto · Operaciones · Finanzas · TI · Líderes de mercado</span>
                                 <span><b>Fuente primaria:</b> <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/folder/5769003728" style="color:#e0e0e0">BLK — árbol EDI BRE</a></span>
@@ -8640,13 +8659,6 @@
                     <div class="wrap">
                         <h2>Cómo usar esta matriz</h2>
                         <div class="lead">Una fila por regla — tres columnas.</div>
-                        <div class="card accent">
-                            <h3>Qué significa cada columna</h3>
-                            <p><strong>Descripción corta</strong> — El &quot;qué&quot; de negocio en lenguaje claro.</p>
-                            <p><strong>Alcance</strong> — Qué evalúa el producto y <strong>cómo se comporta</strong>.</p>
-                            <p><strong>Prerrequisitos</strong> — Qué debe garantizar la <strong>BU en datos e ingesta</strong>.</p>
-                        </div>
-                        <div class="pull"><b>Checklist de firma:</b> BU atestigua <b>Prerrequisitos</b>. Producto + ops atestiguan <b>Alcance</b>. Comercial / finanzas atestiguan <b>Descripción corta</b> cuando aplique.</div>
                         <p class="draft-note">Las tablas siguientes conservan el texto de celda en inglés (citas HLR). Encabezados de tabla localizados donde aplica.</p>
                         <h2>Matriz — reglas de validación</h2>
                         <div class="lead">Regla · descripción corta · alcance · prerrequisitos</div>
@@ -8925,11 +8937,6 @@
   <h3>Notas de programa (no son prerrequisitos de datos BU)</h3>
   <p><strong>Reprocess:</strong> Early BRE scope statements listed “force reprocess” as out of scope for the validator MVP, while <strong>EDI Central Tracking — Operational Tool</strong> explicitly includes reprocess/bypass — treat <strong>Central Tracking</strong> as the owning surface for re-queues, not contradictory ad-hoc broker resends.</p>
   <p><strong>Holds vs rejects:</strong> Package validation and Price validation introduce <strong>blocked</strong> states; DC validation blocks when DC is missing. Align retailer messaging and ops SLAs across those HLRs and Central Tracking.</p>
-</div>
-
-<div class="card">
-  <h3>IDs de página HLR (BLK) citados en esta matriz</h3>
-  <p style="font-size:14px;margin:0">Order integration <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5981536297">5981536297</a> · POC direct <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5791453558">5791453558</a> · POC external IDs <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220054719">6220054719</a> · Delivery dates (range + frequency) <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5791453572">5791453572</a> · PO uniqueness <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5792306185">5792306185</a> · UPC matching <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6140789875">6140789875</a> · Package validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6219956551">6219956551</a> · Price validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6217368312">6217368312</a> · DC validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6222381057">6222381057</a> · Central tracking retailer <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220185829">6220185829</a> · Central tracking ops <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6218907975">6218907975</a></p>
 </div>
 
 <footer>
@@ -9215,7 +9222,7 @@
                                 <div class="edi-if-cell edi-if-cell--fork-arm-no">
                                     <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
                                         <span class="edi-vi-tag">No</span>
-                                        <div class="edi-vi-pill edi-vi-pill--err">Rechazado en Sync · HTTP · fin</div>
+                                        <div class="edi-vi-pill edi-vi-pill--err">Rechazado en Sync<br>· HTTP · fin</div>
                                         <div class="edi-vi-terminus">
                                             <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                             <span class="edi-vi-terminus-lbl">Fin</span>
@@ -9550,7 +9557,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--bre">
                                         <span class="edi-vi-bubble">1</span>
-                                        <span class="edi-vi-lbl">La app Link BRE recibe el pedido</span>
+                                        <span class="edi-vi-lbl">La app Link BRE<br>recibe el pedido</span>
                                     </div>
                                 </div>
                             </div>
@@ -9597,7 +9604,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--accounts">
                                         <span class="edi-vi-bubble">4</span>
-                                        <span class="edi-vi-lbl">Obtener cuenta por <code>CustomerAccountID</code></span>
+                                        <span class="edi-vi-lbl">Obtener cuenta por<br><code>CustomerAccountID</code></span>
                                         <span class="edi-vi-lbl-sub">Servicio de cuentas</span>
                                     </div>
                                 </div>
@@ -9642,7 +9649,7 @@
                                 <div class="edi-if-cell edi-if-cell--fork-arm-yes">
                                     <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
                                         <span class="edi-vi-tag">S&#237;</span>
-                                        <div class="edi-vi-pill edi-vi-pill--ok"><code>VendorAccountID</code> y siguientes reglas</div>
+                                        <div class="edi-vi-pill edi-vi-pill--ok"><code>VendorAccountID</code><br>y siguientes reglas</div>
                                         <div class="edi-vi-terminus edi-vi-terminus--continue">
                                             <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                             <span class="edi-vi-terminus-lbl">Rama</span>
@@ -9673,7 +9680,7 @@
                                         <div class="edi-if-row edi-if-row--poc-node">
                                             <div class="edi-if-cell edi-if-cell--graph">
                                                 <div class="edi-vi-node edi-vi-node--bre">
-                                                    <span class="edi-vi-lbl">Bloquear el pedido (en hold para operador)</span>
+                                                    <span class="edi-vi-lbl">Bloquear el pedido<br>(en hold para operador)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -9698,7 +9705,7 @@
                                         <div class="edi-if-row edi-if-row--poc-node">
                                             <div class="edi-if-cell edi-if-cell--graph">
                                                 <div class="edi-vi-node edi-vi-node--bre">
-                                                    <span class="edi-vi-lbl">Sustituir la cuenta del cliente por <code>VendorAccountID</code></span>
+                                                    <span class="edi-vi-lbl">Sustituir cuenta del cliente por<br><code>VendorAccountID</code></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -9825,7 +9832,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--accounts">
                                         <span class="edi-vi-bubble">2</span>
-                                        <span class="edi-vi-lbl">Buscar pedidos por OC + <code>VendorAccountID</code></span>
+                                        <span class="edi-vi-lbl">Buscar pedidos por OC +<br><code>VendorAccountID</code></span>
                                         <span class="edi-vi-lbl-sub">Base de pedidos</span>
                                     </div>
                                 </div>
@@ -9860,7 +9867,7 @@
                                 <div class="edi-if-cell edi-if-cell--fork-arm-no">
                                     <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
                                         <span class="edi-vi-tag">No</span>
-                                        <div class="edi-vi-pill edi-vi-pill--err">Duplicado · registrar y Bloqueado</div>
+                                        <div class="edi-vi-pill edi-vi-pill--err">Duplicado · registrar<br>y Bloqueado</div>
                                         <div class="edi-vi-terminus">
                                             <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                             <span class="edi-vi-terminus-lbl">Rama</span>
@@ -9891,7 +9898,7 @@
                                         <div class="edi-if-row edi-if-row--poc-node">
                                             <div class="edi-if-cell edi-if-cell--graph">
                                                 <div class="edi-vi-node edi-vi-node--bre">
-                                                    <span class="edi-vi-lbl">Registrar el fallo (motivo incl. <code>OrderId</code>)</span>
+                                                    <span class="edi-vi-lbl">Registrar el fallo<br>(motivo incl. <code>OrderId</code>)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -9901,7 +9908,7 @@
                                         <div class="edi-if-row edi-if-row--poc-node">
                                             <div class="edi-if-cell edi-if-cell--graph">
                                                 <div class="edi-vi-node edi-vi-node--bre">
-                                                    <span class="edi-vi-lbl">Bloquear el pedido (en hold para operador)</span>
+                                                    <span class="edi-vi-lbl">Bloquear el pedido<br>(en hold para operador)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -10073,7 +10080,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--bre">
                                         <span class="edi-vi-bubble">1</span>
-                                        <span class="edi-vi-lbl">Link BRE carga fechas y configuraci&#243;n</span>
+                                        <span class="edi-vi-lbl">Link BRE carga fechas<br>y configuraci&#243;n</span>
                                     </div>
                                 </div>
                             </div>
@@ -10231,7 +10238,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--accounts">
                                         <span class="edi-vi-bubble">2</span>
-                                        <span class="edi-vi-lbl">Obtener fechas de entrega autorizadas</span>
+                                        <span class="edi-vi-lbl">Obtener fechas de entrega<br>autorizadas</span>
                                         <span class="edi-vi-lbl-sub">POC / Delivery Window</span>
                                     </div>
                                 </div>
@@ -10479,7 +10486,7 @@
                                     <div class="edi-if-cell edi-if-cell--graph">
                                         <div class="edi-vi-node edi-vi-node--accounts">
                                             <span class="edi-vi-bubble">1</span>
-                                            <span class="edi-vi-lbl">Buscar la línea en el <strong>catálogo BEES</strong></span>
+                                            <span class="edi-vi-lbl">Buscar la línea en el<br><strong>catálogo BEES</strong></span>
                                             <span class="edi-vi-lbl-sub">Código exacto (sin normalización)</span>
                                         </div>
                                     </div>
@@ -10511,7 +10518,7 @@
                                     <div class="edi-if-cell edi-if-cell--graph">
                                         <div class="edi-vi-node edi-vi-node--accounts">
                                             <span class="edi-vi-bubble">2</span>
-                                            <span class="edi-vi-lbl">Buscar la línea en <strong>POC mapping</strong></span>
+                                            <span class="edi-vi-lbl">Buscar la línea en<br><strong>POC mapping</strong></span>
                                             <span class="edi-vi-lbl-sub">UPC → BEES item · ámbito vendor</span>
                                         </div>
                                     </div>
@@ -10570,7 +10577,7 @@
                                     <div class="edi-if-cell edi-if-cell--fork-arm-yes">
                                         <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
                                             <span class="edi-vi-tag">≥1</span>
-                                            <div class="edi-vi-pill edi-vi-pill--ok"><code>order_continued</code> · conservar sobrevivientes</div>
+                                            <div class="edi-vi-pill edi-vi-pill--ok"><code>order_continued</code><br>· conservar sobrevivientes</div>
                                             <div class="edi-vi-terminus edi-vi-terminus--continue">
                                                 <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                                 <span class="edi-vi-terminus-lbl">Siguiente regla</span>
@@ -10785,7 +10792,7 @@
                                     <div class="edi-if-cell edi-if-cell--fork-arm-no">
                                         <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
                                             <span class="edi-vi-tag">Flag</span>
-                                            <div class="edi-vi-pill edi-vi-pill--err">Bloquear pedido · on-hold hasta D-1</div>
+                                            <div class="edi-vi-pill edi-vi-pill--err">Bloquear pedido · on-hold<br>hasta D-1</div>
                                             <div class="edi-vi-terminus">
                                                 <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                                 <span class="edi-vi-terminus-lbl">En hold</span>
