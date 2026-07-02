@@ -34,9 +34,10 @@ https://abinbev-silvarenan.github.io/edi-exec-summary/
 1. Open this repo on GitHub.
 2. Go to **Settings → Pages**.
 3. Under **Build and deployment**:
-   - **Source:** Deploy from a branch.
-   - **Branch:** `main` / `/ (root)`.
-4. Save. The page should be live in 1–2 minutes at the URL above.
+   - **Source:** GitHub Actions.
+4. Push to `main` (or re-run the **Deploy GitHub Pages** workflow). The page should be live in 1–2 minutes at the URL above.
+
+If you previously used **Deploy from a branch**, switch the source to **GitHub Actions** so it matches `.github/workflows/pages.yml`.
 
 ## Updating the document
 
