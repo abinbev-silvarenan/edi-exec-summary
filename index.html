@@ -6320,6 +6320,7 @@
         <ul class="prereq">
           <li>Maintain <strong>Account Documents</strong> (e.g. RFC, GLN) and account keys so lookups succeed; canonical JSON must carry fields required for resolution (e.g. <code>storeCode</code>, <code>gln</code> alongside <code>ExternalAccountID</code> per architecture notes in HLR).</li>
           <li>BU owns data quality for retailer identifiers; GLN registration with GS1 remains retailer responsibility.</li>
+          <li><strong>Data ingestion APIs:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
         </ul>
       </td>
     <td class="risk risk--high">Missing/outdated match table -> mass order rejects (MX ~90% rejection driver historically on MOQ; POC gaps block all downstream rules). AR expects notification + manual decision vs blind reject.</td><td><span class="eta-bu">BU: Q3 2026 - end Sep</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
@@ -6371,6 +6372,7 @@
         <ul class="prereq">
           <li>BUs keep <strong>Delivery Window</strong> / delivery calendar data current for every POC served via EDI (same source of truth as BEES Delivery Window — no duplicate conflicting calendars).</li>
           <li>Coordinate holidays and exceptional service days through the same ingestion channel.</li>
+          <li><strong>Data ingestion APIs:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a>; <a href="https://developer.bees-platform.com/docs/entities/delivery-windows/api/v2/post" target="_blank" rel="noopener noreferrer">Delivery Windows API v2 (POST)</a></li>
         </ul>
       </td>
     <td class="risk risk--med">Stale calendar -> rejects on valid delivery days (MX: low volume but high commercial friction per POC).</td><td><span class="eta-bu">BU: End Q1 2026</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
@@ -6405,6 +6407,7 @@
         <ul class="prereq">
           <li>BUs maintain accurate catalogue GTIN/UPC coverage for EDI assortment.</li>
           <li>BUs curate and ingest <strong>active</strong> POC-level external-code → BEES item mappings (logical deactivate when retired).</li>
+          <li><strong>Data ingestion APIs:</strong> <a href="https://developer.bees-platform.com/docs/entities/items/api/v2/put" target="_blank" rel="noopener noreferrer">Items API v2 (PUT)</a>; <a href="https://developer.bees-platform.com/docs/entities/product-assortment-inclusion/api/v4/post" target="_blank" rel="noopener noreferrer">Product Assortment Inclusion API v4 (POST)</a>; <a href="https://developer.bees-platform.com/docs/entities/product-assortment-exclusion/api/v1/post" target="_blank" rel="noopener noreferrer">Product Assortment Exclusion API v1 (POST)</a></li>
         </ul>
       </td>
     <td class="risk risk--high">Mapping gaps -> line drops & NR loss (MX ~1%  /  AR ~8% of rejections). Manual AR spreadsheet feeds add lag vs automated sync.</td><td><span class="eta-bu">BU: End Q2 2026</span><br><span class="eta-bre">BRE: Q3 2026</span></td></tr>
@@ -6473,6 +6476,7 @@
       <td>
         <ul class="prereq">
           <li>The Vendor / BU must ensure that all products available in the catalog have updated stock in the <strong>BEES ATP / Inventory</strong> configuration.</li>
+          <li><strong>Data ingestion APIs:</strong> <a href="https://developer.bees-platform.com/docs/entities/inventory/api/v3/post" target="_blank" rel="noopener noreferrer">Inventory API v3 (POST)</a></li>
         </ul>
       </td>
     <td class="risk risk--med">Weak inventory signal -> false accepts (stockouts) or false rejects (lost NR).</td><td><span class="eta-bu">BU: Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026*</span><br><span class="tbd-note">*HLR TBD</span></td></tr>
@@ -6488,6 +6492,7 @@
       <td>
         <ul class="prereq">
           <li>The Vendor / BU must ensure that all stores that require this validation have the <strong>minimum order quantity</strong> configured in <strong>BEES</strong>.</li>
+          <li><strong>Data ingestion APIs:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
         </ul>
       </td>
     <td class="risk risk--high">Largest rejection driver (MX ~90.63%  /  AR ~33.36%). AR expectation of hold/combine vs MVP auto-reject is a commercial design gap.</td><td><span class="eta-bu">BU: Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026*</span><br><span class="tbd-note">*HLR TBD</span></td></tr>
@@ -6503,6 +6508,7 @@
       <td>
         <ul class="prereq">
           <li>The Vendor / BU must ensure that all stores that require this validation have the <strong>maximum order quantity</strong> configured in <strong>BEES</strong>.</li>
+          <li><strong>Data ingestion APIs:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
         </ul>
       </td>
     <td class="risk risk--low">Low rejection volume (MX ~0.48%) but credit exposure if rule delayed or data wrong.</td><td><span class="eta-bu">BU: Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026*</span><br><span class="tbd-note">*HLR TBD</span></td></tr>
@@ -6520,6 +6526,7 @@
         <ul class="prereq">
           <li>BUs must maintain correct <strong>POC → DC</strong> assignments in BEES configuration (source of truth for branching).</li>
           <li>Finance + ops own the <strong>remote DC id list</strong> and FR rule set configuration per market introduction.</li>
+          <li><strong>Data ingestion APIs:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
         </ul>
       </td>
     <td class="risk risk--high">Wrong DC -> false rejects on direct-billing POCs or wrong rule set on distributor-served stores.</td><td><span class="eta-bu">BU: Early Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
@@ -8764,6 +8771,7 @@
         <ul class="prereq">
           <li>Maintain <strong>Account Documents</strong> (e.g. RFC, GLN) and account keys so lookups succeed; canonical JSON must carry fields required for resolution (e.g. <code>storeCode</code>, <code>gln</code> alongside <code>ExternalAccountID</code> per architecture notes in HLR).</li>
           <li>BU owns data quality for retailer identifiers; GLN registration with GS1 remains retailer responsibility.</li>
+          <li><strong>APIs de ingesta de datos:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
         </ul>
       </td>
     <td class="risk risk--high">Tabla de match desactualizada -> rechazos masivos (MX ~90% histórico en MOQ; brechas POC bloquean todas las reglas posteriores). AR espera notificación + decisión manual vs rechazo ciego.</td><td><span class="eta-bu">BU: Q3 2026 - fin sep</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
@@ -8815,6 +8823,7 @@
         <ul class="prereq">
           <li>BUs keep <strong>Delivery Window</strong> / delivery calendar data current for every POC served via EDI (same source of truth as BEES Delivery Window — no duplicate conflicting calendars).</li>
           <li>Coordinate holidays and exceptional service days through the same ingestion channel.</li>
+          <li><strong>APIs de ingesta de datos:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a>; <a href="https://developer.bees-platform.com/docs/entities/delivery-windows/api/v2/post" target="_blank" rel="noopener noreferrer">Delivery Windows API v2 (POST)</a></li>
         </ul>
       </td>
     <td class="risk risk--med">Calendario desactualizado -> rechazos en días de entrega válidos (MX: bajo volumen pero alta fricción comercial por POC).</td><td><span class="eta-bu">BU: Fin Q1 2026</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
@@ -8849,6 +8858,7 @@
         <ul class="prereq">
           <li>BUs maintain accurate catalogue GTIN/UPC coverage for EDI assortment.</li>
           <li>BUs curate and ingest <strong>active</strong> POC-level external-code → BEES item mappings (logical deactivate when retired).</li>
+          <li><strong>APIs de ingesta de datos:</strong> <a href="https://developer.bees-platform.com/docs/entities/items/api/v2/put" target="_blank" rel="noopener noreferrer">Items API v2 (PUT)</a>; <a href="https://developer.bees-platform.com/docs/entities/product-assortment-inclusion/api/v4/post" target="_blank" rel="noopener noreferrer">Product Assortment Inclusion API v4 (POST)</a>; <a href="https://developer.bees-platform.com/docs/entities/product-assortment-exclusion/api/v1/post" target="_blank" rel="noopener noreferrer">Product Assortment Exclusion API v1 (POST)</a></li>
         </ul>
       </td>
     <td class="risk risk--high">Brechas de mapeo -> líneas eliminadas y pérdida de NR (MX ~1%  /  AR ~8% de rechazos). Hojas AR manuales añaden retraso vs sync automatizado.</td><td><span class="eta-bu">BU: Fin Q2 2026</span><br><span class="eta-bre">BRE: Q3 2026</span></td></tr>
@@ -8891,14 +8901,14 @@
       <td>Asegurar que se aplican los impuestos correctos por región del POC antes de completar las compuertas a nivel ítem, alineado al modelo de pricing de BEES.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
-          <li>Tras validación de precio, evaluar configuraciÃ³n fiscal por línea según reglas de región del POC en BEES.</li>
-          <li>Impuesto incorrecto -> <strong>bloquear o rechazar</strong> según configuraciÃ³n país+vendor (entrega con squad Pricing Q3).</li>
+          <li>Tras validación de precio, evaluar configuración fiscal por línea según reglas de región del POC en BEES.</li>
+          <li>Impuesto incorrecto -> <strong>bloquear o rechazar</strong> según configuración país+vendor (entrega con squad Pricing Q3).</li>
           <li>Toggle <strong>por país + vendor</strong>; omitido si está desactivado.</li>
         </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>Finanzas provee <strong>reglas / configuraciÃ³n fiscal por región del POC</strong> alineada al modelo de pricing BEES.</li>
+          <li>Finanzas provee <strong>reglas / configuración fiscal por región del POC</strong> alineada al modelo de pricing BEES.</li>
         </ul>
       </td>
     <td class="risk risk--med">Configuración fiscal incorrecta -> exposición de cumplimiento o bloqueos falsos en pedidos válidos.</td><td><span class="eta-bu">BU: Fin Q2 2026</span><br><span class="eta-bre">BRE: Q3 2026</span></td></tr>
@@ -8917,6 +8927,7 @@
       <td>
         <ul class="prereq">
           <li>The Vendor / BU must ensure that all products available in the catalog have updated stock in the <strong>BEES ATP / Inventory</strong> configuration.</li>
+          <li><strong>APIs de ingesta de datos:</strong> <a href="https://developer.bees-platform.com/docs/entities/inventory/api/v3/post" target="_blank" rel="noopener noreferrer">Inventory API v3 (POST)</a></li>
         </ul>
       </td>
     <td class="risk risk--med">Señal de inventario débil -> aceptaciones falsas (quiebres) o rechazos falsos (NR perdido).</td><td><span class="eta-bu">BU: Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026*</span><br><span class="tbd-note">*HLR TBD</span></td></tr>
@@ -8932,6 +8943,7 @@
       <td>
         <ul class="prereq">
           <li>The Vendor / BU must ensure that all stores that require this validation have the <strong>minimum order quantity</strong> configured in <strong>BEES</strong>.</li>
+          <li><strong>APIs de ingesta de datos:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
         </ul>
       </td>
     <td class="risk risk--high">Mayor driver de rechazo (MX ~90.63%  /  AR ~33.36%). Expectativa AR de hold/combinar vs auto-rechazo MVP es brecha de diseño comercial.</td><td><span class="eta-bu">BU: Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026*</span><br><span class="tbd-note">*HLR TBD</span></td></tr>
@@ -8947,6 +8959,7 @@
       <td>
         <ul class="prereq">
           <li>The Vendor / BU must ensure that all stores that require this validation have the <strong>maximum order quantity</strong> configured in <strong>BEES</strong>.</li>
+          <li><strong>APIs de ingesta de datos:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
         </ul>
       </td>
     <td class="risk risk--low">Bajo volumen de rechazo (MX ~0.48%) pero exposición crediticia si la regla se retrasa o los datos son incorrectos.</td><td><span class="eta-bu">BU: Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026*</span><br><span class="tbd-note">*HLR TBD</span></td></tr>
@@ -8964,6 +8977,7 @@
         <ul class="prereq">
           <li>BUs must maintain correct <strong>POC → DC</strong> assignments in BEES configuration (source of truth for branching).</li>
           <li>Finance + ops own the <strong>remote DC id list</strong> and FR rule set configuration per market introduction.</li>
+          <li><strong>APIs de ingesta de datos:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
         </ul>
       </td>
     <td class="risk risk--high">DC incorrecto -> falsos rechazos en POCs de facturación directa o set de reglas equivocado en tiendas con distribuidor.</td><td><span class="eta-bu">BU: Inicios Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
