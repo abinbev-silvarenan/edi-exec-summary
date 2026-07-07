@@ -27,7 +27,7 @@ jobs:
       - name: Prepare site
         run: |
           mkdir -p _site
-          cp index.html .nojekyll _site/
+          cp index.html bu-decisions-timeline.html .nojekyll _site/
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

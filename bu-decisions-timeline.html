@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BU Decisions Timeline — EDI Order Validation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --yellow: #FFCC00;
+      --near-black: #141414;
+      --white: #FFFFFF;
+      --gray-50: #F7F7F7;
+      --gray-100: #EBEBEB;
+      --gray-200: #D9D9D9;
+      --gray-500: #6B6B6B;
+      --gray-700: #3D3D3D;
+      --font-work: 'Work Sans', system-ui, sans-serif;
+      --font-barlow: 'Barlow', system-ui, sans-serif;
+      --mtx-border: #D4D4D4;
+      --mtx-head: #1A1A1A;
+      --mtx-zebra: #FAFAFA;
+      --shadow: 0 2px 12px rgba(0,0,0,.08);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-work);
+      color: var(--near-black);
+      background: var(--gray-50);
+      line-height: 1.55;
+    }
+    .doc-lang-bar {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: flex-end; gap: .5rem;
+      padding: .6rem 1.5rem;
+      background: var(--near-black);
+      border-bottom: 3px solid var(--yellow);
+    }
+    .doc-lang-bar button {
+      font: 600 .8rem var(--font-work);
+      padding: .35rem .85rem;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 4px;
+      background: transparent;
+      color: rgba(255,255,255,.7);
+      cursor: pointer;
+    }
+    .doc-lang-bar button.active,
+    .doc-lang-bar button:hover {
+      background: var(--yellow);
+      color: var(--near-black);
+      border-color: var(--yellow);
+    }
+    .doc-i18n { display: none; }
+    .doc-i18n.active { display: block; }
+    .hero {
+      background: var(--near-black);
+      color: var(--white);
+      padding: 2.5rem 1.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero-hex {
+      position: absolute; right: -40px; top: -20px;
+      width: 220px; height: 220px; opacity: .12;
+    }
+    .brand { font: 700 .75rem var(--font-barlow); letter-spacing: .12em; color: var(--yellow); text-transform: uppercase; margin: 0 0 .5rem; }
+    .hero h1 { font: 700 1.75rem/1.2 var(--font-barlow); margin: 0 0 .75rem; max-width: 36rem; }
+    .hero-lead { margin: 0; max-width: 42rem; color: rgba(255,255,255,.82); font-size: .95rem; }
+    .hero-meta {
+      display: flex; flex-wrap: wrap; gap: 1rem 2rem;
+      margin-top: 1.25rem; padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,.15);
+      font-size: .8rem; color: rgba(255,255,255,.65);
+    }
+    .hero-meta strong { color: var(--yellow); }
+    .back-link {
+      display: inline-flex; align-items: center; gap: .35rem;
+      margin-top: 1rem; font-size: .85rem; font-weight: 600;
+      color: var(--yellow); text-decoration: none;
+    }
+    .back-link:hover { text-decoration: underline; }
+    main { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+    .intro-card {
+      background: var(--white);
+      border-left: 4px solid var(--yellow);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      font-size: .92rem;
+    }
+    .intro-card p { margin: 0; }
+    .filter-bar {
+      display: flex; flex-wrap: wrap; gap: .75rem; align-items: center;
+      margin-bottom: 1rem;
+    }
+    .filter-bar label { font-size: .85rem; font-weight: 600; }
+    .filter-bar select, .filter-bar input {
+      font: 400 .85rem var(--font-work);
+      padding: .45rem .65rem;
+      border: 1px solid var(--mtx-border);
+      border-radius: 4px;
+      min-width: 160px;
+    }
+    .filter-bar input { flex: 1; min-width: 200px; }
+    .table-scroll {
+      overflow-x: auto;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      border-radius: 4px;
+      margin-bottom: 2rem;
+    }
+    .decisions-matrix {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .82rem;
+    }
+    .decisions-matrix th {
+      background: var(--mtx-head);
+      color: var(--white);
+      font-weight: 600;
+      text-align: left;
+      padding: .65rem .75rem;
+      white-space: nowrap;
+      position: sticky; top: 0;
+    }
+    .decisions-matrix td {
+      padding: .6rem .75rem;
+      border-bottom: 1px solid var(--mtx-border);
+      vertical-align: top;
+    }
+    .decisions-matrix tbody tr:nth-child(even) { background: var(--mtx-zebra); }
+    .decisions-matrix tbody tr:hover { background: #FFF9E0; }
+    .decisions-matrix .col-rule { width: 14%; font-weight: 600; }
+    .decisions-matrix .col-def { width: 42%; }
+    .decisions-matrix .col-people { width: 22%; }
+    .decisions-matrix .col-date { width: 12%; white-space: nowrap; }
+    .zone-badge {
+      display: inline-block;
+      font-size: .7rem; font-weight: 700;
+      padding: .15rem .45rem;
+      border-radius: 3px;
+      margin-right: .35rem;
+      vertical-align: middle;
+    }
+    .zone-badge--mx { background: #E8F4EA; color: #1B5E20; }
+    .zone-badge--ar { background: #E3F2FD; color: #0D47A1; }
+    .zone-badge--all { background: #FFF8E1; color: #5D4037; }
+    .zone-badge--blk { background: #F3E5F5; color: #4A148C; }
+    .status-open {
+      display: inline-block;
+      font-size: .68rem; font-weight: 600;
+      padding: .1rem .4rem;
+      border-radius: 3px;
+      background: #FFF3E0;
+      color: #E65100;
+      margin-left: .25rem;
+    }
+    .legend {
+      display: flex; flex-wrap: wrap; gap: .75rem 1.25rem;
+      font-size: .78rem; color: var(--gray-500);
+      margin-bottom: 1rem;
+    }
+    .legend span { display: inline-flex; align-items: center; gap: .35rem; }
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: .75rem;
+      color: var(--gray-500);
+      border-top: 1px solid var(--gray-200);
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 1.35rem; }
+      .decisions-matrix { font-size: .78rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="doc-lang-bar" role="navigation" aria-label="Language">
+    <button type="button" class="active" data-lang="en" aria-pressed="true">English</button>
+    <button type="button" data-lang="es" aria-pressed="false">Español</button>
+  </div>
+
+  <div class="doc-i18n active" data-doc-lang="en">
+    <header class="hero">
+      <svg class="hero-hex" viewBox="0 0 100 100" aria-hidden="true"><polygon fill="#FFCC00" points="50,2 98,27 98,73 50,98 2,73 2,27"/></svg>
+      <div class="hero-inner">
+        <p class="brand">BEES Link · EDI Order Validation</p>
+        <h1>BU decisions &amp; definitions timeline</h1>
+        <p class="hero-lead">Chronological record of definitions and decisions agreed with Business Unit stakeholders since the start of the initiative — organized by business rule.</p>
+        <div class="hero-meta">
+          <span><strong>Columns:</strong> Business rule · Definition · People involved · Date</span>
+          <span><strong>Status:</strong> Living document — add rows as workshops and sign-offs occur</span>
+        </div>
+        <a class="back-link" href="index.html">← Back to executive summary</a>
+      </div>
+    </header>
+    <main>
+      <div class="intro-card">
+        <p>This matrix captures <strong>what was decided</strong>, <strong>who participated</strong>, and <strong>when</strong> — per validation rule. Items marked <span class="status-open">Open / TBD</span> reflect gaps still under discovery or pending formal BU confirmation.</p>
+      </div>
+      <div class="legend">
+        <span><span class="zone-badge zone-badge--all">ALL</span> Programme-wide</span>
+        <span><span class="zone-badge zone-badge--mx">MX</span> Mexico</span>
+        <span><span class="zone-badge zone-badge--ar">AR</span> Argentina</span>
+        <span><span class="zone-badge zone-badge--blk">BLK</span> BEES Link product / HLR</span>
+      </div>
+      <div class="filter-bar">
+        <label for="filter-rule-en">Business rule</label>
+        <select id="filter-rule-en" aria-label="Filter by business rule">
+          <option value="">All rules</option>
+        </select>
+        <label for="filter-search-en">Search</label>
+        <input type="search" id="filter-search-en" placeholder="Definition, people, date…" aria-label="Search decisions">
+      </div>
+      <div class="table-scroll">
+        <table class="decisions-matrix" id="matrix-en">
+          <thead>
+            <tr>
+              <th class="col-rule">Business rule</th>
+              <th class="col-def">Definition / decision</th>
+              <th class="col-people">People involved</th>
+              <th class="col-date">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-rule="Programme">
+              <td class="col-rule"><span class="zone-badge zone-badge--all">ALL</span> Programme</td>
+              <td class="col-def">HLR documents in BLK Confluence are the canonical source when materials differ; executive summary and matrix inherit from HLRs.</td>
+              <td class="col-people">BEES Link product, BLK architecture</td>
+              <td class="col-date">Feb 2026</td>
+            </tr>
+            <tr data-rule="Programme">
+              <td class="col-rule"><span class="zone-badge zone-badge--all">ALL</span> Programme</td>
+              <td class="col-def">MVP targets automated validation pipeline with <strong>Blocked</strong> vs <strong>Rejected</strong> outcomes per rule; Argentina expects more manual intervention in 2026.</td>
+              <td class="col-people">Link EDI squad, AR market leads, MX commercial</td>
+              <td class="col-date">Q1 2026</td>
+            </tr>
+            <tr data-rule="Order integration">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Order integration</td>
+              <td class="col-def">Single canonical JSON contract (v1.24.0) via BEES Sync as the entry path for EDI orders into the validator.</td>
+              <td class="col-people">BEES Platform engineering, Link EDI product</td>
+              <td class="col-date">Q1 2026</td>
+            </tr>
+            <tr data-rule="Order integration">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Order integration</td>
+              <td class="col-def">One vendor and one POC per order in the payload; multi-POC orders are out of MVP scope.</td>
+              <td class="col-people">HLR authors (BEESEDI-48925), BU ops</td>
+              <td class="col-date">HLR sign-off</td>
+            </tr>
+            <tr data-rule="POC matching">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> POC matching</td>
+              <td class="col-def">Resolution order: AccountID → RFC+SUC → GLN (Mod-10). Match table maintained via Account Documents ingestion API.</td>
+              <td class="col-people">BEES Platform, MX/AR master-data owners</td>
+              <td class="col-date">Q1 2026</td>
+            </tr>
+            <tr data-rule="POC matching">
+              <td class="col-rule"><span class="zone-badge zone-badge--ar">AR</span> POC matching</td>
+              <td class="col-def">If POC not identified, stakeholders want <strong>notification</strong> and a <strong>manual decision</strong> — not blind automatic rejection (may indicate outdated match table).</td>
+              <td class="col-people">AR commercial / ops stakeholders</td>
+              <td class="col-date">2026 workshops <span class="status-open">Open</span></td>
+            </tr>
+            <tr data-rule="POC matching">
+              <td class="col-rule"><span class="zone-badge zone-badge--ar">AR</span> POC matching</td>
+              <td class="col-def">POC translation table (internal vs retailer code) supplied via <strong>spreadsheet</strong> in 2026 — no automated feed planned for AR this year.</td>
+              <td class="col-people">AR ops, Link EDI product</td>
+              <td class="col-date">2026</td>
+            </tr>
+            <tr data-rule="Provider code match">
+              <td class="col-rule"><span class="zone-badge zone-badge--mx">MX</span> Provider code match</td>
+              <td class="col-def">Validate retailer provider / vendor code against BU mapping before order acceptance.</td>
+              <td class="col-people">MX commercial, master-data team</td>
+              <td class="col-date"><span class="status-open">TBD</span></td>
+            </tr>
+            <tr data-rule="Delivery range">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Delivery range</td>
+              <td class="col-def">Strict path vs relaxed path with retailer blacklist; invalid delivery dates block the order per HLR BEESEDI-48929.</td>
+              <td class="col-people">HLR authors, MX/AR scheduling owners</td>
+              <td class="col-date">HLR sign-off</td>
+            </tr>
+            <tr data-rule="Delivery frequency">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Delivery frequency</td>
+              <td class="col-def">BEES Delivery Window is source of truth; rule skipped when toggle off or retailer is blacklisted.</td>
+              <td class="col-people">BEES Platform, BU route planners</td>
+              <td class="col-date">Q2 2026</td>
+            </tr>
+            <tr data-rule="PO number uniqueness">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> PO number uniqueness</td>
+              <td class="col-def">Duplicate PO = same POC + same delivery date → order blocked.</td>
+              <td class="col-people">HLR authors, BU ERP owners</td>
+              <td class="col-date">HLR sign-off</td>
+            </tr>
+            <tr data-rule="UPC matching">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> UPC matching</td>
+              <td class="col-def">Catalogue match first; POC-specific mapping fallback only (HLR BEESEDI-48947). Depends on Items, Assortment, and ingestion APIs.</td>
+              <td class="col-people">BEES Platform, BU catalogue teams</td>
+              <td class="col-date">Q1–Q2 2026</td>
+            </tr>
+            <tr data-rule="Package validation">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Package validation</td>
+              <td class="col-def">Validate sellable package / unit-of-measure against catalogue before downstream availability and price checks.</td>
+              <td class="col-people">BU catalogue, Link EDI product</td>
+              <td class="col-date"><span class="status-open">TBD</span></td>
+            </tr>
+            <tr data-rule="Price discrepancy">
+              <td class="col-rule"><span class="zone-badge zone-badge--mx">MX</span> Price discrepancy</td>
+              <td class="col-def">Tolerance-based validation; block when outside configured range. Skip when no tolerance row exists.</td>
+              <td class="col-people">MX pricing / finance</td>
+              <td class="col-date">Q2 2026</td>
+            </tr>
+            <tr data-rule="Price discrepancy">
+              <td class="col-rule"><span class="zone-badge zone-badge--ar">AR</span> Price discrepancy</td>
+              <td class="col-def">Process <strong>differs from Mexico</strong>: frequent price updates, no fixed range guardrail; stakeholders want <strong>approval flow</strong> — not automatic rejection.</td>
+              <td class="col-people">AR commercial, finance, Link EDI product</td>
+              <td class="col-date">2026 workshops</td>
+            </tr>
+            <tr data-rule="Tax validation">
+              <td class="col-rule"><span class="zone-badge zone-badge--mx">MX</span> Tax validation</td>
+              <td class="col-def">Tax line validation against BU rules (scope per HLR / commercial matrix).</td>
+              <td class="col-people">MX finance, tax compliance</td>
+              <td class="col-date"><span class="status-open">TBD</span></td>
+            </tr>
+            <tr data-rule="SKU availability">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> SKU availability</td>
+              <td class="col-def">Inventory API v3 as source; runs after package validation in the layered flow.</td>
+              <td class="col-people">BEES Platform, BU supply / DC ops</td>
+              <td class="col-date">Q2 2026</td>
+            </tr>
+            <tr data-rule="Minimum order quantity">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Min order qty</td>
+              <td class="col-def">MVP default: auto-reject (or block) when below MinOQ per Accounts CSV ingestion.</td>
+              <td class="col-people">HLR authors, BU commercial</td>
+              <td class="col-date">HLR baseline</td>
+            </tr>
+            <tr data-rule="Minimum order quantity">
+              <td class="col-rule"><span class="zone-badge zone-badge--ar">AR</span> Min order qty</td>
+              <td class="col-def">If below minimum, <strong>hold within a predefined window</strong> for additional orders from same POC to combine toward MOQ; order stays open until approve/decline — no auto-reject.</td>
+              <td class="col-people">AR commercial stakeholders</td>
+              <td class="col-date">2026 workshops <span class="status-open">Open</span></td>
+            </tr>
+            <tr data-rule="Maximum order quantity">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Max order qty</td>
+              <td class="col-def">Cap validation using MaxOQ from Accounts ingestion; aligns with truck / credit limits per BU.</td>
+              <td class="col-people">BU commercial, finance</td>
+              <td class="col-date"><span class="status-open">TBD</span></td>
+            </tr>
+            <tr data-rule="DC validation">
+              <td class="col-rule"><span class="zone-badge zone-badge--ar">AR</span> DC validation</td>
+              <td class="col-def">Remote billing DC id 60 seed; Flow 1 vs Flow 2 rule sets per finance alignment.</td>
+              <td class="col-people">AR finance, DC ops, Link EDI product</td>
+              <td class="col-date">Q2 2026</td>
+            </tr>
+            <tr data-rule="Error handling">
+              <td class="col-rule"><span class="zone-badge zone-badge--ar">AR</span> Error handling</td>
+              <td class="col-def">All validation outcomes routed to someone who can investigate; <strong>no automatic rejection</strong> as default while decision is pending.</td>
+              <td class="col-people">AR market leads, ops, Link EDI product</td>
+              <td class="col-date">2026</td>
+            </tr>
+            <tr data-rule="Central Tracking">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Central Tracking</td>
+              <td class="col-def">Order reprocess owned by Central Tracking ops tool — out of validator MVP scope.</td>
+              <td class="col-people">Central Tracking product, Link EDI</td>
+              <td class="col-date">Q1 2026</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+    <footer>BEES Link · EDI Order Validation · BU decisions timeline · Last updated July 2026</footer>
+  </div>
+
+  <div class="doc-i18n" data-doc-lang="es">
+    <header class="hero">
+      <svg class="hero-hex" viewBox="0 0 100 100" aria-hidden="true"><polygon fill="#FFCC00" points="50,2 98,27 98,73 50,98 2,73 2,27"/></svg>
+      <div class="hero-inner">
+        <p class="brand">BEES Link · Validación de pedidos EDI</p>
+        <h1>Línea de tiempo de decisiones y definiciones con las BUs</h1>
+        <p class="hero-lead">Registro cronológico de definiciones y decisiones acordadas con stakeholders de Unidad de Negocio desde el inicio de la iniciativa — organizado por regla de negocio.</p>
+        <div class="hero-meta">
+          <span><strong>Columnas:</strong> Regla · Definición · Personas · Fecha</span>
+          <span><strong>Estado:</strong> Documento vivo — agregar filas tras talleres y sign-offs</span>
+        </div>
+        <a class="back-link" href="index.html">← Volver al resumen ejecutivo</a>
+      </div>
+    </header>
+    <main>
+      <div class="intro-card">
+        <p>Esta matriz captura <strong>qué se decidió</strong>, <strong>quién participó</strong> y <strong>cuándo</strong> — por regla de validación. Los ítems con <span class="status-open">Abierto / TBD</span> reflejan brechas en descubrimiento o confirmación formal pendiente de la BU.</p>
+      </div>
+      <div class="legend">
+        <span><span class="zone-badge zone-badge--all">TODAS</span> Programa</span>
+        <span><span class="zone-badge zone-badge--mx">MX</span> México</span>
+        <span><span class="zone-badge zone-badge--ar">AR</span> Argentina</span>
+        <span><span class="zone-badge zone-badge--blk">BLK</span> Producto BEES Link / HLR</span>
+      </div>
+      <div class="filter-bar">
+        <label for="filter-rule-es">Regla de negocio</label>
+        <select id="filter-rule-es" aria-label="Filtrar por regla">
+          <option value="">Todas las reglas</option>
+        </select>
+        <label for="filter-search-es">Buscar</label>
+        <input type="search" id="filter-search-es" placeholder="Definición, personas, fecha…" aria-label="Buscar decisiones">
+      </div>
+      <div class="table-scroll">
+        <table class="decisions-matrix" id="matrix-es">
+          <thead>
+            <tr>
+              <th class="col-rule">Regla de negocio</th>
+              <th class="col-def">Definición / decisión</th>
+              <th class="col-people">Personas involucradas</th>
+              <th class="col-date">Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-rule="Programme">
+              <td class="col-rule"><span class="zone-badge zone-badge--all">TODAS</span> Programa</td>
+              <td class="col-def">Los HLR en Confluence BLK son la fuente canónica cuando los materiales difieren; el resumen ejecutivo y la matriz heredan de los HLR.</td>
+              <td class="col-people">Producto BEES Link, arquitectura BLK</td>
+              <td class="col-date">Feb 2026</td>
+            </tr>
+            <tr data-rule="Programme">
+              <td class="col-rule"><span class="zone-badge zone-badge--all">TODAS</span> Programa</td>
+              <td class="col-def">El MVP apunta a un pipeline automatizado con resultados <strong>Bloqueado</strong> vs <strong>Rechazado</strong> por regla; Argentina espera más intervención manual en 2026.</td>
+              <td class="col-people">Squad Link EDI, líderes AR, comercial MX</td>
+              <td class="col-date">Q1 2026</td>
+            </tr>
+            <tr data-rule="Order integration">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Integración de pedido</td>
+              <td class="col-def">Contrato JSON canónico único (v1.24.0) vía BEES Sync como entrada al validador EDI.</td>
+              <td class="col-people">Ingeniería BEES Platform, producto Link EDI</td>
+              <td class="col-date">Q1 2026</td>
+            </tr>
+            <tr data-rule="Order integration">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Integración de pedido</td>
+              <td class="col-def">Un proveedor y un POC por pedido en el payload; pedidos multi-POC fuera del alcance MVP.</td>
+              <td class="col-people">Autores HLR (BEESEDI-48925), ops BU</td>
+              <td class="col-date">Sign-off HLR</td>
+            </tr>
+            <tr data-rule="POC matching">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Coincidencia POC</td>
+              <td class="col-def">Orden de resolución: AccountID → RFC+SUC → GLN (Mod-10). Tabla de match vía API Account Documents.</td>
+              <td class="col-people">BEES Platform, dueños master-data MX/AR</td>
+              <td class="col-date">Q1 2026</td>
+            </tr>
+            <tr data-rule="POC matching">
+              <td class="col-rule"><span class="zone-badge zone-badge--ar">AR</span> Coincidencia POC</td>
+              <td class="col-def">Si el POC no se identifica, los stakeholders quieren <strong>notificación</strong> y <strong>decisión manual</strong> — no rechazo automático ciego.</td>
+              <td class="col-people">Comercial / ops AR</td>
+              <td class="col-date">Talleres 2026 <span class="status-open">Abierto</span></td>
+            </tr>
+            <tr data-rule="POC matching">
+              <td class="col-rule"><span class="zone-badge zone-badge--ar">AR</span> Coincidencia POC</td>
+              <td class="col-def">Tabla de traducción POC (código interno vs minorista) vía <strong>hoja de cálculo</strong> en 2026 — sin feed automatizado en AR este año.</td>
+              <td class="col-people">Ops AR, producto Link EDI</td>
+              <td class="col-date">2026</td>
+            </tr>
+            <tr data-rule="Provider code match">
+              <td class="col-rule"><span class="zone-badge zone-badge--mx">MX</span> Código proveedor</td>
+              <td class="col-def">Validar código proveedor / vendor del minorista contra mapeo BU antes de aceptar el pedido.</td>
+              <td class="col-people">Comercial MX, equipo master-data</td>
+              <td class="col-date"><span class="status-open">TBD</span></td>
+            </tr>
+            <tr data-rule="Delivery range">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Rango de entrega</td>
+              <td class="col-def">Ruta estricta vs relajada con lista negra de minoristas; fechas inválidas bloquean el pedido (HLR BEESEDI-48929).</td>
+              <td class="col-people">Autores HLR, dueños de agenda MX/AR</td>
+              <td class="col-date">Sign-off HLR</td>
+            </tr>
+            <tr data-rule="Delivery frequency">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Frecuencia de entrega</td>
+              <td class="col-def">BEES Delivery Window como fuente de verdad; regla omitida si toggle apagado o minorista en lista negra.</td>
+              <td class="col-people">BEES Platform, planificadores de ruta BU</td>
+              <td class="col-date">Q2 2026</td>
+            </tr>
+            <tr data-rule="PO number uniqueness">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Unicidad PO</td>
+              <td class="col-def">PO duplicado = mismo POC + misma fecha de entrega → pedido bloqueado.</td>
+              <td class="col-people">Autores HLR, dueños ERP BU</td>
+              <td class="col-date">Sign-off HLR</td>
+            </tr>
+            <tr data-rule="UPC matching">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Coincidencia UPC</td>
+              <td class="col-def">Catálogo primero; mapeo por POC solo como respaldo (HLR BEESEDI-48947). Depende de APIs Items, Assortment e ingesta.</td>
+              <td class="col-people">BEES Platform, equipos de catálogo BU</td>
+              <td class="col-date">Q1–Q2 2026</td>
+            </tr>
+            <tr data-rule="Package validation">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Validación de paquete</td>
+              <td class="col-def">Validar paquete vendible / UOM contra catálogo antes de disponibilidad y precio.</td>
+              <td class="col-people">Catálogo BU, producto Link EDI</td>
+              <td class="col-date"><span class="status-open">TBD</span></td>
+            </tr>
+            <tr data-rule="Price discrepancy">
+              <td class="col-rule"><span class="zone-badge zone-badge--mx">MX</span> Discrepancia de precio</td>
+              <td class="col-def">Validación por tolerancia; bloqueo fuera del rango configurado. Omitir si no hay fila de tolerancia.</td>
+              <td class="col-people">Pricing / finanzas MX</td>
+              <td class="col-date">Q2 2026</td>
+            </tr>
+            <tr data-rule="Price discrepancy">
+              <td class="col-rule"><span class="zone-badge zone-badge--ar">AR</span> Discrepancia de precio</td>
+              <td class="col-def">Proceso <strong>diferente a México</strong>: actualizaciones frecuentes, sin rango fijo; quieren <strong>flujo de aprobación</strong> — no rechazo automático.</td>
+              <td class="col-people">Comercial AR, finanzas, producto Link EDI</td>
+              <td class="col-date">Talleres 2026</td>
+            </tr>
+            <tr data-rule="Tax validation">
+              <td class="col-rule"><span class="zone-badge zone-badge--mx">MX</span> Validación fiscal</td>
+              <td class="col-def">Validación de líneas fiscales según reglas BU (alcance por HLR / matriz comercial).</td>
+              <td class="col-people">Finanzas MX, cumplimiento fiscal</td>
+              <td class="col-date"><span class="status-open">TBD</span></td>
+            </tr>
+            <tr data-rule="SKU availability">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Disponibilidad SKU</td>
+              <td class="col-def">Inventory API v3 como fuente; se ejecuta después de validación de paquete en el flujo por capas.</td>
+              <td class="col-people">BEES Platform, supply / ops DC BU</td>
+              <td class="col-date">Q2 2026</td>
+            </tr>
+            <tr data-rule="Minimum order quantity">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Cantidad mínima</td>
+              <td class="col-def">Default MVP: auto-rechazo (o bloqueo) bajo MinOQ vía ingesta Accounts CSV.</td>
+              <td class="col-people">Autores HLR, comercial BU</td>
+              <td class="col-date">Línea base HLR</td>
+            </tr>
+            <tr data-rule="Minimum order quantity">
+              <td class="col-rule"><span class="zone-badge zone-badge--ar">AR</span> Cantidad mínima</td>
+              <td class="col-def">Si está bajo el mínimo, <strong>retener en ventana predefinida</strong> para pedidos adicionales del mismo POC que sumen al MOQ; pedido abierto hasta aprobar/rechazar.</td>
+              <td class="col-people">Stakeholders comerciales AR</td>
+              <td class="col-date">Talleres 2026 <span class="status-open">Abierto</span></td>
+            </tr>
+            <tr data-rule="Maximum order quantity">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Cantidad máxima</td>
+              <td class="col-def">Validación de tope con MaxOQ desde ingesta Accounts; alineado a camión / límites de crédito por BU.</td>
+              <td class="col-people">Comercial BU, finanzas</td>
+              <td class="col-date"><span class="status-open">TBD</span></td>
+            </tr>
+            <tr data-rule="DC validation">
+              <td class="col-rule"><span class="zone-badge zone-badge--ar">AR</span> Validación DC</td>
+              <td class="col-def">Semilla DC facturación remota id 60; conjuntos de reglas Flujo 1 vs Flujo 2 según alineación finanzas.</td>
+              <td class="col-people">Finanzas AR, ops DC, producto Link EDI</td>
+              <td class="col-date">Q2 2026</td>
+            </tr>
+            <tr data-rule="Error handling">
+              <td class="col-rule"><span class="zone-badge zone-badge--ar">AR</span> Manejo de errores</td>
+              <td class="col-def">Todos los resultados de validación dirigidos a alguien que investigue; <strong>sin rechazo automático</strong> por defecto mientras la decisión está pendiente.</td>
+              <td class="col-people">Líderes mercado AR, ops, producto Link EDI</td>
+              <td class="col-date">2026</td>
+            </tr>
+            <tr data-rule="Central Tracking">
+              <td class="col-rule"><span class="zone-badge zone-badge--blk">BLK</span> Central Tracking</td>
+              <td class="col-def">Reproceso de pedidos en herramienta ops Central Tracking — fuera del alcance MVP del validador.</td>
+              <td class="col-people">Producto Central Tracking, Link EDI</td>
+              <td class="col-date">Q1 2026</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+    <footer>BEES Link · Validación de pedidos EDI · Línea de tiempo de decisiones BU · Actualizado julio 2026</footer>
+  </div>
+
+  <script>
+    (function () {
+      var langBtns = document.querySelectorAll('.doc-lang-bar button');
+      var panels = document.querySelectorAll('.doc-i18n');
+      langBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var lang = btn.getAttribute('data-lang');
+          langBtns.forEach(function (b) {
+            b.classList.toggle('active', b === btn);
+            b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+          });
+          panels.forEach(function (p) {
+            p.classList.toggle('active', p.getAttribute('data-doc-lang') === lang);
+          });
+          document.documentElement.lang = lang;
+        });
+      });
+
+      function initFilters(tableId, ruleSelectId, searchId) {
+        var table = document.getElementById(tableId);
+        var select = document.getElementById(ruleSelectId);
+        var search = document.getElementById(searchId);
+        if (!table || !select) return;
+        var rules = {};
+        table.querySelectorAll('tbody tr').forEach(function (row) {
+          var r = row.getAttribute('data-rule');
+          if (r) rules[r] = true;
+        });
+        Object.keys(rules).sort().forEach(function (r) {
+          var opt = document.createElement('option');
+          opt.value = r;
+          opt.textContent = r;
+          select.appendChild(opt);
+        });
+        function apply() {
+          var rule = select.value;
+          var q = (search && search.value || '').toLowerCase();
+          table.querySelectorAll('tbody tr').forEach(function (row) {
+            var matchRule = !rule || row.getAttribute('data-rule') === rule;
+            var text = row.textContent.toLowerCase();
+            var matchSearch = !q || text.indexOf(q) !== -1;
+            row.style.display = matchRule && matchSearch ? '' : 'none';
+          });
+        }
+        select.addEventListener('change', apply);
+        if (search) search.addEventListener('input', apply);
+      }
+      initFilters('matrix-en', 'filter-rule-en', 'filter-search-en');
+      initFilters('matrix-es', 'filter-rule-es', 'filter-search-es');
+    })();
+  </script>
+</body>
+</html>

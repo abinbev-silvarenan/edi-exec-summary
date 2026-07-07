@@ -27,6 +27,7 @@ Commit and push to `main`, or run **Actions → Deploy GitHub Pages → Run work
 | File | Purpose |
 | --- | --- |
 | `index.html` | GitHub Pages entry point (latest version). |
+| `bu-decisions-timeline.html` | BU stakeholder decisions & definitions timeline (EN/ES matrix). |
 | `EDI-Order-Validation-Scope_Exec_Summary-v1.1.html` | Versioned copy of the same document (regenerate when you cut a new release). |
 | `.nojekyll` | Tells GitHub Pages to skip Jekyll processing and serve files as-is. |
 | `tools/merge_bu_matrix.mjs` | Re-embeds the BU rules matrix from `../edi-bre-bu-business-rules-matrix.html` into **Technical requirements** (run from repo root if the standalone matrix changes). |
