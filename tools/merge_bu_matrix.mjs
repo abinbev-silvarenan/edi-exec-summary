@@ -90,7 +90,7 @@ const esSection =
                                 <span><b>Audiencia:</b> Producto · Operaciones · Finanzas · TI · Líderes de mercado</span>
                                 <span><b>Fuente primaria:</b> <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/folder/5769003728" style="color:#e0e0e0">BLK — árbol EDI BRE</a></span>
                                 <span><b>Detalle de celdas:</b> en inglés (texto HLR)</span>
-                                <span><b>Actualizado:</b> feb 2026</span>
+                                <span><b>Actualizado:</b> sep 2026</span>
                             </div>
                         </div>
                     </div>
@@ -107,7 +107,7 @@ const esSection =
                         <p class="draft-note">Las tablas siguientes conservan el texto de celda en inglés (citas HLR). Encabezados de tabla localizados donde aplica.</p>
                         <h2>Matriz — reglas de validación</h2>
                         <div class="lead">Regla · descripción corta · alcance · prerrequisitos</div>
-                        <p class="draft-note">MOQ / MAX / SKU: <em>TBD</em> hasta publicar el HLR de tercera capa en BLK.</p>
+                        <p class="draft-note">Incluye HLR de tercera capa (MOQ, MAX, SKU) y Central Tracking Phase 2. Texto de celdas en inglés (citas HLR).</p>
                         ${tablesFragmentEs}
                     </div>
                 </div>
@@ -117,29 +117,43 @@ const esSection =
 let idx = fs.readFileSync(INDEX, "utf8");
 idx = idx.replace(/\r\n/g, "\n");
 
-if (idx.includes('id="section-tech-bu-matrix"')) {
-  console.log("Skip: section-tech-bu-matrix already present in index.html");
+const force = process.argv.includes("--force");
+
+const reEn =
+  /<section class="slide slide--bre-matrix" id="section-tech-bu-matrix">[\s\S]*?<\/section>\n(?=<section class="slide" id="section-tech-overview">)/;
+const reEs =
+  /<section class="slide slide--bre-matrix" id="section-tech-bu-matrix-es">[\s\S]*?<\/section>\n(?=<section class="slide" id="section-tech-overview-es">)/;
+
+if (idx.includes('id="section-tech-bu-matrix"') && !force) {
+  console.log("Skip: section-tech-bu-matrix already present (use --force to replace)");
   process.exit(0);
 }
 
-const markerEn =
-  '            <div class="doc-i18n doc-i18n--en" data-doc-lang="en">\n<section class="slide" id="section-tech-overview">';
-const markerEs =
-  '            <div class="doc-i18n doc-i18n--es" data-doc-lang="es">\n<section class="slide" id="section-tech-overview-es">';
-if (!idx.includes(markerEn)) throw new Error("EN marker not found");
-if (!idx.includes(markerEs)) throw new Error("ES marker not found");
-idx = idx.replace(
-  markerEn,
-  "            <div class=\"doc-i18n doc-i18n--en\" data-doc-lang=\"en\">\n" +
-    enSection +
-    '<section class="slide" id="section-tech-overview">'
-);
-idx = idx.replace(
-  markerEs,
-  "            <div class=\"doc-i18n doc-i18n--es\" data-doc-lang=\"es\">\n" +
-    esSection +
-    '<section class="slide" id="section-tech-overview-es">'
-);
+if (force) {
+  if (!reEn.test(idx)) throw new Error("EN matrix section not found for --force");
+  if (!reEs.test(idx)) throw new Error("ES matrix section not found for --force");
+  idx = idx.replace(reEn, enSection);
+  idx = idx.replace(reEs, esSection);
+} else {
+  const markerEn =
+    '            <div class="doc-i18n doc-i18n--en" data-doc-lang="en">\n<section class="slide" id="section-tech-overview">';
+  const markerEs =
+    '            <div class="doc-i18n doc-i18n--es" data-doc-lang="es">\n<section class="slide" id="section-tech-overview-es">';
+  if (!idx.includes(markerEn)) throw new Error("EN marker not found");
+  if (!idx.includes(markerEs)) throw new Error("ES marker not found");
+  idx = idx.replace(
+    markerEn,
+    "            <div class=\"doc-i18n doc-i18n--en\" data-doc-lang=\"en\">\n" +
+      enSection +
+      '<section class="slide" id="section-tech-overview">'
+  );
+  idx = idx.replace(
+    markerEs,
+    "            <div class=\"doc-i18n doc-i18n--es\" data-doc-lang=\"es\">\n" +
+      esSection +
+      '<section class="slide" id="section-tech-overview-es">'
+  );
+}
 
 fs.writeFileSync(INDEX, idx.replace(/\n/g, "\r\n"), "utf8");
 console.log("OK: merged matrix into", INDEX);

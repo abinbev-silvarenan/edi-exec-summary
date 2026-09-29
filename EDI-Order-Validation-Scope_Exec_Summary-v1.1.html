@@ -2,6 +2,17 @@
 <html lang="en" data-doc-lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+    (function () {
+        var lang = 'en';
+        try {
+            var stored = localStorage.getItem('breDocUiLang');
+            if (stored === 'es' || stored === 'en') lang = stored;
+        } catch (e) {}
+        document.documentElement.setAttribute('data-doc-lang', lang);
+        document.documentElement.setAttribute('lang', lang === 'es' ? 'es' : 'en');
+    })();
+    </script>
     <title>BEES BRE &#8212; Order validation scope | Bilingual executive brief</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
@@ -77,6 +88,15 @@
         }
 
         .container { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+        @media (min-width: 902px) {
+            .container.doc-main,
+            .doc-hero .container {
+                max-width: calc(100vw - var(--doc-toc-w) - 64px);
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
 
         /* ── Executive Summary ── */
         .exec-summary {
@@ -158,7 +178,8 @@
             line-height: 1.7;
             font-size: 14px;
             color: var(--text-muted);
-            max-width: 820px;
+            max-width: none;
+            width: 100%;
         }
 
         .main-panel-exec .doc-i18n > .slide:nth-of-type(even) {
@@ -2004,7 +2025,7 @@
         }
         .doc-view-switch-inner {
             display: inline-flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             justify-content: center;
             gap: 3px;
             padding: 3px;
@@ -2025,10 +2046,10 @@
             background: transparent;
             color: var(--bees-gray);
             transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
-            white-space: normal;
+            white-space: nowrap;
             line-height: 1.25;
             text-align: center;
-            max-width: 11rem;
+            max-width: none;
         }
         .doc-view-switch-inner button:hover {
             color: var(--bees-black);
@@ -2177,7 +2198,7 @@
         }
         .e2e-row {
             display: grid;
-            grid-template-columns: minmax(160px, 1.2fr) 24px minmax(160px, 1.5fr) 24px minmax(160px, 1.3fr);
+            grid-template-columns: minmax(0, 1.35fr) 24px minmax(0, 1.55fr) 24px minmax(0, 1.4fr);
             gap: 0.5rem;
             align-items: center;
         }
@@ -2203,6 +2224,8 @@
             text-align: left;
             line-height: 1.3;
             min-height: 56px;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
         .e2e-gate small {
             display: block;
@@ -2254,6 +2277,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
         .e2e-onfail strong { display: block; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--bees-gray); margin-bottom: 0.15rem; }
         /* Blocked = on hold, can still recover before the deadline. */
@@ -2294,6 +2319,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
         .e2e-onpass strong { display: block; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--bees-yellow-dark); margin-bottom: 0.15rem; }
         .e2e-arr {
@@ -2367,6 +2394,17 @@
             color: var(--bees-black);
             font-size: 1rem;
             line-height: 1.7;
+        }
+
+        .main-panel-tech .slide h2 {
+            max-width: none;
+            text-wrap: pretty;
+        }
+        .main-panel-tech .tech-diagram-intro,
+        .main-panel-tech .tech-req-note,
+        .main-panel-tech .tech-json-callout {
+            max-width: none;
+            width: 100%;
         }
 
         .tech-epic-strip {
@@ -2468,12 +2506,14 @@
             font-size: 0.85rem;
             letter-spacing: 0.04em;
             border-bottom: 3px solid var(--bees-yellow);
+            line-height: 1.35;
+            white-space: normal;
         }
         .edi-integ-flow-body {
             position: relative;
             padding: 1.25rem 1.25rem 1.4rem;
             background: linear-gradient(160deg, #f3f3f3 0%, #fafafa 40%, var(--bees-white) 100%);
-            --edi-flow-node-w: 199px;
+            --edi-flow-node-w: 240px;
         }
         .edi-if-visual {
             display: flex;
@@ -2780,6 +2820,9 @@
             font-weight: 800;
             color: var(--bees-black);
             line-height: 1.25;
+            width: 100%;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
         .edi-vi-lbl-sub {
             display: block;
@@ -2788,6 +2831,9 @@
             color: var(--bees-gray);
             margin-top: 0.26rem;
             line-height: 1.28;
+            width: 100%;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
         .edi-vi-arrow {
             width: 5px;
@@ -2808,21 +2854,25 @@
             border-top: 9px solid #333;
         }
         .edi-vi-diamond {
-            width: 150px;
-            height: 80px;
+            width: 178px;
+            height: 96px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             font-weight: 800;
-            line-height: 1.22;
+            line-height: 1.18;
             background: var(--bees-yellow);
             border: 2px solid var(--bees-black);
             clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
             color: var(--bees-black);
             margin: 0.28rem 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+            padding: 0.35rem 0.45rem;
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
         .edi-vi-fork-arm {
             display: flex;
@@ -2830,7 +2880,7 @@
             align-items: center;
             gap: 0.28rem;
             min-width: 0;
-            max-width: 132px;
+            max-width: 168px;
             width: 100%;
         }
         .edi-vi-tag {
@@ -2845,17 +2895,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 3.25rem;
+            min-height: 3.6rem;
             box-sizing: border-box;
         }
         .edi-vi-pill {
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             font-weight: 700;
-            padding: 0.46rem 0.5rem;
+            padding: 0.42rem 0.48rem;
             border-radius: 11px;
             text-align: center;
-            line-height: 1.28;
+            line-height: 1.22;
             width: 100%;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
         .edi-vi-pill--err {
             background: var(--fill-grey-08);
@@ -2914,7 +2966,8 @@
             color: var(--bees-gray);
             line-height: 1.45;
             margin: -0.35rem 0 0.65rem;
-            max-width: 36rem;
+            max-width: none;
+            width: 100%;
         }
         /* Full-width technical intros (flow diagram, payload example, etc.) */
         .tech-diagram-intro.tech-diagram-intro--flow-section {
@@ -3550,6 +3603,11 @@
         .hero-meta strong { color: rgba(255,255,255,0.75); }
         .yellow-divider { height: 3px; background: var(--yellow); margin: 0; }
         .doc-main { padding-top: 2rem; padding-bottom: 3rem; }
+        @media (min-width: 902px) {
+            body {
+                padding-right: var(--doc-hero-gutter);
+            }
+        }
         .doc-hero .doc-view-switch { justify-content: flex-start; margin: 0; max-width: none; }
         .doc-hero .doc-view-switch .doc-view-label { color: rgba(255,255,255,0.45); width: auto; text-align: left; }
         .doc-hero .doc-view-switch-inner {
@@ -3557,7 +3615,7 @@
             border-color: rgba(255,255,255,0.12);
             box-shadow: none;
         }
-        .doc-hero .doc-view-switch-inner button { color: rgba(255,255,255,0.55); }
+        .doc-hero .doc-view-switch-inner button { color: rgba(255,255,255,0.55); white-space: nowrap; max-width: none; }
         .doc-hero .doc-view-switch-inner button:hover { color: var(--white); background: rgba(255,255,255,0.1); }
         .doc-hero .doc-view-switch-inner button[aria-selected="true"] {
             background: var(--yellow);
@@ -3602,7 +3660,7 @@
             position: relative;
             overflow: hidden;
         }
-        .bre-bu-matrix .hero .in { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; }
+        .bre-bu-matrix .hero .in { position: relative; z-index: 2; max-width: none; margin: 0; }
         .bre-bu-matrix .hex {
             position: absolute;
             right: -2rem;
@@ -3648,8 +3706,12 @@
         .bre-bu-matrix .hero p {
             color: #cfcfcf;
             font-size: 1rem;
-            max-width: 56rem;
+            max-width: none;
             margin: 0;
+        }
+        .bre-bu-matrix .hero p strong {
+            color: #ffffff;
+            font-weight: 700;
         }
         .bre-bu-matrix .hero .meta {
             margin-top: 1.25rem;
@@ -3662,8 +3724,8 @@
         .bre-bu-matrix .hero .meta b { color: #e0e0e0; font-weight: 600; }
         .bre-bu-matrix .hero a { color: #e0e0e0; }
         .bre-bu-matrix .wrap {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: none;
+            margin: 0;
             padding: 1.5rem 1.25rem 2rem;
             background: var(--bm-n100);
         }
@@ -3727,9 +3789,10 @@
         }
         .bre-bu-matrix table {
             width: 100%;
-            min-width: 760px;
+            min-width: 0;
             border-collapse: collapse;
             font-size: 0.86rem;
+            table-layout: fixed;
         }
         .bre-bu-matrix th {
             font-family: var(--font-work);
@@ -3751,7 +3814,15 @@
             color: var(--bm-n700);
         }
         .bre-bu-matrix td b,
-        .bre-bu-matrix th:first-child { color: var(--bm-n900); }
+        .bre-bu-matrix th:first-child { color: var(--bm-n900); font-weight: 700; }
+        .bre-bu-matrix td strong,
+        .bre-bu-matrix .card strong,
+        .bre-bu-matrix .card b,
+        .bre-bu-matrix .pull strong,
+        .bre-bu-matrix .pull b {
+            color: var(--bm-n900);
+            font-weight: 700;
+        }
         .bre-bu-matrix tr:last-child td { border-bottom: none; }
         .bre-bu-matrix table td ol li { margin: 0 0 0.35rem; }
         .bre-bu-matrix ul.prereq { margin: 0; padding-left: 1.1em; }
@@ -3768,7 +3839,26 @@
             line-height: 1.35;
             max-width: 22em;
         }
-        .bre-bu-matrix .hlr-ref {
+
+        .bre-bu-matrix .zone-badges { display: flex; flex-wrap: wrap; gap: 3px; }
+        .bre-bu-matrix .zone-badge { font-family: var(--font-work); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.03em; padding: 2px 5px; border-radius: 3px; line-height: 1.2; white-space: nowrap; }
+        .bre-bu-matrix .zone-badge--mx { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+        .bre-bu-matrix .zone-badge--ar { background: #fce4ec; color: #ad1457; border: 1px solid #f48fb1; }
+        .bre-bu-matrix .eta-bu, .bre-bu-matrix .eta-bre { display: block; font-size: 0.68rem; font-weight: 600; padding: 2px 5px; border-radius: 3px; margin-top: 3px; line-height: 1.3; white-space: normal; }
+        .bre-bu-matrix .eta-bre { background: #e8f4ec; color: #1b8a5a; }
+        .bre-bu-matrix .eta-bu { background: #fff3e0; color: #b26a00; }
+        .bre-bu-matrix .risk { font-size: 0.78rem; line-height: 1.35; }
+        .bre-bu-matrix .risk--high { color: #c0392b; }
+        .bre-bu-matrix .risk--med { color: #b26a00; }
+        .bre-bu-matrix .risk--low { color: var(--bm-n700); }
+        .bre-bu-matrix .tbd-note { font-style: italic; color: var(--bm-n500); font-size: 0.72rem; }
+        .bre-bu-matrix th:nth-child(1), .bre-bu-matrix td:nth-child(1) { width: 11%; }
+        .bre-bu-matrix th:nth-child(2), .bre-bu-matrix td:nth-child(2) { width: 5%; }
+        .bre-bu-matrix th:nth-child(3), .bre-bu-matrix td:nth-child(3) { width: 15%; }
+        .bre-bu-matrix th:nth-child(4), .bre-bu-matrix td:nth-child(4) { width: 26%; }
+        .bre-bu-matrix th:nth-child(5), .bre-bu-matrix td:nth-child(5) { width: 20%; }
+        .bre-bu-matrix th:nth-child(6), .bre-bu-matrix td:nth-child(6) { width: 13%; }
+        .bre-bu-matrix th:nth-child(7), .bre-bu-matrix td:nth-child(7) { width: 10%; }        .bre-bu-matrix .hlr-ref {
             font-size: 0.72rem;
             color: var(--bm-n500);
             margin-top: 0.25rem;
@@ -3782,25 +3872,60 @@
             color: var(--bm-n500);
             font-size: 0.78rem;
         }
-        /* Override global .slide paragraph colour inside embedded matrix */
-        .slide.slide--bre-matrix .bre-bu-matrix p,
-        .slide.slide--bre-matrix .bre-bu-matrix li {
+        /* Override global .slide paragraph colour inside embedded matrix (wrap body only — not hero) */
+        .slide.slide--bre-matrix .bre-bu-matrix .wrap p,
+        .slide.slide--bre-matrix .bre-bu-matrix .wrap li {
             color: var(--mtx-n700);
+        }
+        .slide.slide--bre-matrix .bre-bu-matrix td strong,
+        .slide.slide--bre-matrix .bre-bu-matrix td b,
+        .slide.slide--bre-matrix .bre-bu-matrix .card strong,
+        .slide.slide--bre-matrix .bre-bu-matrix .card b,
+        .slide.slide--bre-matrix .bre-bu-matrix .pull strong,
+        .slide.slide--bre-matrix .bre-bu-matrix .pull b {
+            color: var(--bm-n900);
+            font-weight: 700;
         }
         .slide.slide--bre-matrix .bre-bu-matrix .hero p {
             color: #cfcfcf;
         }
+        .slide.slide--bre-matrix .bre-bu-matrix .hero p strong {
+            color: #ffffff;
+            font-weight: 700;
+        }
         .slide.slide--bre-matrix .bre-bu-matrix td {
             color: var(--mtx-n700);
+        }
+        .slide.slide--bre-matrix .bre-bu-matrix td code {
+            color: var(--bm-n900);
+            font-weight: 600;
         }
 
         html[data-doc-lang="es"] .doc-i18n--en,
         html[data-doc-lang="en"] .doc-i18n--es {
             display: none !important;
         }
+        /* Full content blocks — always block layout when visible */
+        div.doc-i18n.doc-i18n--en,
+        div.doc-i18n.doc-i18n--es {
+            display: block;
+        }
+        html[data-doc-lang="en"] div.doc-i18n.doc-i18n--es,
+        html[data-doc-lang="es"] div.doc-i18n.doc-i18n--en {
+            display: none !important;
+        }
+        div.doc-i18n.doc-i18n--en[hidden],
+        div.doc-i18n.doc-i18n--es[hidden] {
+            display: none !important;
+        }
+        /* Inline chrome labels stay inline when visible */
+        html[data-doc-lang="en"] span.doc-i18n.doc-i18n--en,
+        html[data-doc-lang="es"] span.doc-i18n.doc-i18n--es {
+            display: inline !important;
+        }
     </style>
 </head>
-<body>
+<body class="doc-toc-collapsed">
     <div class="doc-lang-bar doc-lang-bar--floating" id="doc-lang-bar" role="region" aria-labelledby="doc-lang-bar-heading">
         <div class="doc-lang-bar-inner">
             <span class="doc-lang-bar-icon" aria-hidden="true">
@@ -3823,7 +3948,7 @@
     <nav class="doc-toc" id="doc-toc" aria-label="Document contents">
         <div class="doc-toc-header">
             <span class="doc-toc-title" id="doc-toc-heading"><span class="doc-i18n doc-i18n--en">Contents</span><span class="doc-i18n doc-i18n--es">Contenido</span></span>
-            <button type="button" class="doc-toc-toggle" id="doc-toc-toggle" aria-expanded="true" aria-controls="doc-toc-panel" title="Collapse contents">‹</button>
+            <button type="button" class="doc-toc-toggle" id="doc-toc-toggle" aria-expanded="false" aria-controls="doc-toc-panel" title="Expand contents">&#8250;</button>
         </div>
         <div class="doc-toc-nav" id="doc-toc-panel" role="region" aria-labelledby="doc-toc-heading">
                         <ul class="doc-toc-list">
@@ -3848,6 +3973,11 @@
                 <li class="doc-toc-item--tech-only"><a class="doc-toc-anchor" data-anchor-en="#section-tech-delivery-dates" data-anchor-es="#section-tech-delivery-dates-es" href="#section-tech-delivery-dates"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">T6</span>Delivery dates</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">T6</span>Fechas de entrega</span></a></li>
                 <li class="doc-toc-item--tech-only"><a class="doc-toc-anchor" data-anchor-en="#section-tech-upc-matching" data-anchor-es="#section-tech-upc-matching-es" href="#section-tech-upc-matching"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">T7</span>UPC matching</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">T7</span>Matching de UPC</span></a></li>
                 <li class="doc-toc-item--tech-only"><a class="doc-toc-anchor" data-anchor-en="#section-tech-price-validation" data-anchor-es="#section-tech-price-validation-es" href="#section-tech-price-validation"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">T8</span>Price validation</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">T8</span>Validaci&#243;n de precios</span></a></li>
+                <li class="doc-toc-item--tech-only"><a class="doc-toc-anchor" data-anchor-en="#section-tech-dc-validation" data-anchor-es="#section-tech-dc-validation-es" href="#section-tech-dc-validation"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">T9</span>DC validation</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">T9</span>Validaci&#243;n DC</span></a></li>
+                <li class="doc-toc-item--tech-only"><a class="doc-toc-anchor" data-anchor-en="#section-tech-package-validation" data-anchor-es="#section-tech-package-validation-es" href="#section-tech-package-validation"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">T10</span>Package validation</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">T10</span>Validaci&#243;n empaque</span></a></li>
+                <li class="doc-toc-item--tech-only"><a class="doc-toc-anchor" data-anchor-en="#section-tech-sku-availability" data-anchor-es="#section-tech-sku-availability-es" href="#section-tech-sku-availability"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">T11</span>SKU availability</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">T11</span>Disponibilidad SKU</span></a></li>
+                <li class="doc-toc-item--tech-only"><a class="doc-toc-anchor" data-anchor-en="#section-tech-order-quantity" data-anchor-es="#section-tech-order-quantity-es" href="#section-tech-order-quantity"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">T12</span>MOQ / MAX</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">T12</span>MOQ / MAX</span></a></li>
+                <li class="doc-toc-item--tech-only"><a class="doc-toc-anchor" data-anchor-en="#section-tech-central-tracking" data-anchor-es="#section-tech-central-tracking-es" href="#section-tech-central-tracking"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">T13</span>Central tracking</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">T13</span>Seguimiento central</span></a></li>
                 <li class="doc-toc-item--tech-only"><a class="doc-toc-anchor" data-anchor-en="#section-references" data-anchor-es="#section-references" href="#section-references"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">Ref</span>References</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">Ref</span>Referencias</span></a></li>
             </ul>
         </div>
@@ -6129,12 +6259,17 @@
     <div class="brandmark"><span class="dot"></span> BEES Link</div>
     <div class="kicker">EDI · Business Rules Engine (BRE)</div>
     <h1>Business rules — BU scope &amp; prerequisites</h1>
-    <p>Single view for stakeholders: each row separates <strong>business intent</strong> (short description), <strong>product behaviour</strong> (scope — what is evaluated and how), and <strong>BU master-data obligations</strong> (prerequisites). Matrix cells are aligned to published <strong>BLK</strong> HLRs under the BEES Link EDI validator folders (1st / 2nd / 3rd layer validations and Central Tracking). Executive brief material may differ where HLRs are newer — <strong>HLR wins</strong>.</p>
+    <p>Single view for stakeholders: each row separates <strong>business intent</strong> (short description), <strong>product behaviour</strong> (scope — what is evaluated and how), and <strong>BU master-data obligations</strong> (prerequisites). Matrix cells are aligned to published <strong>BLK</strong> HLRs under the BEES Link EDI validator folders (1st / 2nd / 3rd layer validations and Central Tracking). <strong>HLR wins</strong> where sources differ.</p>
     <div class="hero meta">
       <span><b>Audience:</b> Product · Operations · Finance · IT · Market leads</span>
       <span><b>Primary source:</b> <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/folder/5769003728" style="color:#e0e0e0">BLK — EDI BRE folder tree</a> (1st / 2nd / 3rd layer + Central Tracking)</span>
+<<<<<<< HEAD
       <span><b>Context:</b> <a href="https://silarerenan-cmyk.github.io/edi-bre-exec-summary/" style="color:#e0e0e0">Exec summary</a> (orientation only)</span>
-      <span><b>Updated:</b> Feb 2026</span>
+      <span><b>Updated:</b> Sep 2026</span>
+=======
+      <span><b>Updated:</b> Jul 2026</span>
+      <span><b>Related:</b> <a href="bu-decisions-timeline.html" style="color:#FFC000">BU decisions timeline</a> (definitions &amp; stakeholder sign-offs)</span>
+>>>>>>> abinbev/main
     </div>
   </div>
 </div>
@@ -6142,33 +6277,35 @@
 <div class="wrap">
 
 <h2>How to use this page</h2>
-<div class="lead">One row per rule — three stakeholder-facing columns.</div>
-<div class="card accent">
-  <h3>What each column means</h3>
-  <p><strong>Short description</strong> — Business-facing “what”: the outcome or intent of the rule in plain language (not engineering status or delivery quarter).</p>
-  <p><strong>Scope</strong> — What the product considers for that rule and <strong>how it will work</strong>: inputs, decision order (e.g. primary lookup then fallback), and the behavioural outcome (reject order vs skip line vs branch path). This is the place for stepwise logic like “first X, then Y.”</p>
-  <p><strong>Prerequisites</strong> — What each <strong>BU must guarantee in data management and ingestion</strong> so BRE can run the validation: which BEES structures must be populated, who keeps them current, and any broker/ERP hygiene the market owns. Prefer concrete artefacts (e.g. Account Documents, Delivery Window, canonical JSON) over generic “alignment.”</p>
-</div>
+<div class="lead">One row per rule — description, scope, and prerequisites plus commercial alignment (related BUs, ETA, risk).</div>
 
-<div class="pull"><b>Sign-off checklist:</b> BU leads attest <b>Prerequisites</b> (master data &amp; ingestion ready / owned). Product + ops attest <b>Scope</b> (how the rule behaves). Commercial / finance attest implications captured in <b>Short description</b> where the rule touches price, credit, or contract min/max.</div>
+<div class="pull"><b>How to read ETA:</b> <span class="eta-bu">BU dependency ETA</span> = when master data / ingestion must be ready so BRE can go live without blocking. <span class="eta-bre">BRE delivery ETA</span> = planned engineering delivery quarter. BU readiness should land <strong>before or with</strong> BRE delivery for the same rule.</div>
 
 <h2>Matrix — validation rules</h2>
+<<<<<<< HEAD
 <div class="lead">Business rule · short description · scope · prerequisites</div>
-<p class="draft-note">Content below reflects <strong>Confluence MCP</strong> reads of BLK HLR pages (IDs cited in footer). <strong>MOQ, MAX, SKU availability:</strong> no matching “EDI order validator MVP” HLR title was returned from the same Confluence searches used for sibling rules; rows are marked <em>TBD</em> pending the published 3rd-layer HLRs. <strong>Central Tracking</strong> is not a validator rule — see the companion table after this one.</p>
+<p class="draft-note">Content below reflects published <strong>BLK</strong> HLR pages (IDs cited in footer), including 3rd-layer aggregate rules and companion Central Tracking capabilities. <strong>Central Tracking</strong> is not a BRE validation gate — see the companion table after this one.</p>
+=======
+<div class="lead">Business rule · related BUs · short description · scope · prerequisites · risk · ETA</div>
+<p class="draft-note">Description, scope, and prerequisites unchanged from BLK HLR alignment. <strong>Related BUs</strong>, <strong>risk if BU dependencies are not mitigated</strong>, and <strong>ETA</strong> merged from the commercial feasibility one-pager. <strong>Central Tracking</strong> is not a validator rule — see the companion table after this one.</p>
+>>>>>>> abinbev/main
 
 <div class="table-scroll">
 <table>
   <thead>
     <tr>
-      <th style="min-width:130px">Business rule</th>
-      <th style="min-width:200px">Short description<span class="th-hint">Business “what” — intent in plain language.</span></th>
-      <th style="min-width:240px">Scope<span class="th-hint">What is evaluated and how the application behaves (steps, fallbacks, outcomes).</span></th>
-      <th style="min-width:240px">Prerequisites<span class="th-hint">BU-owned master data &amp; ingestion so BRE can execute the rule.</span></th>
+      <th style="min-width:110px">Business rule</th>
+      <th style="min-width:48px">BUs</th>
+      <th style="min-width:160px">Short description<span class="th-hint">Business “what” — intent in plain language.</span></th>
+      <th style="min-width:200px">Scope<span class="th-hint">What is evaluated and how the application behaves (steps, fallbacks, outcomes).</span></th>
+      <th style="min-width:170px">Prerequisites<span class="th-hint">BU-owned master data &amp; ingestion so BRE can execute the rule.</span></th>
+      <th style="min-width:130px">Risk<span class="th-hint">If BU dependencies are not mitigated in time.</span></th>
+      <th style="min-width:100px">ETA<span class="th-hint">BU readiness vs BRE delivery.</span></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><b>Order integration</b><span class="hlr-ref">BEESEDI-48925</span></td>
+      <td><b>Order integration</b><span class="hlr-ref">BEESEDI-48925</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
       <td>Establish the controlled entry path for EDI orders into BEES Link BRE: canonical JSON over HTTP (BEES Sync), format validation, structured logging, and resilience before any business rule runs.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -6184,9 +6321,9 @@
           <li>Currency and several identifiers are <strong>configuration / audit</strong>, not ad-hoc payload extensions — BU owns integration config.</li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--high">No certified broker mapping -> orders rejected at gate 0; programme cannot start order-level validations.</td><td><span class="eta-bu">BU: Q3 2026 - end Aug</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
     <tr>
-      <td><b>POC matching</b><span class="hlr-ref">BEESEDI-48927 + BEESEDI-52518</span></td>
+      <td><b>POC matching</b><span class="hlr-ref">BEESEDI-48927 + BEESEDI-52518</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span></div></td>
       <td>Resolve every inbound EDI order to a BEES <code>VendorAccountID</code> for the order’s country + vendor so downstream rules use a single account key.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -6199,11 +6336,29 @@
         <ul class="prereq">
           <li>Maintain <strong>Account Documents</strong> (e.g. RFC, GLN) and account keys so lookups succeed; canonical JSON must carry fields required for resolution (e.g. <code>storeCode</code>, <code>gln</code> alongside <code>ExternalAccountID</code> per architecture notes in HLR).</li>
           <li>BU owns data quality for retailer identifiers; GLN registration with GS1 remains retailer responsibility.</li>
+          <li><strong>Data ingestion APIs:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--high">Missing/outdated match table -> mass order rejects (MX ~90% rejection driver historically on MOQ; POC gaps block all downstream rules). AR expects notification + manual decision vs blind reject.</td><td><span class="eta-bu">BU: Q3 2026 - end Sep</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
     <tr>
-      <td><b>Delivery range</b><span class="hlr-ref">BEESEDI-48929 §Delivery range</span></td>
+      <td><b>Provider code match</b><span class="hlr-ref">Exec summary · Q2 Link EDI</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span></div></td>
+      <td>Verify the retailer's vendor code in the EDI order matches the internal partner identifier in BEES so orders are attributed to the correct trading relationship before order-level gates proceed.</td>
+      <td>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>Compare the retailer <strong>vendor / provider code</strong> from the canonical JSON payload against the internal partner ID registered in BEES for the country + vendor pair.</li>
+          <li>If codes do not match -> <strong>reject entire order</strong> and log the mismatch for ops review.</li>
+          <li>Toggle <strong>per country + vendor</strong>; when disabled, skip this gate without pass/fail outcome.</li>
+        </ol>
+      </td>
+      <td>
+        <ul class="prereq">
+          <li>Maintain accurate <strong>provider / vendor code</strong> mapping in BEES for each trading relationship.</li>
+          <li>Broker field mapping to canonical JSON must populate the code used by this rule.</li>
+        </ul>
+      </td>
+    <td class="risk risk--med">Wrong partner attribution -> false rejects or orders routed to wrong commercial entity.</td><td><span class="eta-bu">BU: End Q1 2026</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
+    <tr>
+      <td><b>Delivery range</b><span class="hlr-ref">BEESEDI-48929 §Delivery range</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
       <td>Ensure the retailer’s requested delivery date is not before or equal to the PO creation date when strict validation applies, while still blocking impossible “past” dates on relaxed paths.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -6218,9 +6373,9 @@
           <li>Govern <strong>country + vendor toggles</strong> and <strong>retailer blacklist</strong> (blacklist only applies when the pair is enabled).</li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--med">Bad date mapping -> preventable rejects; blacklist misconfig -> strict rules applied to wrong retailers.</td><td><span class="eta-bu">BU: End Q1 2026</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
     <tr>
-      <td><b>Delivery frequency</b><span class="hlr-ref">BEESEDI-48929 §Delivery frequency</span></td>
+      <td><b>Delivery frequency</b><span class="hlr-ref">BEESEDI-48929 §Delivery frequency</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
       <td>Ensure the requested delivery date falls on an authorised delivery day for the POC, consistent with BEES Delivery Window.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -6233,11 +6388,12 @@
         <ul class="prereq">
           <li>BUs keep <strong>Delivery Window</strong> / delivery calendar data current for every POC served via EDI (same source of truth as BEES Delivery Window — no duplicate conflicting calendars).</li>
           <li>Coordinate holidays and exceptional service days through the same ingestion channel.</li>
+          <li><strong>Data ingestion APIs:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a>; <a href="https://developer.bees-platform.com/docs/entities/delivery-windows/api/v2/post" target="_blank" rel="noopener noreferrer">Delivery Windows API v2 (POST)</a></li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--med">Stale calendar -> rejects on valid delivery days (MX: low volume but high commercial friction per POC).</td><td><span class="eta-bu">BU: End Q1 2026</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
     <tr>
-      <td><b>PO number uniqueness</b><span class="hlr-ref">BEESEDI-48956</span></td>
+      <td><b>PO number uniqueness</b><span class="hlr-ref">BEESEDI-48956</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span></div></td>
       <td>Prevent duplicate BEES processing of the same commercial PO for the same POC when the delivery date is unchanged, protecting fulfilment and billing from double execution.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -6252,14 +6408,19 @@
           <li>Define cut-over behaviour for historical POs already in BEES to avoid false duplicates at launch.</li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--med">Duplicate POs processed -> double fulfilment / billing exposure; aggressive cut-over -> false blocks.</td><td><span class="eta-bu">BU: End Q1 2026</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
     <tr>
-      <td><b>UPC matching</b><span class="hlr-ref">BEESEDI-48947</span></td>
+<<<<<<< HEAD
+      <td><b>UPC matching</b><span class="hlr-ref">BEESEDI-48947 · BEESEDI-53722 · BEESEDI-53692</span></td>
+      <td>Resolve each line’s retailer product code to exactly one BEES item, using the catalogue first and POC-level mappings only as a fallback — so later rules always see a stable <code>beesItemId</code>. Implementation splits across strict catalog path (<a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6140789875">48947</a>), POC mapping fallback (<a href="https://ab-inbev.atlassian.net/browse/BEESEDI-53722">53722</a>), and PO Reader curated lookup (<a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6357876913">53692</a>).</td>
+=======
+      <td><b>UPC matching</b><span class="hlr-ref">BEESEDI-48947</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span></div></td>
       <td>Resolve each line’s retailer product code to exactly one BEES item, using the catalogue first and POC-level mappings only as a fallback — so later rules always see a stable <code>beesItemId</code>.</td>
+>>>>>>> abinbev/main
       <td>
         <ol style="margin:0;padding-left:1.2em">
           <li>Respect BRE toggle <code>SKU_MATCHING</code> per <strong>(Country, VendorID)</strong>. If toggle off or retailer blacklisted → <strong>relaxed path</strong> (skip rule; single order-level event).</li>
-          <li><strong>Strict path:</strong> for each line, search the BEES catalogue with the <strong>exact</strong> code from the order. <strong>Only if no catalogue hit</strong>, search vendor-scoped <strong>POC mapping</strong>. Catalogue match must <strong>never</strong> be overridden by mapping.</li>
+          <li><strong>Strict path:</strong> for each line, search the BEES catalogue with the <strong>exact</strong> code from the order. <strong>Only if no catalogue hit</strong>, search vendor-scoped <strong>POC mapping</strong> (<strong>53722</strong>). Optional <strong>PO Reader</strong> assortment path (<strong>53692</strong>) per market configuration. Catalogue match must <strong>never</strong> be overridden by mapping.</li>
           <li>Unrecognised lines are <strong>removed</strong> from the order with logging; <strong>ambiguous</strong> multi-match lines enter a <strong>curation hold</strong> until order expiration unless resolved. If <strong>zero</strong> lines remain valid → <strong>reject entire order</strong>. Catalog/mapping lookups retry on transient errors (three attempts).</li>
         </ol>
       </td>
@@ -6267,28 +6428,34 @@
         <ul class="prereq">
           <li>BUs maintain accurate catalogue GTIN/UPC coverage for EDI assortment.</li>
           <li>BUs curate and ingest <strong>active</strong> POC-level external-code → BEES item mappings (logical deactivate when retired).</li>
+          <li><strong>Data ingestion APIs:</strong> <a href="https://developer.bees-platform.com/docs/entities/items/api/v2/put" target="_blank" rel="noopener noreferrer">Items API v2 (PUT)</a>; <a href="https://developer.bees-platform.com/docs/entities/product-assortment-inclusion/api/v4/post" target="_blank" rel="noopener noreferrer">Product Assortment Inclusion API v4 (POST)</a>; <a href="https://developer.bees-platform.com/docs/entities/product-assortment-exclusion/api/v1/post" target="_blank" rel="noopener noreferrer">Product Assortment Exclusion API v1 (POST)</a></li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--high">Mapping gaps -> line drops & NR loss (MX ~1%  /  AR ~8% of rejections). Manual AR spreadsheet feeds add lag vs automated sync.</td><td><span class="eta-bu">BU: End Q2 2026</span><br><span class="eta-bre">BRE: Q3 2026</span></td></tr>
     <tr>
+<<<<<<< HEAD
       <td><b>Package validation</b><span class="hlr-ref">BEESEDI-48954</span></td>
+      <td>Convert each line’s retailer quantity to ABI <strong>billing boxes</strong> using <code>pack_conversion_factor</code> per SKU + commercial scope (<code>zoneChainId</code>) — without trusting retailer-declared UOM on the EDI line.</td>
+=======
+      <td><b>Package validation</b><span class="hlr-ref">BEESEDI-48954</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span></div></td>
       <td>Ensure each line’s unit of measure and quantity align with the packaging model registered in BEES for the resolved SKU — converting when mathematically exact, otherwise blocking the order for master-data curation until the order limit date.</td>
+>>>>>>> abinbev/main
       <td>
         <ol style="margin:0;padding-left:1.2em">
-          <li>Runs <strong>immediately after UPC matching</strong> for lines resolved from catalogue or POC mapping. Toggle <code>PACKAGE_VALIDATION</code> + retailer blacklist pattern mirrors other rules.</li>
-          <li><strong>Match / convert:</strong> if UoM matches registered packaging, pass; if different but convertible with an <strong>integer</strong> factor, rewrite quantity + UoM.</li>
-          <li><strong>Non-convertible line(s):</strong> place the <strong>entire order on curation hold</strong> until limit date; at expiration release valid lines and reject invalid ones, or reject whole order if none valid. <strong>Lookup failures</strong> reject at order level (not hold). Under <strong>remote billing Flow 2</strong> (DC HLR), this rule is among those <strong>skipped</strong> for Argentina MVP configuration.</li>
+          <li>Runs <strong>after UPC matching</strong> for lines with <code>resolutionSource</code> ∈ {catalog, poc_mapping}. Toggle <code>PACKAGE_VALIDATION</code> + retailer blacklist mirrors other rules.</li>
+          <li>Resolve <code>zoneChainId</code> via Chain Management; read active <code>EDI_SKU_COMMERCIAL_PARAMS</code> row. <code>boxes_ordered = retailer_order_qty ÷ pack_conversion_factor</code> must be a <strong>positive integer</strong>.</li>
+          <li>Any failing line or missing commercial scope → <strong>reject entire order</strong> (<code>order_rejected_invalid_package</code>) — no partial line accept, no curation hold. Optional cross-check when retailer sends <code>retailer_declared_pack_factor</code>. Under <strong>remote billing Flow 2</strong> (DC HLR), rule is <strong>skipped</strong> for Argentina MVP FR set.</li>
         </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>Master data maintains complete <strong>packaging hierarchy</strong> per SKU so conversions and checks are deterministic.</li>
-          <li>Ops process to resolve holds by fixing registry data then triggering re-validation (tooling outside this HLR’s UI scope).</li>
+          <li>BUs ingest <strong>EDI_SKU_COMMERCIAL_PARAMS</strong> (factor per SKU + <code>zoneChainId</code>) and keep Chain Upload POC → sub-chain assignments current.</li>
+          <li>Commercial scope resolution parameters owned by companion ingest epics; BRE consumes read APIs only.</li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--med">Incomplete packaging master -> order holds near delivery deadline; commercial must resolve before auto-release/reject.</td><td><span class="eta-bu">BU: Q4 2026 - end Oct</span><br><span class="eta-bre">BRE: Q3 2026</span></td></tr>
     <tr>
-      <td><b>Price discrepancy</b><span class="hlr-ref">BEESEDI-48955</span></td>
+      <td><b>Price discrepancy</b><span class="hlr-ref">BEESEDI-48955</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
       <td>Compare retailer unit prices to the BEES reference price (discounts/taxes as in app orders) within retailer-specific tolerances — blocking the <strong>whole order</strong> when any line is out of tolerance.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -6303,45 +6470,121 @@
           <li>Ensure BEES pricing mirrors commercial agreements so reference price matches how app orders are priced.</li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--high">Missing tolerances -> rule skipped (no price protection) or noise blocks (MX 3.78%  /  BR 16.4%). AR misalignment on approval vs reject delays rollout.</td><td><span class="eta-bu">BU: Q4 2026 - end Oct</span><br><span class="eta-bre">BRE: Q3 2026</span></td></tr>
     <tr>
-      <td><b>SKU availability</b></td>
-      <td><em>TBD in BLK.</em> Intended to ensure ordered quantities can be served from the availability signal BEES trusts for the POC/DC context.</td>
+<<<<<<< HEAD
+      <td><b>SKU availability</b><span class="hlr-ref">BEESEDI-54950</span></td>
+      <td>Validate each resolved line’s requested quantity against BEES stock via the same cart-validation path as checkout — adjusting, dropping, or keeping lines so fill rate is predictable.</td>
       <td>
-        <p style="margin:0"><strong>No “EDI order validator MVP — SKU availability” HLR</strong> was found in the Feb–Jun 2026 Confluence search alongside the other validator HLRs. Behaviour, toggles, and outcomes remain <strong>product/engineering TBD</strong> until the 3rd-layer page is published under BLK.</p>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>Runs <strong>after UPC matching</strong> (and sibling line-level prerequisites) for lines with a single resolved SKU. Toggle <code>SKU_AVAILABILITY</code> + retailer blacklist.</li>
+          <li>Call <strong>cart-validation / pricing simulation</strong> (Stepper <code>PERFORM_CARTS_VALIDATION</code>); BRE <strong>consumes</strong> outcomes — no duplicate stock engine.</li>
+          <li>Sufficient stock → accept line; partial stock → <strong>adjust quantity</strong> when policy allows; zero stock → <strong>drop line</strong>. Order becomes <strong>Partially accepted</strong> when some lines survive; <strong>Rejected</strong> when no lines remain.</li>
+=======
+      <td><b>Tax validation</b><span class="hlr-ref">Exec summary · New</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span></div></td>
+      <td>Ensure the correct taxes are applied per POC region before item-level gates complete, aligned with the BEES pricing model.</td>
+      <td>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>After price validation, evaluate tax configuration for each line against POC region rules in BEES.</li>
+          <li>Incorrect tax application -> <strong>block or reject</strong> per country+vendor configuration (delivery with Pricing squad Q3).</li>
+          <li>Toggle <strong>per country + vendor</strong>; skipped when disabled.</li>
+>>>>>>> abinbev/main
+        </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>BUs should pre-position <strong>ATP / inventory feeds</strong> and cut-off alignment with warehouse systems so the future rule can bind to a trustworthy signal.</li>
+<<<<<<< HEAD
+          <li>BUs keep vendor catalog + zone stock configuration aligned with warehouse ATP and cut-offs (same source as app checkout).</li>
+          <li>Inventory enforcement modules in cart-service remain source of truth for partial vs reject behaviour.</li>
+=======
+          <li>Finance provides <strong>tax rules / configuration per POC region</strong> aligned with BEES pricing model.</li>
+>>>>>>> abinbev/main
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--med">Incorrect tax setup -> compliance exposure or false blocks on valid orders.</td><td><span class="eta-bu">BU: End Q2 2026</span><br><span class="eta-bre">BRE: Q3 2026</span></td></tr>
     <tr>
-      <td><b>Minimum order quantity</b></td>
-      <td><em>TBD in BLK.</em> Intended to enforce account-level minimums on the validated order aggregate.</td>
+<<<<<<< HEAD
+      <td><b>Minimum order quantity</b><span class="hlr-ref">BEESEDI-54948</span></td>
+      <td>Enforce store-level minimum order thresholds on the <strong>validated order aggregate</strong> using cart-service evaluation — rejecting sub-minimum EDI orders that app checkout would block.</td>
       <td>
-        <p style="margin:0">Referenced as a <strong>rejection reason</strong> in the <strong>EDI Central Tracking — Operational Tool</strong> HLR, but a dedicated <strong>EDI order validator MVP — MOQ</strong> HLR was not returned from the same Confluence query set used for other layers. Treat pipeline position, toggles, and rejection vs hold as <strong>TBD</strong> until the 3rd-layer HLR is available.</p>
+        <ol style="margin:0;padding-left:1.2em">
+          <li><strong>Stage 3</strong> order-level gate after line-level rules. Toggle per country + vendor; retailer blacklist skips rule.</li>
+          <li>Consult cart-validation for MOQ type (quantity, subtotal, full price, etc.). Unconfigured store → <strong>skip</strong>. Below minimum → <strong>reject entire order</strong> (label <em>Minimum order quantity</em>) — <strong>no multi-order hold / combine window</strong> in MVP.</li>
+          <li>MX: skip for <strong>T4 pickup</strong> and <strong>CEDIS</strong> channel orders. AR remote billing Flow 2 → <strong>skipped</strong>.</li>
+=======
+      <td><b>SKU availability</b></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
+      <td>Validate if the SKUs / products from the order have available stock.</td>
+      <td>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>When <strong>country + vendor</strong> is enabled and the retailer is <strong>not blacklisted</strong> for this rule, the application must validate whether the requested products have available stock.</li>
+          <li>If the product has enough stock to fulfill the requested quantity, the product is <strong>accepted</strong>.</li>
+          <li>If the product has partial stock, the ordered quantity must be <strong>adjusted to the available quantity</strong> in stock.</li>
+          <li>Purchased products without stock are <strong>removed from the order</strong>.</li>
+          <li>If no product from the order has stock, the <strong>entire order is rejected</strong>.</li>
+>>>>>>> abinbev/main
+        </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>Legacy BLK material on MOQ feature activation stresses <strong>Accounts Relay V2</strong> + <strong>BEES Sync</strong> feeding MOQ inputs — use as a dependency hint until superseded by the EDI-specific HLR.</li>
+<<<<<<< HEAD
+          <li>BUs maintain minimum order configuration in Global Accounts / store overrides (Accounts Relay V2 + BEES Sync).</li>
+          <li>Commercial agrees canonical rejection messaging surfaced in Central Tracking.</li>
+=======
+          <li>The Vendor / BU must ensure that all products available in the catalog have updated stock in the <strong>BEES ATP / Inventory</strong> configuration.</li>
+          <li><strong>Data ingestion APIs:</strong> <a href="https://developer.bees-platform.com/docs/entities/inventory/api/v3/post" target="_blank" rel="noopener noreferrer">Inventory API v3 (POST)</a></li>
+>>>>>>> abinbev/main
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--med">Weak inventory signal -> false accepts (stockouts) or false rejects (lost NR).</td><td><span class="eta-bu">BU: Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026*</span><br><span class="tbd-note">*HLR TBD</span></td></tr>
     <tr>
-      <td><b>Maximum order quantity</b></td>
-      <td><em>TBD in BLK.</em> Intended to cap the validated order aggregate for credit or supply constraints.</td>
+<<<<<<< HEAD
+      <td><b>Maximum order quantity</b><span class="hlr-ref">BEESEDI-54949</span></td>
+      <td>Cap the validated order aggregate against store-level maximum thresholds (MX MVP) via cart-validation — protecting logistics capacity and stock allocation.</td>
       <td>
-        <p style="margin:0">Same status as MOQ: named in Central Tracking ops taxonomy; <strong>no matching validator MVP HLR</strong> retrieved via Confluence MCP in this review. Await published requirements for exact behaviour.</p>
+        <ol style="margin:0;padding-left:1.2em">
+          <li><strong>Stage 3</strong> order-level gate; same toggle / blacklist pattern as MOQ. Unconfigured store → <strong>skip</strong>.</li>
+          <li>Above maximum → <strong>reject entire order</strong> (<em>Maximum order quantity</em>). At or below → continue to order creation.</li>
+          <li>MX: skip for <strong>T4</strong> and <strong>CEDIS</strong>. Markets beyond MX are out of scope for this HLR unless extended later.</li>
+=======
+      <td><b>Minimum order quantity</b></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
+      <td>Validate whether the purchased quantity respects the minimum order quantity of the POC / store.</td>
+      <td>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>When <strong>country + vendor</strong> is enabled and the retailer is <strong>not blacklisted</strong> for this rule, the application must validate whether the purchased quantity is equal to or higher than the minimum order quantity registered for the store.</li>
+          <li>If the purchased quantity matches the <strong>MinOQ</strong>, the order is <strong>accepted</strong>. If it does not match the MinOQ, the order is <strong>rejected</strong>.</li>
+>>>>>>> abinbev/main
+        </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>BUs should keep <strong>account-level maxima</strong> accurate in BEES account structures so future wiring inherits clean data.</li>
+<<<<<<< HEAD
+          <li>BUs keep <strong>maximum order</strong> rows accurate per POC/vendor in BEES account structures.</li>
+          <li>Finance validates monetary vs quantity-based max types match commercial policy.</li>
+=======
+          <li>The Vendor / BU must ensure that all stores that require this validation have the <strong>minimum order quantity</strong> configured in <strong>BEES</strong>.</li>
+          <li><strong>Data ingestion APIs:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
+>>>>>>> abinbev/main
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--high">Largest rejection driver (MX ~90.63%  /  AR ~33.36%). AR expectation of hold/combine vs MVP auto-reject is a commercial design gap.</td><td><span class="eta-bu">BU: Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026*</span><br><span class="tbd-note">*HLR TBD</span></td></tr>
     <tr>
-      <td><b>DC validation</b><span class="hlr-ref">BEESEDI-52538</span></td>
+      <td><b>Maximum order quantity</b></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span></div></td>
+      <td>Validate whether the purchased quantity respects the maximum order quantity of the POC / store.</td>
+      <td>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>When <strong>country + vendor</strong> is enabled and the retailer is <strong>not blacklisted</strong> for this rule, the application must validate whether the purchased quantity is equal to or lower than the maximum order quantity registered for the store.</li>
+          <li>If the purchased quantity matches the <strong>MaxOQ</strong>, the order is <strong>accepted</strong>. If it does not match the MaxOQ, the order is <strong>rejected</strong>.</li>
+        </ol>
+      </td>
+      <td>
+        <ul class="prereq">
+          <li>The Vendor / BU must ensure that all stores that require this validation have the <strong>maximum order quantity</strong> configured in <strong>BEES</strong>.</li>
+          <li><strong>Data ingestion APIs:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
+        </ul>
+      </td>
+    <td class="risk risk--low">Low rejection volume (MX ~0.48%) but credit exposure if rule delayed or data wrong.</td><td><span class="eta-bu">BU: Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026*</span><br><span class="tbd-note">*HLR TBD</span></td></tr>
+    <tr>
+      <td><b>DC validation</b><span class="hlr-ref">BEESEDI-52538</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--ar">AR</span></div></td>
       <td>Read the DC assigned to the POC in BEES and branch between <strong>direct billing</strong> (full rule set) and <strong>remote billing</strong> (reduced “FR” rule set), avoiding false rejects for distributor-served POCs.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -6354,9 +6597,10 @@
         <ul class="prereq">
           <li>BUs must maintain correct <strong>POC → DC</strong> assignments in BEES configuration (source of truth for branching).</li>
           <li>Finance + ops own the <strong>remote DC id list</strong> and FR rule set configuration per market introduction.</li>
+          <li><strong>Data ingestion APIs:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--high">Wrong DC -> false rejects on direct-billing POCs or wrong rule set on distributor-served stores.</td><td><span class="eta-bu">BU: Early Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
   </tbody>
 </table>
 </div>
@@ -6368,15 +6612,18 @@
 <table>
   <thead>
     <tr>
-      <th style="min-width:130px">Capability</th>
-      <th style="min-width:200px">Short description<span class="th-hint">Business “what”.</span></th>
-      <th style="min-width:240px">Scope<span class="th-hint">How it works.</span></th>
-      <th style="min-width:240px">Prerequisites<span class="th-hint">BU / partner data &amp; ownership.</span></th>
+      <th style="min-width:110px">Capability</th>
+      <th style="min-width:48px">BUs</th>
+      <th style="min-width:160px">Short description<span class="th-hint">Business “what”.</span></th>
+      <th style="min-width:200px">Scope<span class="th-hint">How it works.</span></th>
+      <th style="min-width:170px">Prerequisites<span class="th-hint">BU / partner data &amp; ownership.</span></th>
+      <th style="min-width:130px">Risk<span class="th-hint">If BU dependencies are not mitigated in time.</span></th>
+      <th style="min-width:100px">ETA</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><b>Central tracking — retailer</b><span class="hlr-ref">BEESEDI-51859</span></td>
+      <td><b>Central tracking — retailer</b><span class="hlr-ref">BEESEDI-51859</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
       <td>Give EDI retailers a read-only, filterable view of every PO they submitted: status (Accepted / Blocked / Rejected / In queue), business rule, and line-level requested vs delivered context.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -6391,9 +6638,10 @@
           <li>Product + platform expose structured <strong>rule IDs</strong> to power filters (assumption noted in HLR).</li>
         </ul>
       </td>
+      <td class="risk risk--med">Wrong entitlements → retailers see other POCs' data (trust breach).</td><td><span class="eta-bu">BU: Q3 2026</span><br><span class="eta-bre">BRE: Q3–Q4 2026</span></td>
     </tr>
     <tr>
-      <td><b>Central tracking — vendor ops</b><span class="hlr-ref">BEESEDI-51860</span></td>
+      <td><b>Central tracking — vendor ops</b><span class="hlr-ref">BEESEDI-51860</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
       <td>Give vendor operations a workspace to triage the same statuses, take corrective actions, annotate, notify sales, and <strong>reprocess or bulk-reprocess</strong> blocked/rejected orders (idempotent, preserves PO number).</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -6408,6 +6656,24 @@
           <li>BUs align on which bypasses are commercially/legal acceptable before enabling in production.</li>
         </ul>
       </td>
+      <td class="risk risk--med">No ops RBAC → unauthorised reprocessing.</td><td><span class="eta-bu">BU: Q3 2026</span><br><span class="eta-bre">BRE: Q3–Q4 2026</span></td>
+    </tr>
+    <tr>
+      <td><b>Central tracking — Phase 2 line &amp; SKU resolution</b><span class="hlr-ref">BEESEDI-57198</span></td>
+      <td>Extend ops tooling so analysts resolve <strong>line-level</strong> catalog, price, and assortment issues (approve requested price, reject at catalog, etc.) without re-running the full order blindly — while respecting ERP freeze rules.</td>
+      <td>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>Builds on MVP ops queue (<strong>51860</strong>); adds per-line decision workflows and issue aggregation for partially accepted orders.</li>
+          <li>Decisions trigger controlled reprocess / handoff paths aligned with order-integration and amendment HLRs.</li>
+          <li>Companion to retailer visibility (<strong>51859</strong>); ops-only actions remain server-side gated.</li>
+        </ol>
+      </td>
+      <td>
+        <ul class="prereq">
+          <li>BUs define which line-level fixes are allowed before ERP submission vs after.</li>
+          <li>Platform exposes stable line diagnostics and rule codes from BRE logging.</li>
+        </ul>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -6416,16 +6682,21 @@
 <div class="card">
   <h3>Programme-level notes (not BU data prerequisites)</h3>
   <p><strong>Reprocess:</strong> Early BRE scope statements listed “force reprocess” as out of scope for the validator MVP, while <strong>EDI Central Tracking — Operational Tool</strong> explicitly includes reprocess/bypass — treat <strong>Central Tracking</strong> as the owning surface for re-queues, not contradictory ad-hoc broker resends.</p>
-  <p><strong>Holds vs rejects:</strong> Package validation and Price validation introduce <strong>blocked</strong> states; DC validation blocks when DC is missing. Align retailer messaging and ops SLAs across those HLRs and Central Tracking.</p>
+  <p><strong>Holds vs rejects:</strong> Price validation and some POC/PO gates use <strong>blocked</strong> states; DC validation blocks when DC is missing; Package validation and MOQ/MAX use <strong>order reject</strong> on fail per current HLRs. Align retailer messaging and ops SLAs across those HLRs and Central Tracking.</p>
 </div>
 
+<<<<<<< HEAD
 <div class="card">
   <h3>HLR page IDs (BLK) used in this matrix</h3>
-  <p style="font-size:14px;margin:0">Order integration <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5981536297">5981536297</a> · POC direct <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5791453558">5791453558</a> · POC external IDs <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220054719">6220054719</a> · Delivery dates (range + frequency) <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5791453572">5791453572</a> · PO uniqueness <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5792306185">5792306185</a> · UPC matching <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6140789875">6140789875</a> · Package validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6219956551">6219956551</a> · Price validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6217368312">6217368312</a> · DC validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6222381057">6222381057</a> · Central tracking retailer <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220185829">6220185829</a> · Central tracking ops <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6218907975">6218907975</a></p>
+  <p style="font-size:14px;margin:0">Order integration <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5981536297">5981536297</a> · POC direct <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5791453558">5791453558</a> · POC external IDs <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220054719">6220054719</a> · Delivery dates (range + frequency) <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5791453572">5791453572</a> · PO uniqueness <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5792306185">5792306185</a> · UPC matching <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6140789875">6140789875</a> · PO Reader curated lookup <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6357876913">6357876913</a> · Package validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6219956551">6219956551</a> · Price validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6217368312">6217368312</a> · DC validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6222381057">6222381057</a> · MOQ <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6453461458">6453461458</a> · MAX <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6452871508">6452871508</a> · SKU availability <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6452150787">6452150787</a> · Central tracking retailer <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220185829">6220185829</a> · Central tracking ops <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6218907975">6218907975</a> · Central tracking Phase 2 <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6611174016">6611174016</a></p>
 </div>
 
 <footer>
-  BEES / AB InBev — internal alignment. Visual tokens: BEES Link one-pager reference. Validation matrix updated from <strong>Atlassian Confluence BLK</strong> HLRs (via MCP) for EDI order validator MVP + Central Tracking; MOQ / MAX / SKU rows marked TBD where no sibling HLR was found in the same search. Executive summary retained only for macro context. Not a legal or contractual substitute for signed HLRs in Jira/Confluence.
+  BEES / AB InBev — internal alignment. Visual tokens: BEES Link one-pager reference. Validation matrix updated from <strong>Atlassian Confluence BLK</strong> HLRs for EDI order validator MVP (layers 1–3) + Central Tracking companion capabilities. Executive summary retained only for macro context. Not a legal or contractual substitute for signed HLRs in Jira/Confluence.
+=======
+<footer>
+  BEES / AB InBev — internal alignment. Visual tokens: BEES Link one-pager reference. Validation matrix updated from <strong>Atlassian Confluence BLK</strong> HLRs (via MCP) for EDI order validator MVP + Central Tracking; MOQ / MAX / SKU rows marked TBD where no sibling HLR was found in the same search. Not a legal or contractual substitute for signed HLRs in Jira/Confluence.
+>>>>>>> abinbev/main
 </footer>
 
 </div>
@@ -6438,11 +6709,26 @@
                     <p>This section describes how <strong>BEES Link</strong> and the <strong>Business Rules Engine (BRE)</strong> expect EDI-sourced orders to be supplied for the validator MVP: order intake via <strong>BEES Sync</strong> and the canonical <strong>JSON</strong> contract.</p>
                 </div>
                 <div class="tech-epic-strip">
-                    <div class="tech-epic-card tech-epic-card--static">
-                        <span class="tec-key">Workstream</span>
-                        <div class="tec-title">Order integration</div>
-                        <p class="tec-hint">Receive EDI-sourced orders via BEES Sync, HTTP JSON contract, validation &amp; logging.</p>
-                    </div>
+                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-33217" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-33217 · L1</span>
+                        <div class="tec-title">Order-level gates</div>
+                        <p class="tec-hint"><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48925">48925</a> intake · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48927">48927</a> POC · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-52518">52518</a> external IDs · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-52538">52538</a> DC · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48929">48929</a> delivery · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48956">48956</a> PO uniqueness</p>
+                    </a>
+                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-33218" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-33218 · L2</span>
+                        <div class="tec-title">Line-level gates</div>
+                        <p class="tec-hint"><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48947">48947</a> UPC · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-53722">53722</a> mapping · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-53692">53692</a> PO Reader · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48954">48954</a> package · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-54950">54950</a> stock · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48955">48955</a> price</p>
+                    </a>
+                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-33219" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-33219 · L3</span>
+                        <div class="tec-title">Order aggregate</div>
+                        <p class="tec-hint"><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-54948">54948</a> MOQ · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-54949">54949</a> MAX</p>
+                    </a>
+                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-31064" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-31064</span>
+                        <div class="tec-title">Central Tracking</div>
+                        <p class="tec-hint"><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-51859">51859</a> retailer · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-51860">51860</a> ops · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-57198">57198</a> Phase 2</p>
+                    </a>
                 </div>
                 <div class="tech-req-note"><span class="badge-tbd">Draft</span> <strong>JSON contract:</strong> Canonical fields follow <code>openapi/order-edi-canonical-v1.yaml</code>; base URLs and auth follow the integration runbook when published.</div>
             </section>
@@ -6450,7 +6736,7 @@
             <section class="slide" id="section-tech-e2e-flow">
                 <p class="slide-num">Technical · End-to-end</p>
                 <h2>End-to-end solution flow — BRE application</h2>
-                <p class="section-intro">Compact view of the <strong>full BRE pipeline</strong> for an EDI-sourced order, from broker intake to order creation in BEES. Rules are evaluated in three stages: <strong>Stage 1 — order-level gates</strong>, <strong>Stage 2 — line-level gates</strong> (plus a final "any product left?" check), and <strong>Stage 3 — order-level quantity gates</strong>. Each failing rule produces one of two distinct outcomes: <strong>Blocked</strong> (the order is put on hold pending an operator action or external correction — it can still recover before its deadline) or <strong>Rejected</strong> (the order is terminated immediately, no recovery). The new <strong>SKU Availability</strong> gate is the only line-level step that <em>drops</em> only the affected lines and lets the rest of the order continue. Gates labeled <em>TBD</em> appear on the canonical flow but are not yet covered by an HLR under the layer-1 / layer-2 Confluence folders consulted for this document. Every gate respects a <strong>country + vendor toggle</strong> (and, where defined, a <strong>retailer / chain blacklist</strong>): if the rule is off, the order skips that gate without a pass/fail outcome.</p>
+                <p class="section-intro">Compact view of the <strong>full BRE pipeline</strong> for an EDI-sourced order, from broker intake to order creation in BEES. Rules are evaluated in three stages: <strong>Stage 1 — order-level gates</strong> (including <strong>DC validation</strong> immediately after POC resolution), <strong>Stage 2 — line-level gates</strong> (plus a final "any product left?" check), and <strong>Stage 3 — order-level quantity gates</strong> (MOQ / MAX). Each failing rule produces <strong>Blocked</strong> (on hold, can recover), <strong>Rejected</strong> (terminated), or <strong>line drop</strong> outcomes per HLR. <strong>SKU Availability</strong> is the primary line-level step that adjusts or drops only affected lines. <strong>Flow 2 (remote billing)</strong> runs a reduced FR rule set per BEESEDI-52538. Every gate respects a <strong>country + vendor toggle</strong> (and, where defined, a <strong>retailer / chain blacklist</strong>): if the rule is off, the order skips that gate without a pass/fail outcome.</p>
 
                 <div class="e2e-pipeline" role="region" aria-labelledby="e2e-pipeline-heading">
                     <div class="e2e-title" id="e2e-pipeline-heading">BRE end-to-end pipeline — Broker → Link BRE → BEES</div>
@@ -6474,7 +6760,7 @@
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-gate is-intake">Broker sends the order file<small>EDI → JSON · POST to BEES Sync</small></div>
                                 <div class="e2e-arr">→</div>
-                                <div class="e2e-gate is-intake">Link BRE app receives the order<small>Canonical JSON, traceId, country header</small></div>
+                                <div class="e2e-gate is-intake">Link BRE app<br>receives the order<small>Canonical JSON, traceId, country header</small></div>
                             </div>
 
                             <!-- Stage 1: Order-level gates -->
@@ -6505,7 +6791,15 @@
                             </div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate">3. Delivery date validation<small><a href="#section-tech-delivery-dates-heading">BEESEDI-48929</a> · Range + Frequency · BEES Delivery Window</small></div>
+                                <div class="e2e-gate">2c. DC validation (distribution model)<small><a href="#section-tech-dc-validation-heading">BEESEDI-52538</a> · <code>deliveryCenterId</code> · Flow 1 vs Flow 2</small></div>
+                                <div class="e2e-arr">→</div>
+                                <div class="e2e-onfail is-blocked"><strong>On fail · Blocked</strong>Missing DC on account · hold until BU fixes assignment · reprocess via Central Tracking</div>
+                                <div class="e2e-arr">→</div>
+                                <div class="e2e-onpass"><strong>On pass</strong>Route to direct billing (all rules) or remote billing FR subset (e.g. AR DC 60)</div>
+                            </div>
+
+                            <div class="e2e-row">
+                                <div class="e2e-gate">3. Delivery date validation<small><a href="#section-tech-delivery-dates-heading">BEESEDI-48929</a> · Range + Frequency · skipped in Flow 2 when configured</small></div>
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-onfail is-rejected"><strong>On fail · Rejected</strong>Invalid delivery range / invalid delivery window · log range / frequency reason</div>
                                 <div class="e2e-arr">→</div>
@@ -6524,7 +6818,7 @@
                             <div class="e2e-section-bar is-line">Stage 2 · Line-level gates (Blocked, line drop, or back-to-Rejected at the end)</div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate is-line">5. UPC matching (per line)<small><a href="#section-tech-upc-matching-heading">BEESEDI-48947</a> · Catalog first, POC mapping fallback</small></div>
+                                <div class="e2e-gate is-line">5. UPC matching (per line)<small><a href="#section-tech-upc-matching-heading">BEESEDI-48947</a> · 53722 mapping · 53692 PO Reader</small></div>
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-onfail is-blocked"><strong>On fail · Blocked</strong>UPC not found · line held pending catalog / POC-mapping fix · log <em>no_match_in_catalog_or_poc_mapping</em></div>
                                 <div class="e2e-arr">→</div>
@@ -6532,15 +6826,15 @@
                             </div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate is-tbd is-line">6. Package type validation<small>UoM / pack alignment per SKU</small></div>
+                                <div class="e2e-gate is-line">6. Package validation<small><a href="#section-tech-package-validation-heading">BEESEDI-48954</a> · <code>pack_conversion_factor</code> · skipped in Flow 2 (AR FR set)</small></div>
                                 <div class="e2e-arr">→</div>
-                                <div class="e2e-onfail is-blocked"><strong>On fail · Blocked</strong>Invalid product packaging · line held for packaging review</div>
+                                <div class="e2e-onfail is-rejected"><strong>On fail · Rejected</strong>Invalid conversion / missing commercial params · reject entire order</div>
                                 <div class="e2e-arr">→</div>
-                                <div class="e2e-onpass"><strong>On pass</strong>Continue</div>
+                                <div class="e2e-onpass"><strong>On pass</strong>Rewrite line qty to billing boxes</div>
                             </div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate is-line">7. SKU Availability (per line)<small>Stock check against BEES inventory</small></div>
+                                <div class="e2e-gate is-line">7. SKU Availability (per line)<small><a href="#section-tech-sku-availability-heading">BEESEDI-54950</a> · cart-validation stock signal</small></div>
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-onfail is-line-drop"><strong>On fail · Line drop</strong>Reject only the out-of-stock products · keep the rest of the order moving</div>
                                 <div class="e2e-arr">→</div>
@@ -6567,7 +6861,7 @@
                             <div class="e2e-section-bar">Stage 3 · Order-level quantity gates (fail → Rejected)</div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate is-tbd">10. Minimum order quantity<small>POC-level minimum threshold for the order</small></div>
+                                <div class="e2e-gate">10. Minimum order quantity<small><a href="#section-tech-order-quantity-heading">BEESEDI-54948</a> · cart-validation MOQ · skipped Flow 2 / T4 / CEDIS (MX)</small></div>
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-onfail is-rejected"><strong>On fail · Rejected</strong>Order below the required minimum quantity</div>
                                 <div class="e2e-arr">→</div>
@@ -6575,7 +6869,7 @@
                             </div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate is-tbd">11. Maximum order quantity<small>POC-level maximum cap — same behavior as minimum</small></div>
+                                <div class="e2e-gate">11. Maximum order quantity<small><a href="#section-tech-order-quantity-heading">BEESEDI-54949</a> · MX MVP · skipped T4 / CEDIS</small></div>
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-onfail is-rejected"><strong>On fail · Rejected</strong>Order above the allowed maximum quantity</div>
                                 <div class="e2e-arr">→</div>
@@ -6605,7 +6899,7 @@
                     </div>
                 </div>
 
-                <div class="tech-req-note"><span class="badge-tbd">Source</span> Built from the Confluence pages under the <strong>layer-1 validations</strong> folder (Order Integration · Match POC · PO uniqueness · Delivery dates) and the <strong>layer-2 validations</strong> folder (UPC matching · Price validation). Gates labeled <em>TBD</em> (Package type validation, Minimum / Maximum order quantity) are placeholders inferred from the BRE end-to-end diagram for completeness; their detailed contracts are not yet published in those folders.</div>
+                <div class="tech-req-note"><span class="badge-tbd">Source</span> Built from BLK HLRs: <strong>layer-1</strong> (48925, 48927, 52518, 52538, 48929, 48956), <strong>layer-2</strong> (48947, 53722, 53692, 48954, 54950, 48955), <strong>layer-3</strong> (54948, 54949). <strong>Flow 2 (remote billing)</strong> skips non-FR rules per BEESEDI-52538. Outcomes surface in <a href="#section-tech-central-tracking-heading">Central Tracking</a> (51859 / 51860 / 57198).</div>
             </section>
 
             <section class="slide" id="section-tech-order-integration">
@@ -6712,7 +7006,7 @@
                                 <div class="edi-if-cell edi-if-cell--fork-arm-no">
                                     <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
                                         <span class="edi-vi-tag">No</span>
-                                        <div class="edi-vi-pill edi-vi-pill--err">Rejected at Sync · HTTP · stop</div>
+                                        <div class="edi-vi-pill edi-vi-pill--err">Rejected at Sync<br>· HTTP · stop</div>
                                         <div class="edi-vi-terminus">
                                             <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                             <span class="edi-vi-terminus-lbl">End</span>
@@ -7080,7 +7374,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--bre">
                                         <span class="edi-vi-bubble">1</span>
-                                        <span class="edi-vi-lbl">Link BRE app receives the order</span>
+                                        <span class="edi-vi-lbl">Link BRE app<br>receives the order</span>
                                     </div>
                                 </div>
                             </div>
@@ -7127,7 +7421,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--accounts">
                                         <span class="edi-vi-bubble">4</span>
-                                        <span class="edi-vi-lbl">Get account by <code>CustomerAccountID</code></span>
+                                        <span class="edi-vi-lbl">Get account by<br><code>CustomerAccountID</code></span>
                                         <span class="edi-vi-lbl-sub">Accounts Service</span>
                                     </div>
                                 </div>
@@ -7172,7 +7466,7 @@
                                 <div class="edi-if-cell edi-if-cell--fork-arm-yes">
                                     <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
                                         <span class="edi-vi-tag">Yes</span>
-                                        <div class="edi-vi-pill edi-vi-pill--ok">Use <code>VendorAccountID</code> + next rules</div>
+                                        <div class="edi-vi-pill edi-vi-pill--ok">Use <code>VendorAccountID</code><br>+ next rules</div>
                                         <div class="edi-vi-terminus edi-vi-terminus--continue">
                                             <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                             <span class="edi-vi-terminus-lbl">Branch</span>
@@ -7228,7 +7522,7 @@
                                         <div class="edi-if-row edi-if-row--poc-node">
                                             <div class="edi-if-cell edi-if-cell--graph">
                                                 <div class="edi-vi-node edi-vi-node--bre">
-                                                    <span class="edi-vi-lbl">Substitute customer’s account ID with <code>VendorAccountID</code></span>
+                                                    <span class="edi-vi-lbl">Substitute account ID with<br><code>VendorAccountID</code></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -7282,7 +7576,7 @@
                                     <div class="edi-if-cell edi-if-cell--graph">
                                         <div class="edi-vi-node edi-vi-node--start">
                                             <span class="edi-vi-bubble">·</span>
-                                            <span class="edi-vi-lbl">Enter on direct-match failure</span>
+                                            <span class="edi-vi-lbl">Enter on direct-<br>match failure</span>
                                         </div>
                                     </div>
                                     <div class="edi-if-cell edi-if-cell--note-side">
@@ -7345,7 +7639,7 @@
                                     <div class="edi-if-cell edi-if-cell--graph">
                                         <div class="edi-vi-node edi-vi-node--accounts">
                                             <span class="edi-vi-bubble">2</span>
-                                            <span class="edi-vi-lbl">Lookup by <code>RFC</code> + <code>SUC</code>/<code>Subsidiary</code></span>
+                                            <span class="edi-vi-lbl">Lookup by <code>RFC</code> +<br><code>SUC</code>/<code>Subsidiary</code></span>
                                             <span class="edi-vi-lbl-sub">Composite key (legal entity + store)</span>
                                         </div>
                                     </div>
@@ -7390,7 +7684,7 @@
                                     <div class="edi-if-cell edi-if-cell--fork-arm-yes">
                                         <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
                                             <span class="edi-vi-tag">Yes</span>
-                                            <div class="edi-vi-pill edi-vi-pill--ok">Carry <code>VendorAccountID</code> + next rules</div>
+                                            <div class="edi-vi-pill edi-vi-pill--ok">Carry <code>VendorAccountID</code><br>+ next rules</div>
                                             <div class="edi-vi-terminus edi-vi-terminus--continue">
                                                 <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                                 <span class="edi-vi-terminus-lbl">Continue</span>
@@ -7491,7 +7785,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--accounts">
                                         <span class="edi-vi-bubble">2</span>
-                                        <span class="edi-vi-lbl">Search orders by PO + <code>VendorAccountID</code></span>
+                                        <span class="edi-vi-lbl">Search orders by PO +<br><code>VendorAccountID</code></span>
                                         <span class="edi-vi-lbl-sub">Orders base</span>
                                     </div>
                                 </div>
@@ -7526,7 +7820,7 @@
                                 <div class="edi-if-cell edi-if-cell--fork-arm-no">
                                     <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
                                         <span class="edi-vi-tag">No</span>
-                                        <div class="edi-vi-pill edi-vi-pill--err">Duplicate · log + Blocked</div>
+                                        <div class="edi-vi-pill edi-vi-pill--err">Duplicate · log<br>+ Blocked</div>
                                         <div class="edi-vi-terminus">
                                             <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                             <span class="edi-vi-terminus-lbl">Branch</span>
@@ -7557,7 +7851,7 @@
                                         <div class="edi-if-row edi-if-row--poc-node">
                                             <div class="edi-if-cell edi-if-cell--graph">
                                                 <div class="edi-vi-node edi-vi-node--bre">
-                                                    <span class="edi-vi-lbl">Log failure (reason incl. <code>OrderId</code>)</span>
+                                                    <span class="edi-vi-lbl">Log failure<br>(reason incl. <code>OrderId</code>)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -7567,7 +7861,7 @@
                                         <div class="edi-if-row edi-if-row--poc-node">
                                             <div class="edi-if-cell edi-if-cell--graph">
                                                 <div class="edi-vi-node edi-vi-node--bre">
-                                                    <span class="edi-vi-lbl">Block the order (on hold for operator)</span>
+                                                    <span class="edi-vi-lbl">Block the order<br>(on hold for operator)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -7739,7 +8033,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--bre">
                                         <span class="edi-vi-bubble">1</span>
-                                        <span class="edi-vi-lbl">Link BRE loads dates &amp; configuration</span>
+                                        <span class="edi-vi-lbl">Link BRE loads dates<br>&amp; configuration</span>
                                     </div>
                                 </div>
                             </div>
@@ -7897,7 +8191,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--accounts">
                                         <span class="edi-vi-bubble">2</span>
-                                        <span class="edi-vi-lbl">Fetch authorized delivery dates</span>
+                                        <span class="edi-vi-lbl">Fetch authorized<br>delivery dates</span>
                                         <span class="edi-vi-lbl-sub">POC / Delivery Window</span>
                                     </div>
                                 </div>
@@ -8016,6 +8310,8 @@
                 <p class="slide-num">T5 · UPC matching (BRE)</p>
                 <h2 id="section-tech-upc-matching-heading">UPC matching (BRE)</h2>
                 <p class="section-intro">Under <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6140789875" target="_blank" rel="noopener noreferrer">BEESEDI-48947</a>, this is the <strong>first line-level gate</strong>: every order line must resolve to a BEES catalog SKU using the <strong>exact product codes</strong> received on the order. The rule operates in two paths controlled by a <strong>country + vendor toggle</strong> (rule key <code>SKU_MATCHING</code>) and a <strong>per-retailer blacklist</strong>: a <strong>Strict path</strong> (toggle on, retailer not blacklisted) that marks unmatched lines as <strong>Blocked</strong> (UPC not found — line held pending a catalog or POC-mapping fix, can still recover before the order's deadline) and ultimately leads to order <strong>Rejection</strong> if zero lines remain at the "any product left?" check; and a <strong>Relaxed path</strong> (toggle off or retailer blacklisted) that skips UPC matching entirely and keeps every line intact.</p>
+
+                <div class="tech-req-note"><span class="badge-tbd">Implementation epics</span> <strong>Catalog strict path:</strong> <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48947" target="_blank" rel="noopener noreferrer">BEESEDI-48947</a>. <strong>POC mapping fallback (MX):</strong> <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-53722" target="_blank" rel="noopener noreferrer">BEESEDI-53722</a> (same HLR family as 48947). <strong>PO Reader curated lookup:</strong> <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6357876913" target="_blank" rel="noopener noreferrer">BEESEDI-53692</a> — assortment path per market configuration.</div>
 
                 <h3 class="tech-slide-h3">Matching inputs and lookup order</h3>
                 <p class="section-intro" style="margin-top:0.25rem;">For each order line the BRE reads the <strong>exact</strong> product code present on the line (<code>order.items[].gtin</code> and/or <code>sku</code>) — no normalization is mandated (no leading-zero padding, GTIN-14 vs GTIN-12 folding, or packaging hierarchy expansion). The lookup order is <strong>mandatory</strong>: (1) BEES <strong>catalog</strong> using the exact code; (2) only if the catalog returns no match, the <strong>POC mapping</strong> for that POC's vendor. <strong>If a catalog match exists, POC mapping must not override it.</strong> The path that resolved the line is recorded as <code>resolutionSource</code> ∈ {<code>catalog</code>, <code>poc_mapping</code>, <code>none</code>}.</p>
@@ -8145,7 +8441,7 @@
                                     <div class="edi-if-cell edi-if-cell--graph">
                                         <div class="edi-vi-node edi-vi-node--accounts">
                                             <span class="edi-vi-bubble">1</span>
-                                            <span class="edi-vi-lbl">Lookup line in <strong>BEES catalog</strong></span>
+                                            <span class="edi-vi-lbl">Lookup line in<br><strong>BEES catalog</strong></span>
                                             <span class="edi-vi-lbl-sub">Exact code (no normalization)</span>
                                         </div>
                                     </div>
@@ -8177,7 +8473,7 @@
                                     <div class="edi-if-cell edi-if-cell--graph">
                                         <div class="edi-vi-node edi-vi-node--accounts">
                                             <span class="edi-vi-bubble">2</span>
-                                            <span class="edi-vi-lbl">Lookup line in <strong>POC mapping</strong></span>
+                                            <span class="edi-vi-lbl">Lookup line in<br><strong>POC mapping</strong></span>
                                             <span class="edi-vi-lbl-sub">Vendor-scoped UPC → BEES item</span>
                                         </div>
                                     </div>
@@ -8236,7 +8532,7 @@
                                     <div class="edi-if-cell edi-if-cell--fork-arm-yes">
                                         <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
                                             <span class="edi-vi-tag">≥1</span>
-                                            <div class="edi-vi-pill edi-vi-pill--ok"><code>order_continued</code> · keep survivors</div>
+                                            <div class="edi-vi-pill edi-vi-pill--ok"><code>order_continued</code><br>· keep survivors</div>
                                             <div class="edi-vi-terminus edi-vi-terminus--continue">
                                                 <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                                 <span class="edi-vi-terminus-lbl">Next rule</span>
@@ -8271,7 +8567,7 @@
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight">What we count on the BU for</h3>
                 <div class="tech-bu-req">
-                    <div class="tech-bu-req-head"><span class="tech-bu-req-badge">BU role</span> A few things we need from the BU side so every order line can be matched to a BEES product</div>
+                    <div class="tech-bu-req-head"><span class="tech-bu-req-badge">BU role</span> Dependencies on the BU/Partner</div>
                     <ul>
                         <li><strong>A clean BEES catalog.</strong> The SKUs you sell to a retailer should be in the BEES catalog with the <strong>exact</strong> code the retailer sends — we don't auto-correct missing zeros, format differences, or pack hierarchies. Out-of-date or missing entries are the #1 reason lines get rejected, so this list deserves attention.</li>
                         <li><strong>POC-level mapping when retailers use their own codes.</strong> When a retailer uses internal codes that don't exist in the catalog, you can register a "this code = that BEES item" mapping at the <strong>vendor + POC</strong> level. You can create, edit, look up and deactivate these mappings yourselves; there's no separate approval workflow, but we log every change for audit.</li>
@@ -8451,7 +8747,7 @@
                                     <div class="edi-if-cell edi-if-cell--fork-arm-no">
                                         <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
                                             <span class="edi-vi-tag">Flag</span>
-                                            <div class="edi-vi-pill edi-vi-pill--err">Block order · on hold until D-1</div>
+                                            <div class="edi-vi-pill edi-vi-pill--err">Block order · on hold<br>until D-1</div>
                                             <div class="edi-vi-terminus">
                                                 <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                                 <span class="edi-vi-terminus-lbl">Held</span>
@@ -8524,6 +8820,87 @@
 
                 <div class="tech-req-note"><span class="badge-tbd">Scope</span> <strong>Out of scope for BEESEDI-48955:</strong> partial order acceptance when only some lines have discrepancies (full order block is required); defining the reference-price computation engine (the rule consumes BEES pricing); discount field validation (escalated to discount team); tax field validation as a standalone check; empties (returnable bottles) validation; the OTC review front-end; behavior after the on-hold deadline expires; per-retailer or per-chain price-format normalization (pending Krikos analysis); default tolerance value definition (TBD setup phase). Source: <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6217368312" target="_blank" rel="noopener noreferrer">BEESEDI-48955 (BLK)</a>.</div>
             </section>
+
+            <section class="slide" id="section-tech-dc-validation" aria-labelledby="section-tech-dc-validation-heading">
+                <p class="slide-num">T9 · DC validation (BRE)</p>
+                <h2 id="section-tech-dc-validation-heading">DC validation — direct vs remote billing (BRE)</h2>
+                <p class="section-intro">Under <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6222381057" target="_blank" rel="noopener noreferrer">BEESEDI-52538</a>, BRE reads <code>deliveryCenterId</code> from Account Service for the resolved POC and selects <strong>Flow 1 (direct billing)</strong> or <strong>Flow 2 (remote billing)</strong>. Flow 1 runs all enabled rules; Flow 2 runs only the configured FR subset (MVP AR seed: DC validation, UPC matching, price discrepancy). Missing DC → <strong>Blocked</strong> order pending BU assignment fix.</p>
+                <h3 class="tech-slide-h3">Toggle and configuration</h3>
+                <ul class="section-intro" style="margin-top:0.5rem">
+                    <li>Country + vendor toggle (default off outside AR MVP pair).</li>
+                    <li>Configurable <strong>remote-billing DC list</strong> (e.g. <code>[60]</code> for Argentina).</li>
+                    <li>Configurable <strong>Flow 2 rule set</strong> without deployment.</li>
+                </ul>
+                <h3 class="tech-slide-h3 tech-slide-h3--tight" id="section-tech-dc-flow">DC validation flow</h3>
+                <div class="e2e-row" style="margin:1rem 0">
+                    <div class="e2e-gate">POC resolved</div>
+                    <div class="e2e-arr">→</div>
+                    <div class="e2e-gate">Read <code>deliveryCenterId</code></div>
+                    <div class="e2e-arr">→</div>
+                    <div class="e2e-onpass"><strong>Match remote list?</strong> Flow 2 else Flow 1</div>
+                </div>
+                <div class="tech-req-note"><span class="badge-tbd">Scope</span> BRE does not maintain POC→DC assignments (Accounts V2 ingestion). Out of scope: distributor pipeline after accept, per-DC rule overrides, multi-DC runtime selection. Source: <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6222381057" target="_blank" rel="noopener noreferrer">BEESEDI-52538 (BLK)</a>.</div>
+            </section>
+
+            <section class="slide" id="section-tech-package-validation" aria-labelledby="section-tech-package-validation-heading">
+                <p class="slide-num">T10 · Package validation (BRE)</p>
+                <h2 id="section-tech-package-validation-heading">Package validation (BRE)</h2>
+                <p class="section-intro">Under <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6219956551" target="_blank" rel="noopener noreferrer">BEESEDI-48954</a>, after UPC matching BRE converts retailer quantity to ABI <strong>billing boxes</strong> using <code>pack_conversion_factor</code> from <code>EDI_SKU_COMMERCIAL_PARAMS</code> keyed by SKU + <code>zoneChainId</code> (Chain Management). Retailer-declared UOM on the EDI line is diagnostic only. Any line failure → <strong>reject entire order</strong> (<code>order_rejected_invalid_package</code>).</p>
+                <h3 class="tech-slide-h3">Key functional requirements</h3>
+                <ul>
+                    <li><strong>FR-PKG-1:</strong> Toggle <code>PACKAGE_VALIDATION</code> per country + vendor + retailer blacklist relaxed path.</li>
+                    <li><strong>FR-PKG-4–6:</strong> Lookup active factor; <code>boxes = qty ÷ factor</code> must be positive integer; rewrite line quantity on pass.</li>
+                    <li><strong>FR-PKG-18:</strong> Optional <code>retailer_declared_pack_factor</code> must equal configured factor when present.</li>
+                    <li><strong>Flow 2:</strong> Skipped for Argentina remote-billing FR configuration.</li>
+                </ul>
+                <div class="tech-req-note"><span class="badge-tbd">Scope</span> Does not use pack-size for price (48955). Commercial param ingest owned by companion epics; BRE consumes reads. Source: <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6219956551" target="_blank" rel="noopener noreferrer">BEESEDI-48954 (BLK)</a>.</div>
+            </section>
+
+            <section class="slide" id="section-tech-sku-availability" aria-labelledby="section-tech-sku-availability-heading">
+                <p class="slide-num">T11 · SKU availability (BRE)</p>
+                <h2 id="section-tech-sku-availability-heading">SKU availability — stock (BRE)</h2>
+                <p class="section-intro">Under <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6452150787" target="_blank" rel="noopener noreferrer">BEESEDI-54950</a>, each line with a single resolved SKU is evaluated via <strong>cart-validation</strong> (same path as checkout). BRE maps responses to line accept, quantity adjust, or line drop — contributing to <strong>Partially accepted</strong> when some lines survive.</p>
+                <h3 class="tech-slide-h3">Key functional requirements</h3>
+                <ul>
+                    <li><strong>FR-SKU-1:</strong> Only lines that passed UPC with one SKU are evaluated.</li>
+                    <li><strong>FR-SKU-2–3:</strong> Call cart-validation; do not duplicate stock configuration in BRE.</li>
+                    <li><strong>FR-SKU-4–6:</strong> Full accept, partial adjust, or zero-stock line removal per BEES policy.</li>
+                    <li>Toggle <code>SKU_AVAILABILITY</code> + retailer blacklist pattern.</li>
+                </ul>
+                <div class="tech-req-note"><span class="badge-tbd">Scope</span> No standalone stock threshold engine in BRE. Reprocess/bypass via Central Tracking. Source: <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6452150787" target="_blank" rel="noopener noreferrer">BEESEDI-54950 (BLK)</a>.</div>
+            </section>
+
+            <section class="slide" id="section-tech-order-quantity" aria-labelledby="section-tech-order-quantity-heading">
+                <p class="slide-num">T12 · Order quantity gates (BRE)</p>
+                <h2 id="section-tech-order-quantity-heading">Minimum and maximum order quantity (BRE)</h2>
+                <p class="section-intro"><strong>Stage 3</strong> aggregate gates after line-level validation. Both rules consult <strong>cart-validation</strong> for thresholds configured per POC (POC overrides vendor). Unconfigured store → skip. Failure → <strong>reject entire order</strong> (no multi-order hold window in MVP).</p>
+                <h3 class="tech-slide-h3" id="section-tech-moq-heading">Minimum order quantity — BEESEDI-54948</h3>
+                <p class="section-intro">MX + AR. Rejection reason <em>Minimum order quantity</em>. Exempt MX T4 pickup and CEDIS; skipped on Flow 2 remote billing. Source: <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6453461458" target="_blank" rel="noopener noreferrer">BLK 6453461458</a>.</p>
+                <h3 class="tech-slide-h3" id="section-tech-max-heading">Maximum order quantity — BEESEDI-54949</h3>
+                <p class="section-intro">MX MVP scope per HLR. Rejection reason <em>Maximum order quantity</em>. Same T4/CEDIS exemptions. Source: <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6452871508" target="_blank" rel="noopener noreferrer">BLK 6452871508</a>.</p>
+                <div class="tech-req-note"><span class="badge-tbd">Scope</span> No auto-adjust to min/max; no defining thresholds in BRE (consumes Global Accounts / cart-service). MOQ multi-order combine is out of MVP scope.</div>
+            </section>
+
+            <section class="slide" id="section-tech-central-tracking" aria-labelledby="section-tech-central-tracking-heading">
+                <p class="slide-num">T13 · Central Tracking (companion)</p>
+                <h2 id="section-tech-central-tracking-heading">EDI Central Tracking — visibility &amp; ops</h2>
+                <p class="section-intro">Not BRE validation gates — companion capabilities on <strong>BEESIP-31064</strong> that consume BRE outcomes and expose reprocess paths.</p>
+                <div class="tech-trans-grid">
+                    <div class="tech-trans-card">
+                        <h4><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-51859" target="_blank" rel="noopener noreferrer">BEESEDI-51859</a> — Retailer self-service</h4>
+                        <p>Read-only list/detail for EDI retailers: status, rule, line context (default 30-day window).</p>
+                    </div>
+                    <div class="tech-trans-card">
+                        <h4><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-51860" target="_blank" rel="noopener noreferrer">BEESEDI-51860</a> — Vendor ops MVP</h4>
+                        <p>Queue, filters, reprocess/bulk reprocess, notes, audit (90-day ops window). <a href="https://abinbev-silvarenan.github.io/-abinbev-silvarenan-edi-central-tracking-ops-tool-mvp/" target="_blank" rel="noopener noreferrer">MVP prototype</a>.</p>
+                    </div>
+                    <div class="tech-trans-card">
+                        <h4><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-57198" target="_blank" rel="noopener noreferrer">BEESEDI-57198</a> — Phase 2 line resolution</h4>
+                        <p>Per-line catalog/price decisions and issue aggregation for partially accepted orders; extends 51860.</p>
+                    </div>
+                </div>
+                <div class="tech-req-note"><span class="badge-tbd">Source</span> HLRs: <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220185829" target="_blank" rel="noopener noreferrer">51859</a> · <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6218907975" target="_blank" rel="noopener noreferrer">51860</a> · <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6611174016" target="_blank" rel="noopener noreferrer">57198</a>.</div>
+            </section>
             </div>
             <div class="doc-i18n doc-i18n--es" data-doc-lang="es">
 <section class="slide slide--bre-matrix" id="section-tech-bu-matrix-es">
@@ -8535,43 +8912,51 @@
                             <div class="brandmark"><span class="dot"></span> BEES Link</div>
                             <div class="kicker">EDI · Motor de reglas de negocio (BRE)</div>
                             <h1>Reglas de negocio — alcance BU y prerrequisitos</h1>
-                            <p>Vista única para stakeholders: cada fila separa la <strong>intención de negocio</strong> (descripción corta), el <strong>comportamiento del producto</strong> (alcance) y las <strong>obligaciones de datos maestros de la BU</strong> (prerrequisitos). Alineado a <strong>HLR</strong> BLK (carpetas 1ª / 2ª / 3ª capa y Central Tracking). Si el resumen ejecutivo difiere, <strong>prevalece el HLR</strong>.</p>
+                            <p>Vista única para stakeholders: cada fila separa la <strong>intención de negocio</strong> (descripción corta), el <strong>comportamiento del producto</strong> (alcance) y las <strong>obligaciones de datos maestros de la BU</strong> (prerrequisitos). Alineado a <strong>HLR</strong> BLK (carpetas 1ª / 2ª / 3ª capa y Central Tracking). <strong>Prevalece el HLR</strong> donde las fuentes difieran.</p>
                             <div class="hero meta">
                                 <span><b>Audiencia:</b> Producto · Operaciones · Finanzas · TI · Líderes de mercado</span>
                                 <span><b>Fuente primaria:</b> <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/folder/5769003728" style="color:#e0e0e0">BLK — árbol EDI BRE</a></span>
+<<<<<<< HEAD
                                 <span><b>Detalle de celdas:</b> en inglés (texto HLR)</span>
-                                <span><b>Actualizado:</b> feb 2026</span>
+                                <span><b>Actualizado:</b> sep 2026</span>
+=======
+                                <span><b>Columnas comerciales:</b> BUs, riesgo y ETA en español</span>
+                                <span><b>Actualizado:</b> jul 2026</span>
+                                <span><b>Relacionado:</b> <a href="bu-decisions-timeline.html" style="color:#FFC000">Línea de tiempo de decisiones BU</a> (definiciones y sign-offs)</span>
+>>>>>>> abinbev/main
                             </div>
                         </div>
                     </div>
                     <div class="wrap">
                         <h2>Cómo usar esta matriz</h2>
-                        <div class="lead">Una fila por regla — tres columnas.</div>
-                        <div class="card accent">
-                            <h3>Qué significa cada columna</h3>
-                            <p><strong>Descripción corta</strong> — El &quot;qué&quot; de negocio en lenguaje claro.</p>
-                            <p><strong>Alcance</strong> — Qué evalúa el producto y <strong>cómo se comporta</strong>.</p>
-                            <p><strong>Prerrequisitos</strong> — Qué debe garantizar la <strong>BU en datos e ingesta</strong>.</p>
-                        </div>
-                        <div class="pull"><b>Checklist de firma:</b> BU atestigua <b>Prerrequisitos</b>. Producto + ops atestiguan <b>Alcance</b>. Comercial / finanzas atestiguan <b>Descripción corta</b> cuando aplique.</div>
-                        <p class="draft-note">Las tablas siguientes conservan el texto de celda en inglés (citas HLR). Encabezados de tabla localizados donde aplica.</p>
+                        <div class="lead">Una fila por regla — descripción, alcance y prerrequisitos más alineación comercial (BUs, ETA, riesgo).</div>
+                        <div class="pull"><b>Cómo leer ETA:</b> <span class="eta-bu">ETA dependencia BU</span> = cuándo deben estar listos datos maestros / ingesta para que el BRE entre en vivo sin bloqueo. <span class="eta-bre">ETA entrega BRE</span> = trimestre planificado de ingeniería. La BU debe estar lista <strong>antes o junto con</strong> la entrega BRE de la misma regla.</div>
                         <h2>Matriz — reglas de validación</h2>
+<<<<<<< HEAD
                         <div class="lead">Regla · descripción corta · alcance · prerrequisitos</div>
-                        <p class="draft-note">MOQ / MAX / SKU: <em>TBD</em> hasta publicar el HLR de tercera capa en BLK.</p>
+                        <p class="draft-note">Incluye HLR de tercera capa (MOQ, MAX, SKU) y Central Tracking Phase 2. Texto de celdas en inglés (citas HLR).</p>
+                        <div class="table-scroll">
+=======
+                        <div class="lead">Regla · BUs · descripción corta · alcance · prerrequisitos · riesgo · ETA</div>
+                        <p class="draft-note">Descripción, alcance y prerrequisitos sin cambios respecto al alineamiento HLR BLK. <strong>BUs relacionadas</strong>, <strong>riesgo si no se mitigan dependencias BU</strong> y <strong>ETA</strong> fusionados desde el one-pager de viabilidad comercial. <strong>Central Tracking</strong> no es regla del validador — ver tabla complementaria.</p>
 
 <div class="table-scroll">
+>>>>>>> abinbev/main
 <table>
   <thead>
     <tr>
-      <th style="min-width:130px">Regla de negocio</th>
-      <th style="min-width:200px">Descripción corta<span class="th-hint">Qué de negocio — intención en lenguaje claro.</span></th>
-      <th style="min-width:240px">Alcance<span class="th-hint">Qué se evalúa y cómo se comporta la aplicación (pasos, alternativas, resultados).</span></th>
-      <th style="min-width:240px">Prerrequisitos<span class="th-hint">Datos maestros e ingesta a cargo de la BU para ejecutar la regla.</span></th>
+      <th style="min-width:110px">Regla de negocio</th>
+      <th style="min-width:48px">BUs</th>
+      <th style="min-width:160px">Descripción corta<span class="th-hint">Qué de negocio — intención en lenguaje claro.</span></th>
+      <th style="min-width:200px">Alcance<span class="th-hint">Qué se evalúa y cómo se comporta la aplicación (pasos, alternativas, resultados).</span></th>
+      <th style="min-width:170px">Prerrequisitos<span class="th-hint">Datos maestros e ingesta a cargo de la BU para ejecutar la regla.</span></th>
+      <th style="min-width:130px">Riesgo<span class="th-hint">Si las dependencias BU no se mitigan a tiempo.</span></th>
+      <th style="min-width:100px">ETA<span class="th-hint">Preparación BU vs entrega BRE.</span></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><b>Order integration</b><span class="hlr-ref">BEESEDI-48925</span></td>
+      <td><b>Order integration</b><span class="hlr-ref">BEESEDI-48925</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
       <td>Establish the controlled entry path for EDI orders into BEES Link BRE: canonical JSON over HTTP (BEES Sync), format validation, structured logging, and resilience before any business rule runs.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -8587,9 +8972,9 @@
           <li>Currency and several identifiers are <strong>configuration / audit</strong>, not ad-hoc payload extensions — BU owns integration config.</li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--high">Sin mapeo de broker certificado -> pedidos rechazados en compuerta 0; el programa no puede iniciar validaciones a nivel pedido.</td><td><span class="eta-bu">BU: Q3 2026 - fin ago</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
     <tr>
-      <td><b>POC matching</b><span class="hlr-ref">BEESEDI-48927 + BEESEDI-52518</span></td>
+      <td><b>POC matching</b><span class="hlr-ref">BEESEDI-48927 + BEESEDI-52518</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span></div></td>
       <td>Resolve every inbound EDI order to a BEES <code>VendorAccountID</code> for the order’s country + vendor so downstream rules use a single account key.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -8602,11 +8987,29 @@
         <ul class="prereq">
           <li>Maintain <strong>Account Documents</strong> (e.g. RFC, GLN) and account keys so lookups succeed; canonical JSON must carry fields required for resolution (e.g. <code>storeCode</code>, <code>gln</code> alongside <code>ExternalAccountID</code> per architecture notes in HLR).</li>
           <li>BU owns data quality for retailer identifiers; GLN registration with GS1 remains retailer responsibility.</li>
+          <li><strong>APIs de ingesta de datos:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--high">Tabla de match desactualizada -> rechazos masivos (MX ~90% histórico en MOQ; brechas POC bloquean todas las reglas posteriores). AR espera notificación + decisión manual vs rechazo ciego.</td><td><span class="eta-bu">BU: Q3 2026 - fin sep</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
     <tr>
-      <td><b>Delivery range</b><span class="hlr-ref">BEESEDI-48929 §Delivery range</span></td>
+      <td><b>Provider code match</b><span class="hlr-ref">Exec summary · Q2 Link EDI</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span></div></td>
+      <td>Verificar que el código de vendor del retailer en el pedido EDI coincide con el identificador interno del partner en BEES para atribuir el pedido a la relación comercial correcta antes de las compuertas a nivel pedido.</td>
+      <td>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>Comparar el <strong>código vendor / provider</strong> del JSON canónico contra el ID de partner interno en BEES para el par país + vendor.</li>
+          <li>Si no coincide -> <strong>rechazar pedido completo</strong> y registrar el mismatch para revisión de ops.</li>
+          <li>Toggle <strong>por país + vendor</strong>; si está desactivado, omitir esta compuerta.</li>
+        </ol>
+      </td>
+      <td>
+        <ul class="prereq">
+          <li>Mantener mapeo preciso de <strong>código provider / vendor</strong> en BEES por relación comercial.</li>
+          <li>El mapeo del broker al JSON canónico debe poblar el campo usado por esta regla.</li>
+        </ul>
+      </td>
+    <td class="risk risk--med">Atribución de partner incorrecta -> falsos rechazos o pedidos al ente comercial equivocado.</td><td><span class="eta-bu">BU: Fin Q1 2026</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
+    <tr>
+      <td><b>Delivery range</b><span class="hlr-ref">BEESEDI-48929 §Delivery range</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
       <td>Ensure the retailer’s requested delivery date is not before or equal to the PO creation date when strict validation applies, while still blocking impossible “past” dates on relaxed paths.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -8621,9 +9024,9 @@
           <li>Govern <strong>country + vendor toggles</strong> and <strong>retailer blacklist</strong> (blacklist only applies when the pair is enabled).</li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--med">Mapeo de fechas incorrecto -> rechazos evitables; blacklist mal configurada -> reglas estrictas en retailers equivocados.</td><td><span class="eta-bu">BU: Fin Q1 2026</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
     <tr>
-      <td><b>Delivery frequency</b><span class="hlr-ref">BEESEDI-48929 §Delivery frequency</span></td>
+      <td><b>Delivery frequency</b><span class="hlr-ref">BEESEDI-48929 §Delivery frequency</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
       <td>Ensure the requested delivery date falls on an authorised delivery day for the POC, consistent with BEES Delivery Window.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -8636,11 +9039,12 @@
         <ul class="prereq">
           <li>BUs keep <strong>Delivery Window</strong> / delivery calendar data current for every POC served via EDI (same source of truth as BEES Delivery Window — no duplicate conflicting calendars).</li>
           <li>Coordinate holidays and exceptional service days through the same ingestion channel.</li>
+          <li><strong>APIs de ingesta de datos:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a>; <a href="https://developer.bees-platform.com/docs/entities/delivery-windows/api/v2/post" target="_blank" rel="noopener noreferrer">Delivery Windows API v2 (POST)</a></li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--med">Calendario desactualizado -> rechazos en días de entrega válidos (MX: bajo volumen pero alta fricción comercial por POC).</td><td><span class="eta-bu">BU: Fin Q1 2026</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
     <tr>
-      <td><b>PO number uniqueness</b><span class="hlr-ref">BEESEDI-48956</span></td>
+      <td><b>PO number uniqueness</b><span class="hlr-ref">BEESEDI-48956</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span></div></td>
       <td>Prevent duplicate BEES processing of the same commercial PO for the same POC when the delivery date is unchanged, protecting fulfilment and billing from double execution.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -8655,14 +9059,19 @@
           <li>Define cut-over behaviour for historical POs already in BEES to avoid false duplicates at launch.</li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--med">POs duplicados procesados -> doble cumplimiento / exposición de facturación; cut-over agresivo -> bloqueos falsos.</td><td><span class="eta-bu">BU: Fin Q1 2026</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
     <tr>
-      <td><b>UPC matching</b><span class="hlr-ref">BEESEDI-48947</span></td>
+<<<<<<< HEAD
+      <td><b>UPC matching</b><span class="hlr-ref">BEESEDI-48947 · BEESEDI-53722 · BEESEDI-53692</span></td>
+      <td>Resolve each line’s retailer product code to exactly one BEES item, using the catalogue first and POC-level mappings only as a fallback — so later rules always see a stable <code>beesItemId</code>. Implementation splits across strict catalog path (<a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6140789875">48947</a>), POC mapping fallback (<a href="https://ab-inbev.atlassian.net/browse/BEESEDI-53722">53722</a>), and PO Reader curated lookup (<a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6357876913">53692</a>).</td>
+=======
+      <td><b>UPC matching</b><span class="hlr-ref">BEESEDI-48947</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span></div></td>
       <td>Resolve each line’s retailer product code to exactly one BEES item, using the catalogue first and POC-level mappings only as a fallback — so later rules always see a stable <code>beesItemId</code>.</td>
+>>>>>>> abinbev/main
       <td>
         <ol style="margin:0;padding-left:1.2em">
           <li>Respect BRE toggle <code>SKU_MATCHING</code> per <strong>(Country, VendorID)</strong>. If toggle off or retailer blacklisted → <strong>relaxed path</strong> (skip rule; single order-level event).</li>
-          <li><strong>Strict path:</strong> for each line, search the BEES catalogue with the <strong>exact</strong> code from the order. <strong>Only if no catalogue hit</strong>, search vendor-scoped <strong>POC mapping</strong>. Catalogue match must <strong>never</strong> be overridden by mapping.</li>
+          <li><strong>Strict path:</strong> for each line, search the BEES catalogue with the <strong>exact</strong> code from the order. <strong>Only if no catalogue hit</strong>, search vendor-scoped <strong>POC mapping</strong> (<strong>53722</strong>). Optional <strong>PO Reader</strong> assortment path (<strong>53692</strong>) per market configuration. Catalogue match must <strong>never</strong> be overridden by mapping.</li>
           <li>Unrecognised lines are <strong>removed</strong> from the order with logging; <strong>ambiguous</strong> multi-match lines enter a <strong>curation hold</strong> until order expiration unless resolved. If <strong>zero</strong> lines remain valid → <strong>reject entire order</strong>. Catalog/mapping lookups retry on transient errors (three attempts).</li>
         </ol>
       </td>
@@ -8670,28 +9079,34 @@
         <ul class="prereq">
           <li>BUs maintain accurate catalogue GTIN/UPC coverage for EDI assortment.</li>
           <li>BUs curate and ingest <strong>active</strong> POC-level external-code → BEES item mappings (logical deactivate when retired).</li>
+          <li><strong>APIs de ingesta de datos:</strong> <a href="https://developer.bees-platform.com/docs/entities/items/api/v2/put" target="_blank" rel="noopener noreferrer">Items API v2 (PUT)</a>; <a href="https://developer.bees-platform.com/docs/entities/product-assortment-inclusion/api/v4/post" target="_blank" rel="noopener noreferrer">Product Assortment Inclusion API v4 (POST)</a>; <a href="https://developer.bees-platform.com/docs/entities/product-assortment-exclusion/api/v1/post" target="_blank" rel="noopener noreferrer">Product Assortment Exclusion API v1 (POST)</a></li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--high">Brechas de mapeo -> líneas eliminadas y pérdida de NR (MX ~1%  /  AR ~8% de rechazos). Hojas AR manuales añaden retraso vs sync automatizado.</td><td><span class="eta-bu">BU: Fin Q2 2026</span><br><span class="eta-bre">BRE: Q3 2026</span></td></tr>
     <tr>
+<<<<<<< HEAD
       <td><b>Package validation</b><span class="hlr-ref">BEESEDI-48954</span></td>
+      <td>Convert each line’s retailer quantity to ABI <strong>billing boxes</strong> using <code>pack_conversion_factor</code> per SKU + commercial scope (<code>zoneChainId</code>) — without trusting retailer-declared UOM on the EDI line.</td>
+=======
+      <td><b>Package validation</b><span class="hlr-ref">BEESEDI-48954</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span></div></td>
       <td>Ensure each line’s unit of measure and quantity align with the packaging model registered in BEES for the resolved SKU — converting when mathematically exact, otherwise blocking the order for master-data curation until the order limit date.</td>
+>>>>>>> abinbev/main
       <td>
         <ol style="margin:0;padding-left:1.2em">
-          <li>Runs <strong>immediately after UPC matching</strong> for lines resolved from catalogue or POC mapping. Toggle <code>PACKAGE_VALIDATION</code> + retailer blacklist pattern mirrors other rules.</li>
-          <li><strong>Match / convert:</strong> if UoM matches registered packaging, pass; if different but convertible with an <strong>integer</strong> factor, rewrite quantity + UoM.</li>
-          <li><strong>Non-convertible line(s):</strong> place the <strong>entire order on curation hold</strong> until limit date; at expiration release valid lines and reject invalid ones, or reject whole order if none valid. <strong>Lookup failures</strong> reject at order level (not hold). Under <strong>remote billing Flow 2</strong> (DC HLR), this rule is among those <strong>skipped</strong> for Argentina MVP configuration.</li>
+          <li>Runs <strong>after UPC matching</strong> for lines with <code>resolutionSource</code> ∈ {catalog, poc_mapping}. Toggle <code>PACKAGE_VALIDATION</code> + retailer blacklist mirrors other rules.</li>
+          <li>Resolve <code>zoneChainId</code> via Chain Management; read active <code>EDI_SKU_COMMERCIAL_PARAMS</code> row. <code>boxes_ordered = retailer_order_qty ÷ pack_conversion_factor</code> must be a <strong>positive integer</strong>.</li>
+          <li>Any failing line or missing commercial scope → <strong>reject entire order</strong> (<code>order_rejected_invalid_package</code>) — no partial line accept, no curation hold. Optional cross-check when retailer sends <code>retailer_declared_pack_factor</code>. Under <strong>remote billing Flow 2</strong> (DC HLR), rule is <strong>skipped</strong> for Argentina MVP FR set.</li>
         </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>Master data maintains complete <strong>packaging hierarchy</strong> per SKU so conversions and checks are deterministic.</li>
-          <li>Ops process to resolve holds by fixing registry data then triggering re-validation (tooling outside this HLR’s UI scope).</li>
+          <li>BUs ingest <strong>EDI_SKU_COMMERCIAL_PARAMS</strong> (factor per SKU + <code>zoneChainId</code>) and keep Chain Upload POC → sub-chain assignments current.</li>
+          <li>Commercial scope resolution parameters owned by companion ingest epics; BRE consumes read APIs only.</li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--med">Maestro de empaque incompleto -> holds cerca del deadline de entrega; comercial debe resolver antes de auto-release/rechazo.</td><td><span class="eta-bu">BU: Q4 2026 - fin oct</span><br><span class="eta-bre">BRE: Q3 2026</span></td></tr>
     <tr>
-      <td><b>Price discrepancy</b><span class="hlr-ref">BEESEDI-48955</span></td>
+      <td><b>Price discrepancy</b><span class="hlr-ref">BEESEDI-48955</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
       <td>Compare retailer unit prices to the BEES reference price (discounts/taxes as in app orders) within retailer-specific tolerances — blocking the <strong>whole order</strong> when any line is out of tolerance.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -8706,45 +9121,121 @@
           <li>Ensure BEES pricing mirrors commercial agreements so reference price matches how app orders are priced.</li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--high">Tolerancias faltantes -> regla omitida (sin protección de precio) o bloqueos ruidosos (MX 3.78%). Desalineación AR en aprobación vs rechazo retrasa rollout.</td><td><span class="eta-bu">BU: Q4 2026 - fin oct</span><br><span class="eta-bre">BRE: Q3 2026</span></td></tr>
     <tr>
-      <td><b>SKU availability</b></td>
-      <td><em>TBD in BLK.</em> Intended to ensure ordered quantities can be served from the availability signal BEES trusts for the POC/DC context.</td>
+<<<<<<< HEAD
+      <td><b>SKU availability</b><span class="hlr-ref">BEESEDI-54950</span></td>
+      <td>Validate each resolved line’s requested quantity against BEES stock via the same cart-validation path as checkout — adjusting, dropping, or keeping lines so fill rate is predictable.</td>
       <td>
-        <p style="margin:0"><strong>No “EDI order validator MVP — SKU availability” HLR</strong> was found in the Feb–Jun 2026 Confluence search alongside the other validator HLRs. Behaviour, toggles, and outcomes remain <strong>product/engineering TBD</strong> until the 3rd-layer page is published under BLK.</p>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>Runs <strong>after UPC matching</strong> (and sibling line-level prerequisites) for lines with a single resolved SKU. Toggle <code>SKU_AVAILABILITY</code> + retailer blacklist.</li>
+          <li>Call <strong>cart-validation / pricing simulation</strong> (Stepper <code>PERFORM_CARTS_VALIDATION</code>); BRE <strong>consumes</strong> outcomes — no duplicate stock engine.</li>
+          <li>Sufficient stock → accept line; partial stock → <strong>adjust quantity</strong> when policy allows; zero stock → <strong>drop line</strong>. Order becomes <strong>Partially accepted</strong> when some lines survive; <strong>Rejected</strong> when no lines remain.</li>
+=======
+      <td><b>Tax validation</b><span class="hlr-ref">Exec summary · New</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span></div></td>
+      <td>Asegurar que se aplican los impuestos correctos por región del POC antes de completar las compuertas a nivel ítem, alineado al modelo de pricing de BEES.</td>
+      <td>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>Tras validación de precio, evaluar configuración fiscal por línea según reglas de región del POC en BEES.</li>
+          <li>Impuesto incorrecto -> <strong>bloquear o rechazar</strong> según configuración país+vendor (entrega con squad Pricing Q3).</li>
+          <li>Toggle <strong>por país + vendor</strong>; omitido si está desactivado.</li>
+>>>>>>> abinbev/main
+        </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>BUs should pre-position <strong>ATP / inventory feeds</strong> and cut-off alignment with warehouse systems so the future rule can bind to a trustworthy signal.</li>
+<<<<<<< HEAD
+          <li>BUs keep vendor catalog + zone stock configuration aligned with warehouse ATP and cut-offs (same source as app checkout).</li>
+          <li>Inventory enforcement modules in cart-service remain source of truth for partial vs reject behaviour.</li>
+=======
+          <li>Finanzas provee <strong>reglas / configuración fiscal por región del POC</strong> alineada al modelo de pricing BEES.</li>
+>>>>>>> abinbev/main
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--med">Configuración fiscal incorrecta -> exposición de cumplimiento o bloqueos falsos en pedidos válidos.</td><td><span class="eta-bu">BU: Fin Q2 2026</span><br><span class="eta-bre">BRE: Q3 2026</span></td></tr>
     <tr>
-      <td><b>Minimum order quantity</b></td>
-      <td><em>TBD in BLK.</em> Intended to enforce account-level minimums on the validated order aggregate.</td>
+<<<<<<< HEAD
+      <td><b>Minimum order quantity</b><span class="hlr-ref">BEESEDI-54948</span></td>
+      <td>Enforce store-level minimum order thresholds on the <strong>validated order aggregate</strong> using cart-service evaluation — rejecting sub-minimum EDI orders that app checkout would block.</td>
       <td>
-        <p style="margin:0">Referenced as a <strong>rejection reason</strong> in the <strong>EDI Central Tracking — Operational Tool</strong> HLR, but a dedicated <strong>EDI order validator MVP — MOQ</strong> HLR was not returned from the same Confluence query set used for other layers. Treat pipeline position, toggles, and rejection vs hold as <strong>TBD</strong> until the 3rd-layer HLR is available.</p>
+        <ol style="margin:0;padding-left:1.2em">
+          <li><strong>Stage 3</strong> order-level gate after line-level rules. Toggle per country + vendor; retailer blacklist skips rule.</li>
+          <li>Consult cart-validation for MOQ type (quantity, subtotal, full price, etc.). Unconfigured store → <strong>skip</strong>. Below minimum → <strong>reject entire order</strong> (label <em>Minimum order quantity</em>) — <strong>no multi-order hold / combine window</strong> in MVP.</li>
+          <li>MX: skip for <strong>T4 pickup</strong> and <strong>CEDIS</strong> channel orders. AR remote billing Flow 2 → <strong>skipped</strong>.</li>
+=======
+      <td><b>SKU availability</b></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
+      <td>Validate if the SKUs / products from the order have available stock.</td>
+      <td>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>When <strong>country + vendor</strong> is enabled and the retailer is <strong>not blacklisted</strong> for this rule, the application must validate whether the requested products have available stock.</li>
+          <li>If the product has enough stock to fulfill the requested quantity, the product is <strong>accepted</strong>.</li>
+          <li>If the product has partial stock, the ordered quantity must be <strong>adjusted to the available quantity</strong> in stock.</li>
+          <li>Purchased products without stock are <strong>removed from the order</strong>.</li>
+          <li>If no product from the order has stock, the <strong>entire order is rejected</strong>.</li>
+>>>>>>> abinbev/main
+        </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>Legacy BLK material on MOQ feature activation stresses <strong>Accounts Relay V2</strong> + <strong>BEES Sync</strong> feeding MOQ inputs — use as a dependency hint until superseded by the EDI-specific HLR.</li>
+<<<<<<< HEAD
+          <li>BUs maintain minimum order configuration in Global Accounts / store overrides (Accounts Relay V2 + BEES Sync).</li>
+          <li>Commercial agrees canonical rejection messaging surfaced in Central Tracking.</li>
+=======
+          <li>The Vendor / BU must ensure that all products available in the catalog have updated stock in the <strong>BEES ATP / Inventory</strong> configuration.</li>
+          <li><strong>APIs de ingesta de datos:</strong> <a href="https://developer.bees-platform.com/docs/entities/inventory/api/v3/post" target="_blank" rel="noopener noreferrer">Inventory API v3 (POST)</a></li>
+>>>>>>> abinbev/main
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--med">Señal de inventario débil -> aceptaciones falsas (quiebres) o rechazos falsos (NR perdido).</td><td><span class="eta-bu">BU: Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026*</span><br><span class="tbd-note">*HLR TBD</span></td></tr>
     <tr>
-      <td><b>Maximum order quantity</b></td>
-      <td><em>TBD in BLK.</em> Intended to cap the validated order aggregate for credit or supply constraints.</td>
+<<<<<<< HEAD
+      <td><b>Maximum order quantity</b><span class="hlr-ref">BEESEDI-54949</span></td>
+      <td>Cap the validated order aggregate against store-level maximum thresholds (MX MVP) via cart-validation — protecting logistics capacity and stock allocation.</td>
       <td>
-        <p style="margin:0">Same status as MOQ: named in Central Tracking ops taxonomy; <strong>no matching validator MVP HLR</strong> retrieved via Confluence MCP in this review. Await published requirements for exact behaviour.</p>
+        <ol style="margin:0;padding-left:1.2em">
+          <li><strong>Stage 3</strong> order-level gate; same toggle / blacklist pattern as MOQ. Unconfigured store → <strong>skip</strong>.</li>
+          <li>Above maximum → <strong>reject entire order</strong> (<em>Maximum order quantity</em>). At or below → continue to order creation.</li>
+          <li>MX: skip for <strong>T4</strong> and <strong>CEDIS</strong>. Markets beyond MX are out of scope for this HLR unless extended later.</li>
+=======
+      <td><b>Minimum order quantity</b></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
+      <td>Validate whether the purchased quantity respects the minimum order quantity of the POC / store.</td>
+      <td>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>When <strong>country + vendor</strong> is enabled and the retailer is <strong>not blacklisted</strong> for this rule, the application must validate whether the purchased quantity is equal to or higher than the minimum order quantity registered for the store.</li>
+          <li>If the purchased quantity matches the <strong>MinOQ</strong>, the order is <strong>accepted</strong>. If it does not match the MinOQ, the order is <strong>rejected</strong>.</li>
+>>>>>>> abinbev/main
+        </ol>
       </td>
       <td>
         <ul class="prereq">
-          <li>BUs should keep <strong>account-level maxima</strong> accurate in BEES account structures so future wiring inherits clean data.</li>
+<<<<<<< HEAD
+          <li>BUs keep <strong>maximum order</strong> rows accurate per POC/vendor in BEES account structures.</li>
+          <li>Finance validates monetary vs quantity-based max types match commercial policy.</li>
+=======
+          <li>The Vendor / BU must ensure that all stores that require this validation have the <strong>minimum order quantity</strong> configured in <strong>BEES</strong>.</li>
+          <li><strong>APIs de ingesta de datos:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
+>>>>>>> abinbev/main
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--high">Mayor driver de rechazo (MX ~90.63%  /  AR ~33.36%). Expectativa AR de hold/combinar vs auto-rechazo MVP es brecha de diseño comercial.</td><td><span class="eta-bu">BU: Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026*</span><br><span class="tbd-note">*HLR TBD</span></td></tr>
     <tr>
-      <td><b>DC validation</b><span class="hlr-ref">BEESEDI-52538</span></td>
+      <td><b>Maximum order quantity</b></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span></div></td>
+      <td>Validate whether the purchased quantity respects the maximum order quantity of the POC / store.</td>
+      <td>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>When <strong>country + vendor</strong> is enabled and the retailer is <strong>not blacklisted</strong> for this rule, the application must validate whether the purchased quantity is equal to or lower than the maximum order quantity registered for the store.</li>
+          <li>If the purchased quantity matches the <strong>MaxOQ</strong>, the order is <strong>accepted</strong>. If it does not match the MaxOQ, the order is <strong>rejected</strong>.</li>
+        </ol>
+      </td>
+      <td>
+        <ul class="prereq">
+          <li>The Vendor / BU must ensure that all stores that require this validation have the <strong>maximum order quantity</strong> configured in <strong>BEES</strong>.</li>
+          <li><strong>APIs de ingesta de datos:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
+        </ul>
+      </td>
+    <td class="risk risk--low">Bajo volumen de rechazo (MX ~0.48%) pero exposición crediticia si la regla se retrasa o los datos son incorrectos.</td><td><span class="eta-bu">BU: Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026*</span><br><span class="tbd-note">*HLR TBD</span></td></tr>
+    <tr>
+      <td><b>DC validation</b><span class="hlr-ref">BEESEDI-52538</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--ar">AR</span></div></td>
       <td>Read the DC assigned to the POC in BEES and branch between <strong>direct billing</strong> (full rule set) and <strong>remote billing</strong> (reduced “FR” rule set), avoiding false rejects for distributor-served POCs.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -8757,29 +9248,33 @@
         <ul class="prereq">
           <li>BUs must maintain correct <strong>POC → DC</strong> assignments in BEES configuration (source of truth for branching).</li>
           <li>Finance + ops own the <strong>remote DC id list</strong> and FR rule set configuration per market introduction.</li>
+          <li><strong>APIs de ingesta de datos:</strong> <a href="https://developer.bees-platform.com/docs/entities/accounts/csv/v2/post" target="_blank" rel="noopener noreferrer">Accounts CSV v2 (POST)</a></li>
         </ul>
       </td>
-    </tr>
+    <td class="risk risk--high">DC incorrecto -> falsos rechazos en POCs de facturación directa o set de reglas equivocado en tiendas con distribuidor.</td><td><span class="eta-bu">BU: Inicios Q2 2026</span><br><span class="eta-bre">BRE: Q2 2026</span></td></tr>
   </tbody>
 </table>
 </div>
 
 <h2>Seguimiento central (capacidad complementaria)</h2>
 <div class="lead">Visibilidad y acciones de ops — no es una regla de validación del BRE</div>
-<p class="draft-note">Estos HLR consumen salidas del BRE y APIs de reproceso; no sustituyen los toggles del validador.</p>
+<p class="draft-note">These HLRs consume BRE outputs and reprocess APIs; they do not replace validator toggles.</p>
 <div class="table-scroll">
 <table>
   <thead>
     <tr>
-      <th style="min-width:130px">Capacidad</th>
-      <th style="min-width:200px">Descripción corta<span class="th-hint">Qué de negocio.</span></th>
-      <th style="min-width:240px">Alcance<span class="th-hint">Cómo funciona.</span></th>
-      <th style="min-width:240px">Prerrequisitos<span class="th-hint">Datos de BU / partner y titularidad.</span></th>
+      <th style="min-width:110px">Capacidad</th>
+      <th style="min-width:48px">BUs</th>
+      <th style="min-width:160px">Descripción corta<span class="th-hint">Qué de negocio.</span></th>
+      <th style="min-width:200px">Alcance<span class="th-hint">Cómo funciona.</span></th>
+      <th style="min-width:170px">Prerrequisitos<span class="th-hint">Datos de BU / partner y titularidad.</span></th>
+      <th style="min-width:130px">Riesgo<span class="th-hint">Si las dependencias BU no se mitigan a tiempo.</span></th>
+      <th style="min-width:100px">ETA</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><b>Central tracking — retailer</b><span class="hlr-ref">BEESEDI-51859</span></td>
+      <td><b>Central tracking — retailer</b><span class="hlr-ref">BEESEDI-51859</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
       <td>Give EDI retailers a read-only, filterable view of every PO they submitted: status (Accepted / Blocked / Rejected / In queue), business rule, and line-level requested vs delivered context.</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -8794,9 +9289,10 @@
           <li>Product + platform expose structured <strong>rule IDs</strong> to power filters (assumption noted in HLR).</li>
         </ul>
       </td>
+      <td class="risk risk--med">Entitlements incorrectos → retailers ven datos de otros POCs (brecha de confianza).</td><td><span class="eta-bu">BU: Q3 2026</span><br><span class="eta-bre">BRE: Q3–Q4 2026</span></td>
     </tr>
     <tr>
-      <td><b>Central tracking — vendor ops</b><span class="hlr-ref">BEESEDI-51860</span></td>
+      <td><b>Central tracking — vendor ops</b><span class="hlr-ref">BEESEDI-51860</span></td><td><div class="zone-badges"><span class="zone-badge zone-badge--mx">MX</span><span class="zone-badge zone-badge--ar">AR</span></div></td>
       <td>Give vendor operations a workspace to triage the same statuses, take corrective actions, annotate, notify sales, and <strong>reprocess or bulk-reprocess</strong> blocked/rejected orders (idempotent, preserves PO number).</td>
       <td>
         <ol style="margin:0;padding-left:1.2em">
@@ -8811,6 +9307,24 @@
           <li>BUs align on which bypasses are commercially/legal acceptable before enabling in production.</li>
         </ul>
       </td>
+      <td class="risk risk--med">Sin RBAC de ops → reprocesamiento no autorizado.</td><td><span class="eta-bu">BU: Q3 2026</span><br><span class="eta-bre">BRE: Q3–Q4 2026</span></td>
+    </tr>
+    <tr>
+      <td><b>Central tracking — Phase 2 line &amp; SKU resolution</b><span class="hlr-ref">BEESEDI-57198</span></td>
+      <td>Extend ops tooling so analysts resolve <strong>line-level</strong> catalog, price, and assortment issues (approve requested price, reject at catalog, etc.) without re-running the full order blindly — while respecting ERP freeze rules.</td>
+      <td>
+        <ol style="margin:0;padding-left:1.2em">
+          <li>Builds on MVP ops queue (<strong>51860</strong>); adds per-line decision workflows and issue aggregation for partially accepted orders.</li>
+          <li>Decisions trigger controlled reprocess / handoff paths aligned with order-integration and amendment HLRs.</li>
+          <li>Companion to retailer visibility (<strong>51859</strong>); ops-only actions remain server-side gated.</li>
+        </ol>
+      </td>
+      <td>
+        <ul class="prereq">
+          <li>BUs define which line-level fixes are allowed before ERP submission vs after.</li>
+          <li>Platform exposes stable line diagnostics and rule codes from BRE logging.</li>
+        </ul>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -8819,20 +9333,22 @@
 <div class="card">
   <h3>Notas de programa (no son prerrequisitos de datos BU)</h3>
   <p><strong>Reprocess:</strong> Early BRE scope statements listed “force reprocess” as out of scope for the validator MVP, while <strong>EDI Central Tracking — Operational Tool</strong> explicitly includes reprocess/bypass — treat <strong>Central Tracking</strong> as the owning surface for re-queues, not contradictory ad-hoc broker resends.</p>
-  <p><strong>Holds vs rejects:</strong> Package validation and Price validation introduce <strong>blocked</strong> states; DC validation blocks when DC is missing. Align retailer messaging and ops SLAs across those HLRs and Central Tracking.</p>
+  <p><strong>Holds vs rejects:</strong> Price validation and some POC/PO gates use <strong>blocked</strong> states; DC validation blocks when DC is missing; Package validation and MOQ/MAX use <strong>order reject</strong> on fail per current HLRs. Align retailer messaging and ops SLAs across those HLRs and Central Tracking.</p>
 </div>
 
+<<<<<<< HEAD
 <div class="card">
   <h3>IDs de página HLR (BLK) citados en esta matriz</h3>
-  <p style="font-size:14px;margin:0">Order integration <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5981536297">5981536297</a> · POC direct <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5791453558">5791453558</a> · POC external IDs <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220054719">6220054719</a> · Delivery dates (range + frequency) <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5791453572">5791453572</a> · PO uniqueness <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5792306185">5792306185</a> · UPC matching <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6140789875">6140789875</a> · Package validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6219956551">6219956551</a> · Price validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6217368312">6217368312</a> · DC validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6222381057">6222381057</a> · Central tracking retailer <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220185829">6220185829</a> · Central tracking ops <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6218907975">6218907975</a></p>
+  <p style="font-size:14px;margin:0">Order integration <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5981536297">5981536297</a> · POC direct <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5791453558">5791453558</a> · POC external IDs <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220054719">6220054719</a> · Delivery dates (range + frequency) <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5791453572">5791453572</a> · PO uniqueness <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5792306185">5792306185</a> · UPC matching <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6140789875">6140789875</a> · PO Reader curated lookup <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6357876913">6357876913</a> · Package validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6219956551">6219956551</a> · Price validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6217368312">6217368312</a> · DC validation <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6222381057">6222381057</a> · MOQ <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6453461458">6453461458</a> · MAX <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6452871508">6452871508</a> · SKU availability <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6452150787">6452150787</a> · Central tracking retailer <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220185829">6220185829</a> · Central tracking ops <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6218907975">6218907975</a> · Central tracking Phase 2 <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6611174016">6611174016</a></p>
 </div>
 
+=======
+>>>>>>> abinbev/main
 <footer>
-  BEES / AB InBev — alineación interna. Matriz actualizada desde <strong>Confluence BLK</strong> (HLR del MVP del validador EDI + Central Tracking). Filas MOQ / MAX / SKU en TBD. No sustituye HLR firmados.
+  BEES / AB InBev — internal alignment. Visual tokens: BEES Link one-pager reference. Validation matrix updated from <strong>Atlassian Confluence BLK</strong> HLRs for EDI order validator MVP (layers 1–3) + Central Tracking companion capabilities. Executive summary retained only for macro context. Not a legal or contractual substitute for signed HLRs in Jira/Confluence.
 </footer>
 
 </div>
-                    </div>
                 </div>
 </section>
 <section class="slide" id="section-tech-overview-es">
@@ -8842,11 +9358,26 @@
                     <p>Esta sección describe cómo <strong>BEES Link</strong> y el <strong>motor de reglas de negocio (BRE)</strong> esperan recibir los pedidos de origen EDI para el MVP del validador: ingesta vía <strong>BEES Sync</strong> y el contrato canónico <strong>JSON</strong>.</p>
                 </div>
                 <div class="tech-epic-strip">
-                    <div class="tech-epic-card tech-epic-card--static">
-                        <span class="tec-key">Línea de trabajo</span>
-                        <div class="tec-title">Integración de pedidos</div>
-                        <p class="tec-hint">Recibir pedidos EDI vía BEES Sync, contrato HTTP JSON, validación y registro.</p>
-                    </div>
+                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-33217" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-33217 · L1</span>
+                        <div class="tec-title">Compuertas a nivel pedido</div>
+                        <p class="tec-hint"><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48925">48925</a> ingesta · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48927">48927</a> POC · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-52518">52518</a> IDs externos · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-52538">52538</a> DC · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48929">48929</a> entrega · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48956">48956</a> unicidad PO</p>
+                    </a>
+                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-33218" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-33218 · L2</span>
+                        <div class="tec-title">Compuertas a nivel línea</div>
+                        <p class="tec-hint"><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48947">48947</a> UPC · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-53722">53722</a> mapping · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-53692">53692</a> PO Reader · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48954">48954</a> empaque · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-54950">54950</a> stock · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48955">48955</a> precio</p>
+                    </a>
+                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-33219" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-33219 · L3</span>
+                        <div class="tec-title">Agregado de pedido</div>
+                        <p class="tec-hint"><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-54948">54948</a> MOQ · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-54949">54949</a> MAX</p>
+                    </a>
+                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-31064" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-31064</span>
+                        <div class="tec-title">Central Tracking</div>
+                        <p class="tec-hint"><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-51859">51859</a> minorista · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-51860">51860</a> ops · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-57198">57198</a> Fase 2</p>
+                    </a>
                 </div>
                 <div class="tech-req-note"><span class="badge-tbd">Borrador</span> <strong>Contrato JSON:</strong> los campos canónicos siguen <code>openapi/order-edi-canonical-v1.yaml</code>; URLs base y autenticación según el runbook de integración al publicarse.</div>
             </section>
@@ -8854,7 +9385,7 @@
             <section class="slide" id="section-tech-e2e-flow-es">
                 <p class="slide-num">Técnico · Extremo a extremo</p>
                 <h2>Flujo de solución extremo a extremo — aplicación BRE</h2>
-                <p class="section-intro">Vista compacta del <strong>pipeline completo del BRE</strong> para un pedido EDI, desde la recepción del broker hasta la creación del pedido en BEES. Las reglas se evalúan en tres etapas: <strong>Etapa 1 — compuertas a nivel pedido</strong>, <strong>Etapa 2 — compuertas a nivel línea</strong> (más un chequeo final "¿queda algún producto?") y <strong>Etapa 3 — compuertas a nivel pedido por cantidad</strong>. Cada regla que falla produce uno de dos resultados distintos: <strong>Bloqueado</strong> (el pedido queda en hold pendiente de una acción operativa o de una corrección externa — todavía puede recuperarse antes de su deadline) o <strong>Rechazado</strong> (el pedido se termina de inmediato, sin recuperación). El nuevo paso <strong>SKU Availability</strong> es el único de nivel línea que <em>descarta</em> solo las líneas afectadas y deja al resto del pedido continuar. Las compuertas marcadas <em>TBD</em> aparecen en el flujo canónico pero todavía no están cubiertas por un HLR en las carpetas Confluence de capa 1 / capa 2 consultadas para este documento. Cada compuerta respeta un <strong>toggle por país + vendor</strong> (y, cuando aplica, una <strong>blacklist por retailer / cadena</strong>): si la regla está apagada, el pedido omite esa compuerta sin pass/fail.</p>
+                <p class="section-intro">Vista compacta del <strong>pipeline completo del BRE</strong> para un pedido EDI, desde la recepción del broker hasta la creación del pedido en BEES. Tres etapas: <strong>Etapa 1</strong> (incluye <strong>validación DC</strong> tras resolver POC), <strong>Etapa 2</strong> (líneas + chequeo final) y <strong>Etapa 3</strong> (MOQ / MAX). Resultados <strong>Bloqueado</strong>, <strong>Rechazado</strong> o <strong>descarte de línea</strong> según HLR. <strong>Disponibilidad SKU</strong> ajusta o descarta líneas. <strong>Flujo 2 (facturación remota)</strong> ejecuta subconjunto FR (BEESEDI-52538). Toggles por país + vendor y blacklist por minorista cuando aplica.</p>
 
                 <div class="e2e-pipeline" role="region" aria-labelledby="e2e-pipeline-heading-es">
                     <div class="e2e-title" id="e2e-pipeline-heading-es">Pipeline BRE extremo a extremo — Broker → Link BRE → BEES</div>
@@ -8907,7 +9438,15 @@
                             </div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate">3. Validación de fechas de entrega<small><a href="#section-tech-delivery-dates-heading-es">BEESEDI-48929</a> · Rango + Frecuencia · BEES Delivery Window</small></div>
+                                <div class="e2e-gate">2c. Validación DC (modelo de distribución)<small><a href="#section-tech-dc-validation-heading-es">BEESEDI-52538</a> · <code>deliveryCenterId</code> · Flujo 1 vs 2</small></div>
+                                <div class="e2e-arr">→</div>
+                                <div class="e2e-onfail is-blocked"><strong>Al fallar · Bloqueado</strong>DC ausente en cuenta · hold hasta corrección BU · reproceso vía Central Tracking</div>
+                                <div class="e2e-arr">→</div>
+                                <div class="e2e-onpass"><strong>Al pasar</strong>Facturación directa (todas las reglas) o remota FR (p. ej. AR DC 60)</div>
+                            </div>
+
+                            <div class="e2e-row">
+                                <div class="e2e-gate">3. Validación de fechas de entrega<small><a href="#section-tech-delivery-dates-heading-es">BEESEDI-48929</a> · Rango + Frecuencia · omitido en Flujo 2 si aplica</small></div>
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-onfail is-rejected"><strong>Al fallar · Rechazado</strong>Rango de entrega inválido / ventana de entrega inválida · log motivo (rango / frecuencia)</div>
                                 <div class="e2e-arr">→</div>
@@ -8925,7 +9464,7 @@
                             <div class="e2e-section-bar is-line">Etapa 2 · Compuertas a nivel línea (Bloqueado, línea descartada o Rechazado al final)</div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate is-line">5. Matching de UPC (por línea)<small><a href="#section-tech-upc-matching-heading-es">BEESEDI-48947</a> · Catálogo primero, fallback POC mapping</small></div>
+                                <div class="e2e-gate is-line">5. Matching de UPC (por línea)<small><a href="#section-tech-upc-matching-heading-es">BEESEDI-48947</a> · 53722 mapping · 53692 PO Reader</small></div>
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-onfail is-blocked"><strong>Al fallar · Bloqueado</strong>UPC no encontrado · línea en hold a la espera de corregir catálogo / POC mapping · log <em>no_match_in_catalog_or_poc_mapping</em></div>
                                 <div class="e2e-arr">→</div>
@@ -8933,15 +9472,15 @@
                             </div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate is-tbd is-line">6. Validación de tipo de empaque<small>UoM / alineación de pack por SKU</small></div>
+                                <div class="e2e-gate is-line">6. Validación de empaque<small><a href="#section-tech-package-validation-heading-es">BEESEDI-48954</a> · <code>pack_conversion_factor</code> · omitido en Flujo 2 (AR FR)</small></div>
                                 <div class="e2e-arr">→</div>
-                                <div class="e2e-onfail is-blocked"><strong>Al fallar · Bloqueado</strong>Empaque de producto inválido · línea en hold para revisión de packaging</div>
+                                <div class="e2e-onfail is-rejected"><strong>Al fallar · Rechazado</strong>Conversión inválida / params comerciales ausentes · rechazar pedido completo</div>
                                 <div class="e2e-arr">→</div>
-                                <div class="e2e-onpass"><strong>Al pasar</strong>Continuar</div>
+                                <div class="e2e-onpass"><strong>Al pasar</strong>Reescribir cantidad a cajas de facturación</div>
                             </div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate is-line">7. Disponibilidad de SKU (por línea)<small>Chequeo de stock contra inventario BEES</small></div>
+                                <div class="e2e-gate is-line">7. Disponibilidad de SKU (por línea)<small><a href="#section-tech-sku-availability-heading-es">BEESEDI-54950</a> · señal stock cart-validation</small></div>
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-onfail is-line-drop"><strong>Al fallar · Línea descartada</strong>Rechazar solo los productos sin stock · mantener el resto del pedido en marcha</div>
                                 <div class="e2e-arr">→</div>
@@ -8967,7 +9506,7 @@
                             <div class="e2e-section-bar">Etapa 3 · Compuertas a nivel pedido por cantidad (fallo → Rechazado)</div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate is-tbd">10. Cantidad mínima de pedido<small>Umbral mínimo por POC para el pedido</small></div>
+                                <div class="e2e-gate">10. Cantidad mínima de pedido<small><a href="#section-tech-order-quantity-heading-es">BEESEDI-54948</a> · MOQ cart-validation · omitido Flujo 2 / T4 / CEDIS (MX)</small></div>
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-onfail is-rejected"><strong>Al fallar · Rechazado</strong>Pedido por debajo de la cantidad mínima requerida</div>
                                 <div class="e2e-arr">→</div>
@@ -8975,7 +9514,7 @@
                             </div>
 
                             <div class="e2e-row">
-                                <div class="e2e-gate is-tbd">11. Cantidad máxima de pedido<small>Tope máximo por POC — mismo comportamiento que la mínima</small></div>
+                                <div class="e2e-gate">11. Cantidad máxima de pedido<small><a href="#section-tech-order-quantity-heading-es">BEESEDI-54949</a> · MVP MX · omitido T4 / CEDIS</small></div>
                                 <div class="e2e-arr">→</div>
                                 <div class="e2e-onfail is-rejected"><strong>Al fallar · Rechazado</strong>Pedido por encima de la cantidad máxima permitida</div>
                                 <div class="e2e-arr">→</div>
@@ -9004,7 +9543,7 @@
                     </div>
                 </div>
 
-                <div class="tech-req-note"><span class="badge-tbd">Fuente</span> Construido a partir de las páginas Confluence de la carpeta <strong>capa 1</strong> (Order Integration · Match POC · PO uniqueness · Delivery dates) y de la carpeta <strong>capa 2</strong> (UPC matching · Price validation). Las compuertas marcadas <em>TBD</em> (Validación de tipo de empaque, Cantidad mínima / máxima de pedido) son placeholders inferidos del diagrama BRE extremo a extremo para completitud; sus contratos detallados todavía no se publican en esas carpetas.</div>
+                <div class="tech-req-note"><span class="badge-tbd">Fuente</span> HLR BLK: <strong>capa 1</strong> (48925, 48927, 52518, 52538, 48929, 48956), <strong>capa 2</strong> (48947, 53722, 53692, 48954, 54950, 48955), <strong>capa 3</strong> (54948, 54949). El <strong>Flujo 2 (facturación remota)</strong> omite reglas no FR según BEESEDI-52538. Resultados en <a href="#section-tech-central-tracking-heading-es">Central Tracking</a> (51859 / 51860 / 57198).</div>
             </section>
 
             <section class="slide" id="section-tech-order-integration-es">
@@ -9111,7 +9650,7 @@
                                 <div class="edi-if-cell edi-if-cell--fork-arm-no">
                                     <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
                                         <span class="edi-vi-tag">No</span>
-                                        <div class="edi-vi-pill edi-vi-pill--err">Rechazado en Sync · HTTP · fin</div>
+                                        <div class="edi-vi-pill edi-vi-pill--err">Rechazado en Sync<br>· HTTP · fin</div>
                                         <div class="edi-vi-terminus">
                                             <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                             <span class="edi-vi-terminus-lbl">Fin</span>
@@ -9446,7 +9985,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--bre">
                                         <span class="edi-vi-bubble">1</span>
-                                        <span class="edi-vi-lbl">La app Link BRE recibe el pedido</span>
+                                        <span class="edi-vi-lbl">La app Link BRE<br>recibe el pedido</span>
                                     </div>
                                 </div>
                             </div>
@@ -9493,7 +10032,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--accounts">
                                         <span class="edi-vi-bubble">4</span>
-                                        <span class="edi-vi-lbl">Obtener cuenta por <code>CustomerAccountID</code></span>
+                                        <span class="edi-vi-lbl">Obtener cuenta por<br><code>CustomerAccountID</code></span>
                                         <span class="edi-vi-lbl-sub">Servicio de cuentas</span>
                                     </div>
                                 </div>
@@ -9538,7 +10077,7 @@
                                 <div class="edi-if-cell edi-if-cell--fork-arm-yes">
                                     <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
                                         <span class="edi-vi-tag">S&#237;</span>
-                                        <div class="edi-vi-pill edi-vi-pill--ok"><code>VendorAccountID</code> y siguientes reglas</div>
+                                        <div class="edi-vi-pill edi-vi-pill--ok"><code>VendorAccountID</code><br>y siguientes reglas</div>
                                         <div class="edi-vi-terminus edi-vi-terminus--continue">
                                             <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                             <span class="edi-vi-terminus-lbl">Rama</span>
@@ -9569,7 +10108,7 @@
                                         <div class="edi-if-row edi-if-row--poc-node">
                                             <div class="edi-if-cell edi-if-cell--graph">
                                                 <div class="edi-vi-node edi-vi-node--bre">
-                                                    <span class="edi-vi-lbl">Bloquear el pedido (en hold para operador)</span>
+                                                    <span class="edi-vi-lbl">Bloquear el pedido<br>(en hold para operador)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -9594,7 +10133,7 @@
                                         <div class="edi-if-row edi-if-row--poc-node">
                                             <div class="edi-if-cell edi-if-cell--graph">
                                                 <div class="edi-vi-node edi-vi-node--bre">
-                                                    <span class="edi-vi-lbl">Sustituir la cuenta del cliente por <code>VendorAccountID</code></span>
+                                                    <span class="edi-vi-lbl">Sustituir cuenta del cliente por<br><code>VendorAccountID</code></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -9721,7 +10260,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--accounts">
                                         <span class="edi-vi-bubble">2</span>
-                                        <span class="edi-vi-lbl">Buscar pedidos por OC + <code>VendorAccountID</code></span>
+                                        <span class="edi-vi-lbl">Buscar pedidos por OC +<br><code>VendorAccountID</code></span>
                                         <span class="edi-vi-lbl-sub">Base de pedidos</span>
                                     </div>
                                 </div>
@@ -9756,7 +10295,7 @@
                                 <div class="edi-if-cell edi-if-cell--fork-arm-no">
                                     <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
                                         <span class="edi-vi-tag">No</span>
-                                        <div class="edi-vi-pill edi-vi-pill--err">Duplicado · registrar y Bloqueado</div>
+                                        <div class="edi-vi-pill edi-vi-pill--err">Duplicado · registrar<br>y Bloqueado</div>
                                         <div class="edi-vi-terminus">
                                             <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                             <span class="edi-vi-terminus-lbl">Rama</span>
@@ -9787,7 +10326,7 @@
                                         <div class="edi-if-row edi-if-row--poc-node">
                                             <div class="edi-if-cell edi-if-cell--graph">
                                                 <div class="edi-vi-node edi-vi-node--bre">
-                                                    <span class="edi-vi-lbl">Registrar el fallo (motivo incl. <code>OrderId</code>)</span>
+                                                    <span class="edi-vi-lbl">Registrar el fallo<br>(motivo incl. <code>OrderId</code>)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -9797,7 +10336,7 @@
                                         <div class="edi-if-row edi-if-row--poc-node">
                                             <div class="edi-if-cell edi-if-cell--graph">
                                                 <div class="edi-vi-node edi-vi-node--bre">
-                                                    <span class="edi-vi-lbl">Bloquear el pedido (en hold para operador)</span>
+                                                    <span class="edi-vi-lbl">Bloquear el pedido<br>(en hold para operador)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -9969,7 +10508,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--bre">
                                         <span class="edi-vi-bubble">1</span>
-                                        <span class="edi-vi-lbl">Link BRE carga fechas y configuraci&#243;n</span>
+                                        <span class="edi-vi-lbl">Link BRE carga fechas<br>y configuraci&#243;n</span>
                                     </div>
                                 </div>
                             </div>
@@ -10127,7 +10666,7 @@
                                 <div class="edi-if-cell edi-if-cell--graph">
                                     <div class="edi-vi-node edi-vi-node--accounts">
                                         <span class="edi-vi-bubble">2</span>
-                                        <span class="edi-vi-lbl">Obtener fechas de entrega autorizadas</span>
+                                        <span class="edi-vi-lbl">Obtener fechas de entrega<br>autorizadas</span>
                                         <span class="edi-vi-lbl-sub">POC / Delivery Window</span>
                                     </div>
                                 </div>
@@ -10245,7 +10784,9 @@
             <section class="slide" id="section-tech-upc-matching-es" aria-labelledby="section-tech-upc-matching-heading-es">
                 <p class="slide-num">T5 · Matching de UPC (BRE)</p>
                 <h2 id="section-tech-upc-matching-heading-es">Matching de UPC (BRE)</h2>
-                <p class="section-intro">Según <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6140789875" target="_blank" rel="noopener noreferrer">BEESEDI-48947</a>, esta es la <strong>primera compuerta a nivel línea</strong>: cada línea del pedido debe resolverse a un SKU del catálogo BEES usando los <strong>códigos de producto exactos</strong> recibidos en el pedido. La regla opera en dos rutas controladas por un <strong>toggle por país + vendor</strong> (clave de regla <code>SKU_MATCHING</code>) y una <strong>blacklist por minorista</strong>: una <strong>ruta estricta</strong> (toggle activo, minorista no en blacklist) que marca las líneas sin match como <strong>Bloqueadas</strong> (UPC no encontrado — línea en hold a la espera de corregir catálogo o POC mapping, todavía puede recuperarse antes del deadline) y termina en <strong>Rechazo</strong> del pedido si no queda ninguna línea al chequeo "¿queda algún producto?"; y una <strong>ruta relajada</strong> (toggle inactivo o minorista en blacklist) que omite el matching de UPC por completo y conserva todas las líneas.</p>
+                <p class="section-intro">Según <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6140789875" target="_blank" rel="noopener noreferrer">BEESEDI-48947</a>, esta es la <strong>primera compuerta a nivel línea</strong>: cada línea debe resolverse a un SKU del catálogo BEES con los <strong>códigos exactos</strong> del pedido, con rutas estricta (toggle + blacklist) o relajada (omite la regla).</p>
+
+                <div class="tech-req-note"><span class="badge-tbd">Épicos de implementación</span> <strong>Catálogo:</strong> <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48947" target="_blank" rel="noopener noreferrer">48947</a>. <strong>Fallback POC mapping (MX):</strong> <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-53722" target="_blank" rel="noopener noreferrer">53722</a>. <strong>PO Reader:</strong> <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6357876913" target="_blank" rel="noopener noreferrer">53692</a>.</div>
 
                 <h3 class="tech-slide-h3">Entradas y orden de lookup</h3>
                 <p class="section-intro" style="margin-top:0.25rem;">Para cada línea del pedido el BRE lee el código <strong>exacto</strong> presente en la línea (<code>order.items[].gtin</code> y/o <code>sku</code>) — no se exige normalización (ni padding de ceros, ni folding GTIN-14 vs GTIN-12, ni expansión de jerarquía de empaque). El orden de lookup es <strong>obligatorio</strong>: (1) <strong>catálogo</strong> BEES con el código exacto; (2) solo si el catálogo no devuelve match, el <strong>POC mapping</strong> del vendor de ese POC. <strong>Si existe match en catálogo, el POC mapping no puede sobrescribirlo.</strong> La ruta que resolvió la línea se registra como <code>resolutionSource</code> ∈ {<code>catalog</code>, <code>poc_mapping</code>, <code>none</code>}.</p>
@@ -10375,7 +10916,7 @@
                                     <div class="edi-if-cell edi-if-cell--graph">
                                         <div class="edi-vi-node edi-vi-node--accounts">
                                             <span class="edi-vi-bubble">1</span>
-                                            <span class="edi-vi-lbl">Buscar la línea en el <strong>catálogo BEES</strong></span>
+                                            <span class="edi-vi-lbl">Buscar la línea en el<br><strong>catálogo BEES</strong></span>
                                             <span class="edi-vi-lbl-sub">Código exacto (sin normalización)</span>
                                         </div>
                                     </div>
@@ -10407,7 +10948,7 @@
                                     <div class="edi-if-cell edi-if-cell--graph">
                                         <div class="edi-vi-node edi-vi-node--accounts">
                                             <span class="edi-vi-bubble">2</span>
-                                            <span class="edi-vi-lbl">Buscar la línea en <strong>POC mapping</strong></span>
+                                            <span class="edi-vi-lbl">Buscar la línea en<br><strong>POC mapping</strong></span>
                                             <span class="edi-vi-lbl-sub">UPC → BEES item · ámbito vendor</span>
                                         </div>
                                     </div>
@@ -10466,7 +11007,7 @@
                                     <div class="edi-if-cell edi-if-cell--fork-arm-yes">
                                         <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
                                             <span class="edi-vi-tag">≥1</span>
-                                            <div class="edi-vi-pill edi-vi-pill--ok"><code>order_continued</code> · conservar sobrevivientes</div>
+                                            <div class="edi-vi-pill edi-vi-pill--ok"><code>order_continued</code><br>· conservar sobrevivientes</div>
                                             <div class="edi-vi-terminus edi-vi-terminus--continue">
                                                 <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                                 <span class="edi-vi-terminus-lbl">Siguiente regla</span>
@@ -10501,7 +11042,7 @@
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight">Lo que necesitamos del BU</h3>
                 <div class="tech-bu-req">
-                    <div class="tech-bu-req-head"><span class="tech-bu-req-badge">Rol del BU</span> Unas pocas cosas que necesitamos del lado del BU para que cada línea de pedido pueda matchearse con un producto BEES</div>
+                    <div class="tech-bu-req-head"><span class="tech-bu-req-badge">Rol del BU</span> Dependencias del BU / partner</div>
                     <ul>
                         <li><strong>Un catálogo BEES limpio.</strong> Los SKUs que le vendés a un minorista deben estar en el catálogo BEES con el código <strong>exacto</strong> que el minorista envía — no autocorregimos ceros faltantes, diferencias de formato ni jerarquías de empaque. Datos desactualizados o faltantes son la causa #1 de líneas rechazadas, así que esa lista merece atención.</li>
                         <li><strong>Mapeo a nivel POC cuando los minoristas usan sus propios códigos.</strong> Cuando un minorista usa códigos internos que no existen en el catálogo, podés registrar un mapeo "este código = aquel item BEES" a nivel <strong>vendor + POC</strong>. Podés crear, editar, buscar y desactivar esos mapeos vos mismo; no hay workflow de aprobación, pero registramos cada cambio para auditoría.</li>
@@ -10681,7 +11222,7 @@
                                     <div class="edi-if-cell edi-if-cell--fork-arm-no">
                                         <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
                                             <span class="edi-vi-tag">Flag</span>
-                                            <div class="edi-vi-pill edi-vi-pill--err">Bloquear pedido · on-hold hasta D-1</div>
+                                            <div class="edi-vi-pill edi-vi-pill--err">Bloquear pedido · on-hold<br>hasta D-1</div>
                                             <div class="edi-vi-terminus">
                                                 <span class="edi-vi-terminus-bar" aria-hidden="true"></span>
                                                 <span class="edi-vi-terminus-lbl">En hold</span>
@@ -10754,6 +11295,37 @@
 
                 <div class="tech-req-note"><span class="badge-tbd">Scope</span> <strong>Fuera de alcance para BEESEDI-48955:</strong> aceptación parcial cuando solo algunas líneas tienen discrepancia (el bloqueo del pedido completo es requerido); definir el motor de cálculo de precio de referencia (la regla consume el pricing BEES); validación del campo de descuento (se escala al equipo de descuentos); validación del campo de impuesto como check independiente; validación de empties (envases retornables); el front-end de revisión OTC; comportamiento tras vencer la deadline; normalización de formato de precio por minorista o cadena (pendiente análisis Krikos); definición de valores de tolerancia por defecto (TBD fase de setup). Fuente: <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6217368312" target="_blank" rel="noopener noreferrer">BEESEDI-48955 (BLK)</a>.</div>
             </section>
+
+            <section class="slide" id="section-tech-dc-validation-es" aria-labelledby="section-tech-dc-validation-heading-es">
+                <p class="slide-num">T9 · Validación DC (BRE)</p>
+                <h2 id="section-tech-dc-validation-heading-es">Validación DC — facturación directa vs remota (BRE)</h2>
+                <p class="section-intro">Según <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6222381057" target="_blank" rel="noopener noreferrer">BEESEDI-52538</a>, el BRE lee <code>deliveryCenterId</code> en Account Service y elige <strong>Flujo 1</strong> o <strong>Flujo 2 (facturación remota)</strong>. DC ausente → pedido <strong>Bloqueado</strong>.</p>
+                <div class="tech-req-note"><span class="badge-tbd">Scope</span> El BRE no mantiene asignaciones POC→DC. Fuente: <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6222381057" target="_blank" rel="noopener noreferrer">BEESEDI-52538 (BLK)</a>.</div>
+            </section>
+
+            <section class="slide" id="section-tech-package-validation-es" aria-labelledby="section-tech-package-validation-heading-es">
+                <p class="slide-num">T10 · Validación de empaque (BRE)</p>
+                <h2 id="section-tech-package-validation-heading-es">Validación de empaque (BRE)</h2>
+                <p class="section-intro"><a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6219956551" target="_blank" rel="noopener noreferrer">BEESEDI-48954</a>: conversión a cajas de facturación con <code>pack_conversion_factor</code> y <code>EDI_SKU_COMMERCIAL_PARAMS</code>. Fallo → <strong>rechazo del pedido completo</strong>.</p>
+            </section>
+
+            <section class="slide" id="section-tech-sku-availability-es" aria-labelledby="section-tech-sku-availability-heading-es">
+                <p class="slide-num">T11 · Disponibilidad SKU (BRE)</p>
+                <h2 id="section-tech-sku-availability-heading-es">Disponibilidad SKU — stock (BRE)</h2>
+                <p class="section-intro"><a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6452150787" target="_blank" rel="noopener noreferrer">BEESEDI-54950</a>: validación por línea vía <strong>cart-validation</strong>; aceptar, ajustar cantidad o descartar línea.</p>
+            </section>
+
+            <section class="slide" id="section-tech-order-quantity-es" aria-labelledby="section-tech-order-quantity-heading-es">
+                <p class="slide-num">T12 · Cantidades agregadas (BRE)</p>
+                <h2 id="section-tech-order-quantity-heading-es">Cantidad mínima y máxima de pedido (BRE)</h2>
+                <p class="section-intro">Etapa 3: <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6453461458" target="_blank" rel="noopener noreferrer">BEESEDI-54948</a> (MOQ) y <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6452871508" target="_blank" rel="noopener noreferrer">BEESEDI-54949</a> (MAX). Consulta cart-validation; rechazo de pedido completo si falla; sin ventana de combinación multi-pedido en MVP.</p>
+            </section>
+
+            <section class="slide" id="section-tech-central-tracking-es" aria-labelledby="section-tech-central-tracking-heading-es">
+                <p class="slide-num">T13 · Central Tracking (complemento)</p>
+                <h2 id="section-tech-central-tracking-heading-es">EDI Central Tracking — visibilidad y ops</h2>
+                <p class="section-intro">Capacidades complementarias en <strong>BEESIP-31064</strong>: <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-51859" target="_blank" rel="noopener noreferrer">51859</a> minorista · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-51860" target="_blank" rel="noopener noreferrer">51860</a> ops · <a href="https://ab-inbev.atlassian.net/browse/BEESEDI-57198" target="_blank" rel="noopener noreferrer">57198</a> Fase 2.</p>
+            </section>
             </div>
         <section class="slide references-section" id="section-references" aria-labelledby="section-references-heading">
             <p class="slide-num"><span class="doc-i18n doc-i18n--en">References</span><span class="doc-i18n doc-i18n--es">Referencias</span></p>
@@ -10768,6 +11340,15 @@
                 <li><a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/5791453572" target="_blank" rel="noopener noreferrer"><span class="doc-i18n doc-i18n--en">BEESEDI-48929 &#8212; Delivery dates validation</span><span class="doc-i18n doc-i18n--es">BEESEDI-48929 &mdash; Validaci&#243;n de fechas de entrega</span></a></li>
                 <li><a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6140789875" target="_blank" rel="noopener noreferrer"><span class="doc-i18n doc-i18n--en">BEESEDI-48947 &#8212; EDI Order Validator MVP &#8212; UPC Matching</span><span class="doc-i18n doc-i18n--es">BEESEDI-48947 &mdash; EDI Order Validator MVP &mdash; Matching de UPC</span></a></li>
                 <li><a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6217368312" target="_blank" rel="noopener noreferrer"><span class="doc-i18n doc-i18n--en">BEESEDI-48955 &#8212; EDI order validator MVP &#8212; Price validation</span><span class="doc-i18n doc-i18n--es">BEESEDI-48955 &mdash; EDI order validator MVP &mdash; Validaci&#243;n de precios</span></a></li>
+                <li><a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6219956551" target="_blank" rel="noopener noreferrer"><span class="doc-i18n doc-i18n--en">BEESEDI-48954 &#8212; Package validation</span><span class="doc-i18n doc-i18n--es">BEESEDI-48954 &mdash; Validaci&#243;n de empaque</span></a></li>
+                <li><a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6222381057" target="_blank" rel="noopener noreferrer"><span class="doc-i18n doc-i18n--en">BEESEDI-52538 &#8212; DC validation</span><span class="doc-i18n doc-i18n--es">BEESEDI-52538 &mdash; Validaci&#243;n DC</span></a></li>
+                <li><a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6357876913" target="_blank" rel="noopener noreferrer"><span class="doc-i18n doc-i18n--en">BEESEDI-53692 &#8212; POC curated product lookup (PO Reader)</span><span class="doc-i18n doc-i18n--es">BEESEDI-53692 &mdash; POC curated lookup (PO Reader)</span></a></li>
+                <li><a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6452150787" target="_blank" rel="noopener noreferrer"><span class="doc-i18n doc-i18n--en">BEESEDI-54950 &#8212; SKU availability</span><span class="doc-i18n doc-i18n--es">BEESEDI-54950 &mdash; Disponibilidad SKU</span></a></li>
+                <li><a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6453461458" target="_blank" rel="noopener noreferrer"><span class="doc-i18n doc-i18n--en">BEESEDI-54948 &#8212; Minimum order quantity</span><span class="doc-i18n doc-i18n--es">BEESEDI-54948 &mdash; Cantidad m&#237;nima de pedido</span></a></li>
+                <li><a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6452871508" target="_blank" rel="noopener noreferrer"><span class="doc-i18n doc-i18n--en">BEESEDI-54949 &#8212; Maximum order quantity</span><span class="doc-i18n doc-i18n--es">BEESEDI-54949 &mdash; Cantidad m&#225;xima de pedido</span></a></li>
+                <li><a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220185829" target="_blank" rel="noopener noreferrer"><span class="doc-i18n doc-i18n--en">BEESEDI-51859 &#8212; Central Tracking (retailers)</span><span class="doc-i18n doc-i18n--es">BEESEDI-51859 &mdash; Central Tracking (minoristas)</span></a></li>
+                <li><a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6218907975" target="_blank" rel="noopener noreferrer"><span class="doc-i18n doc-i18n--en">BEESEDI-51860 &#8212; Central Tracking (vendor ops)</span><span class="doc-i18n doc-i18n--es">BEESEDI-51860 &mdash; Central Tracking (ops)</span></a></li>
+                <li><a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6611174016" target="_blank" rel="noopener noreferrer"><span class="doc-i18n doc-i18n--en">BEESEDI-57198 &#8212; Central Tracking Phase 2</span><span class="doc-i18n doc-i18n--es">BEESEDI-57198 &mdash; Central Tracking Fase 2</span></a></li>
             </ul>
         </section>
         </div>
@@ -10789,7 +11370,7 @@
             btn.textContent = collapsed ? '\u203a' : '\u2039';
         }
 
-        apply(localStorage.getItem(KEY) === '1');
+        apply(localStorage.getItem(KEY) !== '0');
 
         btn.addEventListener('click', function () {
             var collapsed = !body.classList.contains('doc-toc-collapsed');
@@ -10915,6 +11496,9 @@
             var es = lang === 'es';
             html.setAttribute('lang', es ? 'es' : 'en');
             html.setAttribute('data-doc-lang', lang);
+            document.querySelectorAll('div.doc-i18n[data-doc-lang]').forEach(function (el) {
+                el.hidden = el.getAttribute('data-doc-lang') !== lang;
+            });
             var btnEn = document.getElementById('doc-lang-en');
             var btnEs = document.getElementById('doc-lang-es');
             if (btnEn) {
@@ -10943,8 +11527,12 @@
             var stored = localStorage.getItem(LANG_KEY);
             if (stored === 'es' || stored === 'en') {
                 applyDocLang(stored);
+            } else {
+                applyDocLang(html.getAttribute('data-doc-lang') || 'en');
             }
-        } catch (e) {}
+        } catch (e) {
+            applyDocLang(html.getAttribute('data-doc-lang') || 'en');
+        }
 
         var bEn = document.getElementById('doc-lang-en');
         var bEs = document.getElementById('doc-lang-es');
