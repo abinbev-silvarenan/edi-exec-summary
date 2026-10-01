@@ -3011,6 +3011,38 @@
         .edi-if-fork-note:last-child {
             margin-bottom: 0;
         }
+        .edi-if-layer-band {
+            width: 100%;
+            max-width: 52rem;
+            margin: 0.55rem auto 0.15rem;
+            padding: 0.38rem 0.85rem;
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: var(--bees-black);
+            color: var(--bees-yellow);
+            border-radius: 10px;
+            text-align: center;
+            line-height: 1.35;
+        }
+        .edi-if-handoff-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.45rem;
+            width: 100%;
+            max-width: 28rem;
+            margin: 0 auto;
+        }
+        @media (max-width: 520px) {
+            .edi-if-handoff-grid { grid-template-columns: 1fr; }
+        }
+        .edi-if-handoff-grid .edi-vi-pill {
+            min-height: 2.85rem;
+            font-size: 0.62rem;
+            line-height: 1.25;
+            padding: 0.35rem 0.45rem;
+        }
         .tech-diagram-intro {
             font-size: 0.82rem;
             color: var(--bees-gray);
@@ -4013,6 +4045,7 @@
                 <li class="doc-toc-item--exec-only"><a class="doc-toc-anchor" data-anchor-en="#section-delivery" data-anchor-es="#section-delivery-es" href="#section-delivery"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">6</span>Delivery plan</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">6</span>Delivery plan</span></a></li>
                 <li class="doc-toc-item--exec-only"><a class="doc-toc-anchor" data-anchor-en="#section-concerns" data-anchor-es="#section-concerns-es" href="#section-concerns"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">7</span>Concerns</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">7</span>Preocupaciones</span></a></li>
                 <li class="doc-toc-item--tech-only"><a class="doc-toc-anchor" data-anchor-en="#section-tech-bu-matrix" data-anchor-es="#section-tech-bu-matrix-es" href="#section-tech-bu-matrix"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">T0</span>Business rules matrix</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">T0</span>Matriz de reglas</span></a></li>
+                <li class="doc-toc-item--tech-only doc-toc-item--sub"><a class="doc-toc-anchor" data-anchor-en="#section-e2e-journey-matrix-heading" data-anchor-es="#section-e2e-journey-matrix-heading-es" href="#section-e2e-journey-matrix-heading"><span class="doc-i18n doc-i18n--en">E2E journey flow</span><span class="doc-i18n doc-i18n--es">Flujo E2E</span></a></li>
                 <li class="doc-toc-item--tech-only"><a class="doc-toc-anchor" data-anchor-en="#section-tech-overview" data-anchor-es="#section-tech-overview-es" href="#section-tech-overview"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">T1</span>Overview</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">T1</span>Overview</span></a></li>
                 <li class="doc-toc-item--tech-only"><a class="doc-toc-anchor" data-anchor-en="#section-tech-e2e-flow" data-anchor-es="#section-tech-e2e-flow-es" href="#section-tech-e2e-flow"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">T2</span>End-to-end BRE flow</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">T2</span>Flujo BRE extremo a extremo</span></a></li>
                 <li class="doc-toc-item--tech-only"><a class="doc-toc-anchor" data-anchor-en="#section-tech-order-integration" data-anchor-es="#section-tech-order-integration-es" href="#section-tech-order-integration"><span class="doc-i18n doc-i18n--en"><span class="doc-toc-num">T3</span>Order integration</span><span class="doc-i18n doc-i18n--es"><span class="doc-toc-num">T3</span>Order integration</span></a></li>
@@ -6331,6 +6364,231 @@
 <div class="lead">Business rule · related BUs · short description · scope · prerequisites · risk · ETA</div>
 <p class="draft-note">Description, scope, and prerequisites aligned to published <strong>BLK</strong> HLRs (3rd-layer MOQ/MAX/SKU included). <strong>Related BUs</strong>, <strong>risk</strong>, and <strong>ETA</strong> merged from the commercial feasibility one-pager. <strong>Central Tracking</strong> is not a validator rule — see the companion table after this one.</p>
 
+<h2 id="section-e2e-journey-matrix-heading">End-to-end journey — ingestion, validation &amp; handoff</h2>
+<p class="lead">Macro flow of the EDI BRE solution and platform integrations. Per-rule detail matches the <strong>Flow + key points</strong> diagrams in <a href="#section-tech-order-integration">Technical requirements</a>.</p>
+
+<div class="edi-integ-flow" role="region" aria-labelledby="e2e-journey-flow-heading">
+    <div class="edi-integ-flow-title" id="e2e-journey-flow-heading">EDI BRE — end-to-end solution flow</div>
+    <div class="edi-integ-flow-body">
+        <div class="edi-if-visual">
+            <div class="edi-if-visual-head">
+                <span class="edi-if-visual-caption">Flow + key points</span>
+                <div class="edi-vi-shape-key" aria-hidden="true">
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-step"></span> Step</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-diamond"></span> Decision</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-err"></span> Error</div>
+                </div>
+            </div>
+            <div class="edi-if-flow-track">
+
+                <div class="edi-if-layer-band">Ingestion layer</div>
+
+                <div class="edi-if-row edi-if-row--note-right">
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-node edi-vi-node--sync">
+                            <span class="edi-vi-bubble">1</span>
+                            <span class="edi-vi-lbl">BEES Sync Service</span>
+                            <span class="edi-vi-lbl-sub">Broker EDI → canonical JSON</span>
+                        </div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Sync · JSON extraction</strong>
+                        <p class="edi-if-ls-desc">Receive HTTP payload from broker; parse and normalize to the canonical <code>order</code> JSON contract before Link BRE.</p>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-left edi-if-row--diamond">
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Level 1 · format</strong>
+                        <p class="edi-if-ls-desc">Schema / required fields at Sync boundary — same pattern as order integration flow.</p>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-diamond">Level 1<br>OK?</div>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--fork-split">
+                    <div class="edi-if-cell edi-if-cell--fork-note-no">
+                        <p class="edi-if-fork-note"><strong>No:</strong> reject at Sync; no BRE handoff.</p>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+                        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+                            <span class="edi-vi-tag">No</span>
+                            <div class="edi-vi-pill edi-vi-pill--err">Rejected at Sync<br>· HTTP · stop</div>
+                            <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">End</span></div>
+                        </div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+                        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+                            <span class="edi-vi-tag">Yes</span>
+                            <div class="edi-vi-pill edi-vi-pill--ok">Forward to Link BRE</div>
+                            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+                        </div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--fork-note-yes">
+                        <p class="edi-if-fork-note"><strong>Yes:</strong> enter validation layer (3 phases).</p>
+                    </div>
+                </div>
+
+                <div class="edi-if-layer-band">Validation layer · 3 phases</div>
+
+                <div class="edi-if-row edi-if-row--note-right">
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-node edi-vi-node--bre">
+                            <span class="edi-vi-bubble">2</span>
+                            <span class="edi-vi-lbl">1st layer</span>
+                            <span class="edi-vi-lbl-sub">Order-level · 5 rules</span>
+                        </div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Order-level gates</strong>
+                        <ul class="edi-if-suboutcomes">
+                            <li><strong>POC matching</strong> ← Accounts</li>
+                            <li><strong>PO uniqueness</strong> ← Orders</li>
+                            <li><strong>Delivery range</strong> ← BRE engine</li>
+                            <li><strong>Delivery window</strong> ← Cart</li>
+                            <li><strong>DC validation</strong> ← Accounts</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-left edi-if-row--diamond">
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Layer 1 outcome</strong>
+                        <p class="edi-if-ls-desc">Fail → order blocked or rejected per HLR; pass → line-level phase.</p>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-diamond">Order-level<br>pass?</div>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-right">
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-node edi-vi-node--bre">
+                            <span class="edi-vi-bubble">3</span>
+                            <span class="edi-vi-lbl">2nd layer</span>
+                            <span class="edi-vi-lbl-sub">Line-level · 5 rules</span>
+                        </div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Line-level gates</strong>
+                        <ul class="edi-if-suboutcomes">
+                            <li><strong>UPC matching</strong> ← Items &amp; Catalog</li>
+                            <li><strong>Package validation</strong> ← EDI BRE</li>
+                            <li><strong>Stock availability</strong> ← Cart</li>
+                            <li><strong>Tax validation</strong> ← Price MS</li>
+                            <li><strong>Price validation</strong> ← Price MS</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-left edi-if-row--diamond">
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Layer 2 outcome</strong>
+                        <p class="edi-if-ls-desc">Line drop / partial accept where allowed; zero surviving lines → full reject.</p>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-diamond">Line-level<br>pass?</div>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-right">
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-node edi-vi-node--bre">
+                            <span class="edi-vi-bubble">4</span>
+                            <span class="edi-vi-lbl">3rd layer</span>
+                            <span class="edi-vi-lbl-sub">Aggregate · 2 rules + creation</span>
+                        </div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Order aggregate</strong>
+                        <ul class="edi-if-suboutcomes">
+                            <li><strong>Minimum qty</strong> ← Cart</li>
+                            <li><strong>Maximum qty</strong> ← Cart</li>
+                            <li><strong>Order creation</strong> in BEES when gates pass</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-layer-band">Handoff layer</div>
+
+                <div class="edi-if-row edi-if-row--note-left">
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Aggregate status</strong>
+                        <p class="edi-if-ls-desc">BRE emits structured outcome before OMS consumption and Central Tracking visibility.</p>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-if-handoff-grid" role="list">
+                            <div class="edi-vi-pill edi-vi-pill--ok" role="listitem">Accepted<br><small>Full order ingestion</small></div>
+                            <div class="edi-vi-pill edi-vi-pill--ok" role="listitem">Partially accepted<br><small>Partial line ingestion</small></div>
+                            <div class="edi-vi-pill edi-vi-pill--err" role="listitem">Rejected<br><small>Full order rejection</small></div>
+                            <div class="edi-vi-pill" role="listitem">Pending<br><small>Processing / on hold</small></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-right">
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-node">
+                            <span class="edi-vi-bubble">5</span>
+                            <span class="edi-vi-lbl">OMS</span>
+                            <span class="edi-vi-lbl-sub">Order management handoff</span>
+                        </div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">OMS</strong>
+                        <p class="edi-if-ls-desc">Accepted and partially accepted orders continue in the order-management path for BU / ERP consumption.</p>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-left">
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Central Tracking</strong>
+                        <p class="edi-if-ls-desc">All outcomes indexed for retailer visibility and vendor ops (reprocess, line resolution) — companion to BRE, not a validator toggle.</p>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-node edi-vi-node--bre">
+                            <span class="edi-vi-bubble">6</span>
+                            <span class="edi-vi-lbl">Central Tracking</span>
+                            <span class="edi-vi-lbl-sub">Visibility · ops · audit</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-right">
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">End</span></div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Traceability</strong>
+                        <p class="edi-if-ls-desc">Structured events (<code>requestTraceID</code>, rule, outcome) across Sync → BRE → OMS → Central Tracking.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="table-scroll">
 <table>
@@ -9060,6 +9318,232 @@
                         <h2>Matriz — reglas de validación</h2>
                         <div class="lead">Regla · BUs · descripción corta · alcance · prerrequisitos · riesgo · ETA</div>
                         <p class="draft-note">Descripción, alcance y prerrequisitos alineados a HLR BLK (MOQ/MAX/SKU de tercera capa incluidos). <strong>BUs relacionadas</strong>, <strong>riesgo</strong> y <strong>ETA</strong> fusionados desde el one-pager de viabilidad comercial. <strong>Central Tracking</strong> no es regla del validador — ver tabla complementaria.</p>
+
+                        <h2 id="section-e2e-journey-matrix-heading-es">Jornada extremo a extremo — ingesta, validación y handoff</h2>
+                        <p class="lead">Flujo macro de la solución EDI BRE e integraciones de plataforma. El detalle por regla sigue los diagramas <strong>Flow + key points</strong> en <a href="#section-tech-order-integration">Requisitos técnicos</a>.</p>
+
+<div class="edi-integ-flow" role="region" aria-labelledby="e2e-journey-flow-heading-es">
+    <div class="edi-integ-flow-title" id="e2e-journey-flow-heading-es">EDI BRE — flujo de solución extremo a extremo</div>
+    <div class="edi-integ-flow-body">
+        <div class="edi-if-visual">
+            <div class="edi-if-visual-head">
+                <span class="edi-if-visual-caption">Flujo + puntos clave</span>
+                <div class="edi-vi-shape-key" aria-hidden="true">
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-step"></span> Paso</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-diamond"></span> Decisión</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-err"></span> Error</div>
+                </div>
+            </div>
+            <div class="edi-if-flow-track">
+
+                <div class="edi-if-layer-band">Capa de ingesta</div>
+
+                <div class="edi-if-row edi-if-row--note-right">
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-node edi-vi-node--sync">
+                            <span class="edi-vi-bubble">1</span>
+                            <span class="edi-vi-lbl">BEES Sync Service</span>
+                            <span class="edi-vi-lbl-sub">Broker EDI → JSON canónico</span>
+                        </div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Sync · extracción JSON</strong>
+                        <p class="edi-if-ls-desc">Recibe payload HTTP del broker; parsea y normaliza al contrato canónico <code>order</code> antes de Link BRE.</p>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-left edi-if-row--diamond">
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Nivel 1 · formato</strong>
+                        <p class="edi-if-ls-desc">Esquema / campos obligatorios en el límite Sync — mismo patrón que integración de pedidos.</p>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-diamond">¿Nivel 1<br>OK?</div>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--fork-split">
+                    <div class="edi-if-cell edi-if-cell--fork-note-no">
+                        <p class="edi-if-fork-note"><strong>No:</strong> rechazo en Sync; sin handoff a BRE.</p>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+                        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+                            <span class="edi-vi-tag">No</span>
+                            <div class="edi-vi-pill edi-vi-pill--err">Rechazado en Sync<br>· HTTP · fin</div>
+                            <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Fin</span></div>
+                        </div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+                        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+                            <span class="edi-vi-tag">Sí</span>
+                            <div class="edi-vi-pill edi-vi-pill--ok">Pasar a Link BRE</div>
+                            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Siguiente</span></div>
+                        </div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--fork-note-yes">
+                        <p class="edi-if-fork-note"><strong>Sí:</strong> entrar a la capa de validación (3 fases).</p>
+                    </div>
+                </div>
+
+                <div class="edi-if-layer-band">Capa de validación · 3 fases</div>
+
+                <div class="edi-if-row edi-if-row--note-right">
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-node edi-vi-node--bre">
+                            <span class="edi-vi-bubble">2</span>
+                            <span class="edi-vi-lbl">1ª capa</span>
+                            <span class="edi-vi-lbl-sub">Nivel pedido · 5 reglas</span>
+                        </div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Compuertas a nivel pedido</strong>
+                        <ul class="edi-if-suboutcomes">
+                            <li><strong>POC matching</strong> ← Accounts</li>
+                            <li><strong>Unicidad PO</strong> ← Orders</li>
+                            <li><strong>Rango de entrega</strong> ← motor BRE</li>
+                            <li><strong>Ventana de entrega</strong> ← Cart</li>
+                            <li><strong>Validación DC</strong> ← Accounts</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-left edi-if-row--diamond">
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Resultado capa 1</strong>
+                        <p class="edi-if-ls-desc">Fallo → pedido bloqueado o rechazado según HLR; éxito → fase a nivel línea.</p>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-diamond">¿Pasa<br>pedido?</div>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-right">
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-node edi-vi-node--bre">
+                            <span class="edi-vi-bubble">3</span>
+                            <span class="edi-vi-lbl">2ª capa</span>
+                            <span class="edi-vi-lbl-sub">Nivel línea · 5 reglas</span>
+                        </div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Compuertas a nivel línea</strong>
+                        <ul class="edi-if-suboutcomes">
+                            <li><strong>UPC matching</strong> ← Items &amp; Catalog</li>
+                            <li><strong>Validación de paquete</strong> ← EDI BRE</li>
+                            <li><strong>Disponibilidad stock</strong> ← Cart</li>
+                            <li><strong>Validación impuestos</strong> ← Price MS</li>
+                            <li><strong>Validación precio</strong> ← Price MS</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-left edi-if-row--diamond">
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Resultado capa 2</strong>
+                        <p class="edi-if-ls-desc">Descarte de línea / aceptación parcial cuando aplique; cero líneas → rechazo total.</p>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-diamond">¿Pasa<br>línea?</div>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-right">
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-node edi-vi-node--bre">
+                            <span class="edi-vi-bubble">4</span>
+                            <span class="edi-vi-lbl">3ª capa</span>
+                            <span class="edi-vi-lbl-sub">Agregado · 2 reglas + creación</span>
+                        </div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Agregado de pedido</strong>
+                        <ul class="edi-if-suboutcomes">
+                            <li><strong>Cantidad mínima</strong> ← Cart</li>
+                            <li><strong>Cantidad máxima</strong> ← Cart</li>
+                            <li><strong>Creación del pedido</strong> en BEES cuando pasan las compuertas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-layer-band">Capa de handoff</div>
+
+                <div class="edi-if-row edi-if-row--note-left">
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Estado agregado</strong>
+                        <p class="edi-if-ls-desc">BRE emite resultado estructurado antes del consumo en OMS y la visibilidad en Central Tracking.</p>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-if-handoff-grid" role="list">
+                            <div class="edi-vi-pill edi-vi-pill--ok" role="listitem">Aceptado<br><small>Ingesta total del pedido</small></div>
+                            <div class="edi-vi-pill edi-vi-pill--ok" role="listitem">Parcialmente aceptado<br><small>Ingesta parcial de líneas</small></div>
+                            <div class="edi-vi-pill edi-vi-pill--err" role="listitem">Rechazado<br><small>Rechazo total del pedido</small></div>
+                            <div class="edi-vi-pill" role="listitem">Pendiente<br><small>Procesando / en hold</small></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-right">
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-node">
+                            <span class="edi-vi-bubble">5</span>
+                            <span class="edi-vi-lbl">OMS</span>
+                            <span class="edi-vi-lbl-sub">Handoff de gestión de pedidos</span>
+                        </div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">OMS</strong>
+                        <p class="edi-if-ls-desc">Pedidos aceptados y parcialmente aceptados continúan en gestión de pedidos para consumo BU / ERP.</p>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-left">
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Central Tracking</strong>
+                        <p class="edi-if-ls-desc">Todos los estados indexados para visibilidad del retailer y ops del vendor (reproceso, resolución por línea) — complemento del BRE.</p>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-node edi-vi-node--bre">
+                            <span class="edi-vi-bubble">6</span>
+                            <span class="edi-vi-lbl">Central Tracking</span>
+                            <span class="edi-vi-lbl-sub">Visibilidad · ops · auditoría</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+                <div class="edi-if-row edi-if-row--note-right">
+                    <div class="edi-if-cell edi-if-cell--graph">
+                        <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Fin</span></div>
+                    </div>
+                    <div class="edi-if-cell edi-if-cell--note-side">
+                        <strong class="edi-if-ls-title">Trazabilidad</strong>
+                        <p class="edi-if-ls-desc">Eventos estructurados (<code>requestTraceID</code>, regla, resultado) en Sync → BRE → OMS → Central Tracking.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <table>
   <thead>
