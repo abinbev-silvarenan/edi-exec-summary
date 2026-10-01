@@ -2409,12 +2409,26 @@
 
         .tech-epic-strip {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 0.75rem;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
             margin: 1.5rem 0 0.25rem;
+            align-items: stretch;
+        }
+        @media (max-width: 1080px) {
+            .tech-epic-strip {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (max-width: 560px) {
+            .tech-epic-strip {
+                grid-template-columns: 1fr;
+            }
         }
         .tech-epic-card {
-            display: block;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-width: 0;
             text-decoration: none;
             color: inherit;
             background: var(--bees-white);
@@ -2425,9 +2439,14 @@
             border-top: 3px solid var(--bees-yellow);
             transition: box-shadow 0.2s ease, transform 0.15s ease;
         }
-        a.tech-epic-card:hover {
-            box-shadow: 0 4px 18px rgba(255, 208, 0, 0.28);
-            transform: translateY(-1px);
+        .tech-epic-card .tec-epic-parent {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .tech-epic-card .tec-epic-parent:hover .tec-key {
+            color: var(--bees-black);
+            text-decoration: underline;
         }
         .tech-epic-card--static {
             cursor: default;
@@ -2456,11 +2475,12 @@
             list-style: none;
             margin: 0.65rem 0 0;
             padding: 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
-            gap: 0.35rem 0.6rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
             font-size: 0.76rem;
             line-height: 1.4;
+            flex: 1 1 auto;
         }
         .tech-epic-card .tec-epic-list li {
             padding: 0.2rem 0;
@@ -4088,17 +4108,19 @@
         html[data-doc-lang="en"] .doc-i18n--es {
             display: none !important;
         }
-        /* Full content blocks — always block layout when visible */
-        div.doc-i18n.doc-i18n--en,
-        div.doc-i18n.doc-i18n--es {
+        /* Language panels: one visible block per tab (EN or ES) */
+        #main-panel-exec > .doc-i18n,
+        #main-panel-tech > .doc-i18n {
             display: block;
         }
-        html[data-doc-lang="en"] div.doc-i18n.doc-i18n--es,
-        html[data-doc-lang="es"] div.doc-i18n.doc-i18n--en {
+        html[data-doc-lang="en"] #main-panel-exec > .doc-i18n--es,
+        html[data-doc-lang="en"] #main-panel-tech > .doc-i18n--es,
+        html[data-doc-lang="es"] #main-panel-exec > .doc-i18n--en,
+        html[data-doc-lang="es"] #main-panel-tech > .doc-i18n--en {
             display: none !important;
         }
-        div.doc-i18n.doc-i18n--en[hidden],
-        div.doc-i18n.doc-i18n--es[hidden] {
+        #main-panel-exec > .doc-i18n[hidden],
+        #main-panel-tech > .doc-i18n[hidden] {
             display: none !important;
         }
         /* Inline chrome labels stay inline when visible */
@@ -5312,7 +5334,7 @@
             </div>
         </section>
             </div>
-            <div class="doc-i18n doc-i18n--es" data-doc-lang="es">
+            <div class="doc-i18n doc-i18n--es" data-doc-lang="es" hidden>
 <!-- Executive summary -->
         <!-- ================================================================ -->
         <!-- Slide 1: Context & Problem                                       -->
@@ -7236,8 +7258,8 @@
                     <div class="tech-layer-pill"><strong>Companion</strong> Central Tracking surfaces outcomes and reprocess — not validator toggles.</div>
                 </div>
                 <div class="tech-epic-strip">
-                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-33217" target="_blank" rel="noopener noreferrer">
-                        <span class="tec-key">BEESIP-33217 · L1</span>
+                    <div class="tech-epic-card"><a class="tec-epic-parent" href="https://ab-inbev.atlassian.net/browse/BEESIP-33217" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-33217 · L1</span></a>
                         <div class="tec-title">Order-level gates</div>
                         <ul class="tec-epic-list">
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48925">48925</a><span class="tec-epic-label">Order intake</span></li>
@@ -7247,9 +7269,9 @@
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48929">48929</a><span class="tec-epic-label">Delivery dates</span></li>
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48956">48956</a><span class="tec-epic-label">PO uniqueness</span></li>
                         </ul>
-                    </a>
-                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-33218" target="_blank" rel="noopener noreferrer">
-                        <span class="tec-key">BEESIP-33218 · L2</span>
+                    </div>
+                    <div class="tech-epic-card"><a class="tec-epic-parent" href="https://ab-inbev.atlassian.net/browse/BEESIP-33218" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-33218 · L2</span></a>
                         <div class="tec-title">Line-level gates</div>
                         <ul class="tec-epic-list">
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48947">48947</a><span class="tec-epic-label">UPC catalog</span></li>
@@ -7259,24 +7281,24 @@
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-54950">54950</a><span class="tec-epic-label">SKU stock</span></li>
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48955">48955</a><span class="tec-epic-label">Price</span></li>
                         </ul>
-                    </a>
-                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-33219" target="_blank" rel="noopener noreferrer">
-                        <span class="tec-key">BEESIP-33219 · L3</span>
+                    </div>
+                    <div class="tech-epic-card"><a class="tec-epic-parent" href="https://ab-inbev.atlassian.net/browse/BEESIP-33219" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-33219 · L3</span></a>
                         <div class="tec-title">Order aggregate</div>
                         <ul class="tec-epic-list">
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-54948">54948</a><span class="tec-epic-label">Minimum order qty</span></li>
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-54949">54949</a><span class="tec-epic-label">Maximum order qty</span></li>
                         </ul>
-                    </a>
-                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-31064" target="_blank" rel="noopener noreferrer">
-                        <span class="tec-key">BEESIP-31064</span>
+                    </div>
+                    <div class="tech-epic-card"><a class="tec-epic-parent" href="https://ab-inbev.atlassian.net/browse/BEESIP-31064" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-31064</span></a>
                         <div class="tec-title">Central Tracking</div>
                         <ul class="tec-epic-list">
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-51859">51859</a><span class="tec-epic-label">Retailer visibility</span></li>
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-51860">51860</a><span class="tec-epic-label">Vendor ops MVP</span></li>
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-57198">57198</a><span class="tec-epic-label">Phase 2 line resolution</span></li>
                         </ul>
-                    </a>
+                    </div>
                 </div>
                 <div class="tech-req-note"><span class="badge-tbd">Draft</span> <strong>JSON contract:</strong> Canonical fields follow <code>openapi/order-edi-canonical-v1.yaml</code>; base URLs and auth follow the integration runbook when published.</div>
             </section>
@@ -9378,23 +9400,103 @@
                 <p class="section-intro" style="margin-top:0.25rem;">Country from the request header, vendor from the authenticated token, and <code>VendorAccountID</code> from the completed POC gate. BRE loads <code>deliveryCenterId</code> for that POC–vendor contract (Account V2 contract field in multicontract markets such as AR). Toggle off → skip DC lookup entirely and default to Flow 1 for all orders under that pair.</p>
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight" id="section-tech-dc-flow">DC validation flow</h3>
-                <p class="tech-diagram-intro tech-diagram-intro--flow-section">Runs as gate <strong>2c</strong> in the end-to-end pipeline — before delivery dates, PO uniqueness, and all line-level rules.</p>
-                <div class="e2e-pipeline" style="margin:1rem 0">
-                    <div class="e2e-body">
-                        <div class="e2e-row">
-                            <div class="e2e-gate">Toggle on for country + vendor?</div>
-                            <div class="e2e-arr">→</div>
-                            <div class="e2e-onfail"><strong>Off</strong> Flow 1 for all orders (no DC pass/fail)</div>
-                        </div>
-                        <div class="e2e-row">
-                            <div class="e2e-gate">Account Service: read <code>deliveryCenterId</code></div>
-                            <div class="e2e-arr">→</div>
-                            <div class="e2e-onfail is-blocked"><strong>Missing DC</strong> Block order · <code>missing_dc_assignment</code></div>
-                            <div class="e2e-arr">→</div>
-                            <div class="e2e-onpass"><strong>DC in remote list?</strong> Flow 2 (FR set only) else Flow 1 (full set)</div>
-                        </div>
-                    </div>
+                <p class="tech-diagram-intro tech-diagram-intro--flow-section">Runs as gate <strong>2c</strong> in the end-to-end pipeline — before delivery dates, PO uniqueness, and all line-level rules. <strong>Link BRE</strong> orchestrates; <strong>Accounts Service</strong> supplies <code>deliveryCenterId</code>.</p>
+<!-- RULE_FLOW_T9_EN_START -->
+
+<div class="edi-integ-flow edi-integ-flow--e2e-detailed" role="region" aria-labelledby="section-tech-dc-flow-diagram">
+    <div class="edi-integ-flow-title" id="section-tech-dc-flow-diagram">DC validation — Link BRE → Accounts</div>
+    <div class="edi-integ-flow-body">
+        <div class="edi-if-visual">
+            <div class="edi-if-visual-head">
+                <span class="edi-if-visual-caption">Flow + key points</span>
+                <div class="edi-vi-shape-key" aria-hidden="true">
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-bre"></span> Link BRE</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-accounts"></span> Accounts</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-cart"></span> Cart</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-catalog"></span> Catalog / chain</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-pricem"></span> Price MS</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-step"></span> Step</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-diamond"></span> Decision</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-err"></span> Error</div>
                 </div>
+            </div>
+            <div class="edi-if-flow-track edi-if-flow-track--e2e">
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">1</span><span class="edi-vi-lbl">DC validation</span><span class="edi-vi-lbl-sub">Gate 2c · after POC</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Rule intent</strong><p class="edi-if-ls-desc">Select Flow 1 (direct) vs Flow 2 (remote billing FR subset).</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--diamond"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Configuration</strong><p class="edi-if-ls-desc">Off → skip DC lookup; default Flow 1 for all orders.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-diamond">Toggle<br>on?</div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+<div class="edi-if-row edi-if-row--fork-split edi-poc-fork">
+    <div class="edi-if-cell edi-if-cell--fork-note-no"><p class="edi-if-fork-note"><strong>Off:</strong> no pass/fail on DC.</p></div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+            <span class="edi-vi-tag">No</span>
+            <div class="edi-vi-pill edi-vi-pill--err">Flow 1 · skip DC</div>
+            <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">End</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+            <span class="edi-vi-tag">Yes</span>
+            <div class="edi-vi-pill edi-vi-pill--ok">Lookup DC</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-note-yes"><p class="edi-if-fork-note"><strong>On:</strong> read account DC.</p></div>
+</div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right edi-if-row--svc"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--accounts"><span class="edi-vi-bubble edi-vi-bubble--call">↔</span><span class="edi-vi-lbl">Accounts Service</span><span class="edi-vi-lbl-sub">Read <code>deliveryCenterId</code></span><span class="edi-vi-comm">GET · account</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Communication</strong><p class="edi-if-ls-desc">BRE → Accounts: POC–vendor contract field (not EDI payload).</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--diamond"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Outcome</strong><p class="edi-if-ls-desc">Missing → <strong>Blocked</strong> <code>missing_dc_assignment</code>.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-diamond">DC<br>present?</div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+<div class="edi-if-row edi-if-row--fork-split edi-poc-fork">
+    <div class="edi-if-cell edi-if-cell--fork-note-no"><p class="edi-if-fork-note"><strong>No:</strong> hold for BU DC fix.</p></div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+            <span class="edi-vi-tag">No</span>
+            <div class="edi-vi-pill edi-vi-pill--err">Blocked · DC</div>
+            <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">End</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+            <span class="edi-vi-tag">Yes</span>
+            <div class="edi-vi-pill edi-vi-pill--ok">Route flow</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-note-yes"><p class="edi-if-fork-note"><strong>Yes:</strong> compare remote DC list.</p></div>
+</div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">BRE engine</strong><p class="edi-if-ls-desc">Flow 2 → FR rules only + <code>skipped — remote billing</code> logs.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">2</span><span class="edi-vi-lbl">Flow routing</span><span class="edi-vi-lbl-sub">Remote DC list vs <code>deliveryCenterId</code></span></div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right edi-if-row--diamond"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-diamond">Remote<br>DC?</div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Outcome</strong><p class="edi-if-ls-desc">Yes → Flow 2 (e.g. AR DC 60). No → Flow 1 full rule set.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+<div class="edi-if-row edi-if-row--fork-split edi-poc-fork">
+    <div class="edi-if-cell edi-if-cell--fork-note-no"><p class="edi-if-fork-note"><strong>Remote:</strong> UPC, price, DC per config.</p></div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+            <span class="edi-vi-tag">Yes</span>
+            <div class="edi-vi-pill edi-vi-pill--err">Flow 2 · FR subset</div>
+            <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">End</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+            <span class="edi-vi-tag">No</span>
+            <div class="edi-vi-pill edi-vi-pill--ok">Flow 1 · full set</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-note-yes"><p class="edi-if-fork-note"><strong>Direct:</strong> all toggled rules.</p></div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RULE_FLOW_T9_EN_END -->
 
                 <h3 class="tech-slide-h3">Resilience and logging</h3>
                 <ul>
@@ -9424,13 +9526,59 @@
                 <p class="section-intro" style="margin-top:0.25rem;">Eligible lines have <code>resolutionSource</code> ∈ {catalog, poc_mapping}. BRE resolves commercial scope via Chain Upload / <code>zoneChainId</code>, loads the active conversion factor, and computes <code>boxes_ordered = retailer_order_qty ÷ pack_conversion_factor</code>. Optional <code>retailer_declared_pack_factor</code>, when sent, must match the configured factor.</p>
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight" id="section-tech-package-flow">Package validation flow</h3>
-                <div class="e2e-row" style="margin:1rem 0">
-                    <div class="e2e-gate">Toggle + blacklist</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-gate">Resolve <code>zoneChainId</code> + factor</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-onpass"><strong>Integer boxes?</strong> Rewrite line qty · else reject order</div>
+                <p class="tech-diagram-intro tech-diagram-intro--flow-section">Per-line conversion to billing boxes using chain commercial parameters — fail rejects the <strong>entire order</strong>.</p>
+<!-- RULE_FLOW_T10_EN_START -->
+
+<div class="edi-integ-flow edi-integ-flow--e2e-detailed" role="region" aria-labelledby="section-tech-package-flow-diagram">
+    <div class="edi-integ-flow-title" id="section-tech-package-flow-diagram">Package validation — Link BRE → commercial params</div>
+    <div class="edi-integ-flow-body">
+        <div class="edi-if-visual">
+            <div class="edi-if-visual-head">
+                <span class="edi-if-visual-caption">Flow + key points</span>
+                <div class="edi-vi-shape-key" aria-hidden="true">
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-bre"></span> Link BRE</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-accounts"></span> Accounts</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-cart"></span> Cart</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-catalog"></span> Catalog / chain</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-pricem"></span> Price MS</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-step"></span> Step</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-diamond"></span> Decision</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-err"></span> Error</div>
                 </div>
+            </div>
+            <div class="edi-if-flow-track edi-if-flow-track--e2e">
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">1</span><span class="edi-vi-lbl">Package validation</span><span class="edi-vi-lbl-sub">Per line · after UPC</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Rule intent</strong><p class="edi-if-ls-desc">Convert retailer qty to ABI billing boxes via <code>pack_conversion_factor</code>.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--svc"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Communication</strong><p class="edi-if-ls-desc">BRE → chain scope + active conversion factor for SKU + zone.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--catalog"><span class="edi-vi-bubble edi-vi-bubble--call">↔</span><span class="edi-vi-lbl">Chain / commercial params</span><span class="edi-vi-lbl-sub">Resolve <code>zoneChainId</code> + factor</span><span class="edi-vi-comm">GET · EDI_SKU_COMMERCIAL_PARAMS</span></div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">2</span><span class="edi-vi-lbl">Compute boxes</span><span class="edi-vi-lbl-sub"><code>qty ÷ pack_conversion_factor</code></span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">EDI BRE</strong><p class="edi-if-ls-desc">Optional cross-check of retailer-declared pack factor.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--diamond"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Outcome</strong><p class="edi-if-ls-desc">Fail → <strong>reject entire order</strong> <code>order_rejected_invalid_package</code>.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-diamond">Integer<br>boxes?</div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+<div class="edi-if-row edi-if-row--fork-split edi-poc-fork">
+    <div class="edi-if-cell edi-if-cell--fork-note-no"><p class="edi-if-fork-note"><strong>No:</strong> no partial accept.</p></div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+            <span class="edi-vi-tag">No</span>
+            <div class="edi-vi-pill edi-vi-pill--err">Rejected · package</div>
+            <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">End</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+            <span class="edi-vi-tag">Yes</span>
+            <div class="edi-vi-pill edi-vi-pill--ok">Rewrite line qty</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-note-yes"><p class="edi-if-fork-note"><strong>Yes:</strong> persist billing boxes; next line gate.</p></div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RULE_FLOW_T10_EN_END -->
 
                 <h3 class="tech-slide-h3">Functional requirements (summary)</h3>
                 <div class="tech-trans-grid">
@@ -9461,15 +9609,59 @@
                 <p class="section-intro" style="margin-top:0.25rem;">Runs after UPC (and sibling line prerequisites). Toggle <code>SKU_AVAILABILITY</code> with standard country + vendor and retailer blacklist pattern. BRE does not duplicate ATP rules — it consumes cart-validation responses and logs line-level outcomes.</p>
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight" id="section-tech-sku-flow">SKU availability flow</h3>
-                <div class="e2e-row" style="margin:1rem 0">
-                    <div class="e2e-gate">Per line: cart-validation</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-onpass"><strong>Full stock</strong> keep line</div>
-                    <div class="e2e-arr">·</div>
-                    <div class="e2e-onpass"><strong>Partial</strong> adjust qty</div>
-                    <div class="e2e-arr">·</div>
-                    <div class="e2e-onfail is-rejected"><strong>Zero</strong> drop line</div>
+                <p class="tech-diagram-intro tech-diagram-intro--flow-section">Each line calls <strong>Cart</strong> for stock — outcomes map to keep, adjust, or drop line (partial accept path).</p>
+<!-- RULE_FLOW_T11_EN_START -->
+
+<div class="edi-integ-flow edi-integ-flow--e2e-detailed" role="region" aria-labelledby="section-tech-sku-flow-diagram">
+    <div class="edi-integ-flow-title" id="section-tech-sku-flow-diagram">SKU availability — Link BRE → Cart</div>
+    <div class="edi-integ-flow-body">
+        <div class="edi-if-visual">
+            <div class="edi-if-visual-head">
+                <span class="edi-if-visual-caption">Flow + key points</span>
+                <div class="edi-vi-shape-key" aria-hidden="true">
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-bre"></span> Link BRE</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-accounts"></span> Accounts</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-cart"></span> Cart</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-catalog"></span> Catalog / chain</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-pricem"></span> Price MS</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-step"></span> Step</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-diamond"></span> Decision</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-err"></span> Error</div>
                 </div>
+            </div>
+            <div class="edi-if-flow-track edi-if-flow-track--e2e">
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">1</span><span class="edi-vi-lbl">SKU availability</span><span class="edi-vi-lbl-sub">Per line · cart-validation</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Rule intent</strong><p class="edi-if-ls-desc">Delegate stock to same path as app checkout (Stepper <code>PERFORM_CARTS_VALIDATION</code>).</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--svc"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Communication</strong><p class="edi-if-ls-desc">BRE → Cart: ATP / availability for SKU + qty at POC.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--cart"><span class="edi-vi-bubble edi-vi-bubble--call">↔</span><span class="edi-vi-lbl">Cart</span><span class="edi-vi-lbl-sub">Stock validation API</span><span class="edi-vi-comm">POST · stock</span></div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right edi-if-row--diamond"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-diamond">Stock<br>outcome?</div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Line outcomes</strong><p class="edi-if-ls-desc">Full · partial adjust · zero (drop line).</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+<div class="edi-if-row edi-if-row--fork-split edi-poc-fork">
+    <div class="edi-if-cell edi-if-cell--fork-note-no"><p class="edi-if-fork-note"><strong>Zero:</strong> remove line; continue order.</p></div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+            <span class="edi-vi-tag">Zero</span>
+            <div class="edi-vi-pill edi-vi-pill--warn">Drop line</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next line</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+            <span class="edi-vi-tag">Partial</span>
+            <div class="edi-vi-pill edi-vi-pill--ok">Adjust qty</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-note-yes"><p class="edi-if-fork-note"><strong>Partial/Full:</strong> keep or adjust line.</p></div>
+</div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Order status</strong><p class="edi-if-ls-desc">≥1 line → partial or full accept; 0 lines → reject order.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">2</span><span class="edi-vi-lbl">Aggregate lines</span><span class="edi-vi-lbl-sub">After all lines</span></div></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RULE_FLOW_T11_EN_END -->
 
                 <h3 class="tech-slide-h3">Functional requirements (summary)</h3>
                 <ul>
@@ -9502,15 +9694,83 @@
                 <p class="section-intro" style="margin-top:0.25rem;">MX MVP per HLR; same toggle / blacklist pattern and T4 / CEDIS exemptions as MOQ. Above configured maximum → reject with <em>Maximum order quantity</em>.</p>
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight" id="section-tech-moq-max-flow">MOQ / MAX flow</h3>
-                <div class="e2e-row" style="margin:1rem 0">
-                    <div class="e2e-gate">≥ 1 line survived Stage 2</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-gate">MOQ cart-validation</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-gate">MAX cart-validation</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-onpass">Continue to order creation</div>
+                <p class="tech-diagram-intro tech-diagram-intro--flow-section">Stage 3 aggregate gates — each rule calls <strong>Cart</strong> for configured thresholds before order creation.</p>
+<!-- RULE_FLOW_T12_EN_START -->
+
+<div class="edi-integ-flow edi-integ-flow--e2e-detailed" role="region" aria-labelledby="section-tech-moq-max-flow-diagram">
+    <div class="edi-integ-flow-title" id="section-tech-moq-max-flow-diagram">MOQ / MAX — Link BRE → Cart</div>
+    <div class="edi-integ-flow-body">
+        <div class="edi-if-visual">
+            <div class="edi-if-visual-head">
+                <span class="edi-if-visual-caption">Flow + key points</span>
+                <div class="edi-vi-shape-key" aria-hidden="true">
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-bre"></span> Link BRE</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-accounts"></span> Accounts</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-cart"></span> Cart</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-catalog"></span> Catalog / chain</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-pricem"></span> Price MS</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-step"></span> Step</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-diamond"></span> Decision</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-err"></span> Error</div>
                 </div>
+            </div>
+            <div class="edi-if-flow-track edi-if-flow-track--e2e">
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">1</span><span class="edi-vi-lbl">Minimum order qty (MOQ)</span><span class="edi-vi-lbl-sub">3rd layer · order aggregate</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Prerequisite</strong><p class="edi-if-ls-desc">≥1 line survived Stage 2.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--svc"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Communication</strong><p class="edi-if-ls-desc">BRE → Cart: store/vendor MOQ thresholds.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--cart"><span class="edi-vi-bubble edi-vi-bubble--call">↔</span><span class="edi-vi-lbl">Cart</span><span class="edi-vi-lbl-sub">MOQ validation</span><span class="edi-vi-comm">POST · MOQ</span></div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right edi-if-row--diamond"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-diamond">MOQ met?</div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Outcome</strong><p class="edi-if-ls-desc">Below MOQ → <strong>reject order</strong>.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+<div class="edi-if-row edi-if-row--fork-split edi-poc-fork">
+    <div class="edi-if-cell edi-if-cell--fork-note-no"><p class="edi-if-fork-note"><strong>No:</strong> canonical MOQ reason.</p></div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+            <span class="edi-vi-tag">No</span>
+            <div class="edi-vi-pill edi-vi-pill--err">Rejected · MOQ</div>
+            <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">End</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+            <span class="edi-vi-tag">Yes</span>
+            <div class="edi-vi-pill edi-vi-pill--ok">MAX gate</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-note-yes"><p class="edi-if-fork-note"><strong>Yes:</strong> continue to MAX.</p></div>
+</div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">2</span><span class="edi-vi-lbl">Maximum order qty (MAX)</span><span class="edi-vi-lbl-sub">3rd layer · order aggregate</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Rule intent</strong><p class="edi-if-ls-desc">MX MVP; skipped T4 / CEDIS channels per HLR.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--svc"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Communication</strong><p class="edi-if-ls-desc">BRE → Cart: maximum allowed order quantity.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--cart"><span class="edi-vi-bubble edi-vi-bubble--call">↔</span><span class="edi-vi-lbl">Cart</span><span class="edi-vi-lbl-sub">MAX validation</span><span class="edi-vi-comm">POST · MAX</span></div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right edi-if-row--diamond"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-diamond">Within MAX?</div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Outcome</strong><p class="edi-if-ls-desc">Above MAX → <strong>reject order</strong>.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+<div class="edi-if-row edi-if-row--fork-split edi-poc-fork">
+    <div class="edi-if-cell edi-if-cell--fork-note-no"><p class="edi-if-fork-note"><strong>No:</strong> canonical MAX reason.</p></div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+            <span class="edi-vi-tag">No</span>
+            <div class="edi-vi-pill edi-vi-pill--err">Rejected · MAX</div>
+            <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">End</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+            <span class="edi-vi-tag">Yes</span>
+            <div class="edi-vi-pill edi-vi-pill--ok">Order creation</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-note-yes"><p class="edi-if-fork-note"><strong>Yes:</strong> proceed to order creation.</p></div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RULE_FLOW_T12_EN_END -->
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight">What we count on the BU for</h3>
                 <div class="tech-bu-req">
@@ -9545,14 +9805,40 @@
                     </div>
                 </div>
 
-                <h3 class="tech-slide-h3 tech-slide-h3--tight">How it connects to BRE</h3>
-                <div class="e2e-row" style="margin:1rem 0">
-                    <div class="e2e-gate">BRE emits rule + outcome events</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-gate">Central Tracking indexes order</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-onpass">Retailer read · Ops triage · Reprocess API</div>
+                <h3 class="tech-slide-h3 tech-slide-h3--tight" id="section-tech-central-tracking-flow">How it connects to BRE</h3>
+                <p class="tech-diagram-intro tech-diagram-intro--flow-section">Companion surface — consumes BRE events, indexes orders, and exposes retailer read vs vendor ops actions.</p>
+<!-- RULE_FLOW_T13_EN_START -->
+
+<div class="edi-integ-flow edi-integ-flow--e2e-detailed" role="region" aria-labelledby="section-tech-central-tracking-flow-diagram">
+    <div class="edi-integ-flow-title" id="section-tech-central-tracking-flow-diagram">Central Tracking — BRE events → index → ops / retailer</div>
+    <div class="edi-integ-flow-body">
+        <div class="edi-if-visual">
+            <div class="edi-if-visual-head">
+                <span class="edi-if-visual-caption">Flow + key points</span>
+                <div class="edi-vi-shape-key" aria-hidden="true">
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-bre"></span> Link BRE</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-accounts"></span> Accounts</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-cart"></span> Cart</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-catalog"></span> Catalog / chain</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-pricem"></span> Price MS</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-step"></span> Step</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-diamond"></span> Decision</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-err"></span> Error</div>
                 </div>
+            </div>
+            <div class="edi-if-flow-track edi-if-flow-track--e2e">
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">1</span><span class="edi-vi-lbl">BRE outcome events</span><span class="edi-vi-lbl-sub">Structured logging</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Emit</strong><p class="edi-if-ls-desc">Rule id, outcome, line diagnostics, <code>requestTraceID</code>.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--svc"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Communication</strong><p class="edi-if-ls-desc">BRE → Central Tracking: Accepted / Partial / Rejected / Pending.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--tracking"><span class="edi-vi-bubble edi-vi-bubble--call">↔</span><span class="edi-vi-lbl">Central Tracking</span><span class="edi-vi-lbl-sub">Index order + status</span><span class="edi-vi-comm">POST · index</span></div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">2</span><span class="edi-vi-lbl">Consumer surfaces</span><span class="edi-vi-lbl-sub">51859 · 51860 · 57198</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Paths</strong><p class="edi-if-ls-desc">Retailer read-only · vendor ops reprocess · Phase 2 line resolution.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--svc"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Communication</strong><p class="edi-if-ls-desc">Parallel path: accepted / partial orders to ERP pipeline (not a BRE toggle).</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--oms"><span class="edi-vi-bubble edi-vi-bubble--call">↔</span><span class="edi-vi-lbl">OMS</span><span class="edi-vi-lbl-sub">Accepted orders handoff</span><span class="edi-vi-comm">POST · order</span></div></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RULE_FLOW_T13_EN_END -->
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight">What we count on the BU for</h3>
                 <div class="tech-bu-req">
@@ -9567,7 +9853,7 @@
                 <div class="tech-req-note"><span class="badge-tbd">Scope</span> Validator MVP listed “force reprocess” as out of scope for BRE itself — <strong>Central Tracking</strong> is the owning surface for re-queues. HLRs: <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220185829" target="_blank" rel="noopener noreferrer">51859</a> · <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6218907975" target="_blank" rel="noopener noreferrer">51860</a> · <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6611174016" target="_blank" rel="noopener noreferrer">57198</a>.</div>
             </section>
             </div>
-            <div class="doc-i18n doc-i18n--es" data-doc-lang="es">
+            <div class="doc-i18n doc-i18n--es" data-doc-lang="es" hidden>
 <section class="slide slide--bre-matrix" id="section-tech-bu-matrix-es">
                 <p class="slide-num">Técnico · Matriz BU</p>
                 <div class="bre-bu-matrix">
@@ -10366,8 +10652,8 @@
                     <div class="tech-layer-pill"><strong>Complemento</strong> Central Tracking expone estados y reproceso — no sustituye toggles del validador.</div>
                 </div>
                 <div class="tech-epic-strip">
-                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-33217" target="_blank" rel="noopener noreferrer">
-                        <span class="tec-key">BEESIP-33217 · L1</span>
+                    <div class="tech-epic-card"><a class="tec-epic-parent" href="https://ab-inbev.atlassian.net/browse/BEESIP-33217" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-33217 · L1</span></a>
                         <div class="tec-title">Compuertas a nivel pedido</div>
                         <ul class="tec-epic-list">
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48925">48925</a><span class="tec-epic-label">Ingesta</span></li>
@@ -10377,9 +10663,9 @@
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48929">48929</a><span class="tec-epic-label">Fechas entrega</span></li>
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48956">48956</a><span class="tec-epic-label">Unicidad PO</span></li>
                         </ul>
-                    </a>
-                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-33218" target="_blank" rel="noopener noreferrer">
-                        <span class="tec-key">BEESIP-33218 · L2</span>
+                    </div>
+                    <div class="tech-epic-card"><a class="tec-epic-parent" href="https://ab-inbev.atlassian.net/browse/BEESIP-33218" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-33218 · L2</span></a>
                         <div class="tec-title">Compuertas a nivel línea</div>
                         <ul class="tec-epic-list">
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48947">48947</a><span class="tec-epic-label">UPC catálogo</span></li>
@@ -10389,24 +10675,24 @@
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-54950">54950</a><span class="tec-epic-label">Stock SKU</span></li>
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-48955">48955</a><span class="tec-epic-label">Precio</span></li>
                         </ul>
-                    </a>
-                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-33219" target="_blank" rel="noopener noreferrer">
-                        <span class="tec-key">BEESIP-33219 · L3</span>
+                    </div>
+                    <div class="tech-epic-card"><a class="tec-epic-parent" href="https://ab-inbev.atlassian.net/browse/BEESIP-33219" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-33219 · L3</span></a>
                         <div class="tec-title">Agregado de pedido</div>
                         <ul class="tec-epic-list">
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-54948">54948</a><span class="tec-epic-label">Cantidad mínima</span></li>
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-54949">54949</a><span class="tec-epic-label">Cantidad máxima</span></li>
                         </ul>
-                    </a>
-                    <a class="tech-epic-card" href="https://ab-inbev.atlassian.net/browse/BEESIP-31064" target="_blank" rel="noopener noreferrer">
-                        <span class="tec-key">BEESIP-31064</span>
+                    </div>
+                    <div class="tech-epic-card"><a class="tec-epic-parent" href="https://ab-inbev.atlassian.net/browse/BEESIP-31064" target="_blank" rel="noopener noreferrer">
+                        <span class="tec-key">BEESIP-31064</span></a>
                         <div class="tec-title">Central Tracking</div>
                         <ul class="tec-epic-list">
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-51859">51859</a><span class="tec-epic-label">Visibilidad minorista</span></li>
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-51860">51860</a><span class="tec-epic-label">Ops vendor MVP</span></li>
                             <li><a href="https://ab-inbev.atlassian.net/browse/BEESEDI-57198">57198</a><span class="tec-epic-label">Fase 2 líneas</span></li>
                         </ul>
-                    </a>
+                    </div>
                 </div>
                 <div class="tech-req-note"><span class="badge-tbd">Borrador</span> <strong>Contrato JSON:</strong> los campos canónicos siguen <code>openapi/order-edi-canonical-v1.yaml</code>; URLs base y autenticación según el runbook de integración al publicarse.</div>
             </section>
@@ -12334,23 +12620,103 @@
                 <p class="section-intro" style="margin-top:0.25rem;">País (cabecera), vendor (token) y <code>VendorAccountID</code> del gate POC. BRE carga <code>deliveryCenterId</code> del contrato POC–vendor (Account V2 en mercados multicontrato como AR). Toggle apagado → sin lookup DC; Flujo 1 para todos los pedidos del par.</p>
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight" id="section-tech-dc-flow-es">Flujo de validación DC</h3>
-                <p class="tech-diagram-intro tech-diagram-intro--flow-section">Compuerta <strong>2c</strong> del pipeline — antes de fechas de entrega, unicidad PO y reglas de línea.</p>
-                <div class="e2e-pipeline" style="margin:1rem 0">
-                    <div class="e2e-body">
-                        <div class="e2e-row">
-                            <div class="e2e-gate">¿Toggle activo país + vendor?</div>
-                            <div class="e2e-arr">→</div>
-                            <div class="e2e-onfail"><strong>Off</strong> Flujo 1 (sin pass/fail DC)</div>
-                        </div>
-                        <div class="e2e-row">
-                            <div class="e2e-gate">Account Service: <code>deliveryCenterId</code></div>
-                            <div class="e2e-arr">→</div>
-                            <div class="e2e-onfail is-blocked"><strong>Sin DC</strong> Bloquear · <code>missing_dc_assignment</code></div>
-                            <div class="e2e-arr">→</div>
-                            <div class="e2e-onpass"><strong>¿DC en lista remota?</strong> Flujo 2 (solo FR) si no Flujo 1</div>
-                        </div>
-                    </div>
+                <p class="tech-diagram-intro tech-diagram-intro--flow-section">Compuerta <strong>2c</strong> del pipeline — Link BRE orquesta; <strong>Accounts Service</strong> entrega <code>deliveryCenterId</code>.</p>
+<!-- RULE_FLOW_T9_ES_START -->
+
+<div class="edi-integ-flow edi-integ-flow--e2e-detailed" role="region" aria-labelledby="section-tech-dc-flow-es-diagram">
+    <div class="edi-integ-flow-title" id="section-tech-dc-flow-es-diagram">Validación DC — Link BRE → Accounts</div>
+    <div class="edi-integ-flow-body">
+        <div class="edi-if-visual">
+            <div class="edi-if-visual-head">
+                <span class="edi-if-visual-caption">Flujo + puntos clave</span>
+                <div class="edi-vi-shape-key" aria-hidden="true">
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-bre"></span> Link BRE</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-accounts"></span> Accounts</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-cart"></span> Cart</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-catalog"></span> Catalog / chain</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-pricem"></span> Price MS</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-step"></span> Step</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-diamond"></span> Decision</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-err"></span> Error</div>
                 </div>
+            </div>
+            <div class="edi-if-flow-track edi-if-flow-track--e2e">
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">1</span><span class="edi-vi-lbl">Validación DC</span><span class="edi-vi-lbl-sub">Compuerta 2c · tras POC</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Intención</strong><p class="edi-if-ls-desc">Elegir Flujo 1 (directo) vs Flujo 2 (subconjunto FR).</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--diamond"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Configuración</strong><p class="edi-if-ls-desc">Off → omitir lookup DC; Flujo 1 por defecto.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-diamond">¿Toggle<br>activo?</div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+<div class="edi-if-row edi-if-row--fork-split edi-poc-fork">
+    <div class="edi-if-cell edi-if-cell--fork-note-no"><p class="edi-if-fork-note"><strong>Off:</strong> sin pass/fail en DC.</p></div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+            <span class="edi-vi-tag">No</span>
+            <div class="edi-vi-pill edi-vi-pill--err">Flujo 1 · sin DC</div>
+            <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">End</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+            <span class="edi-vi-tag">Sí</span>
+            <div class="edi-vi-pill edi-vi-pill--ok">Lookup DC</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-note-yes"><p class="edi-if-fork-note"><strong>On:</strong> leer DC de cuenta.</p></div>
+</div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right edi-if-row--svc"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--accounts"><span class="edi-vi-bubble edi-vi-bubble--call">↔</span><span class="edi-vi-lbl">Accounts Service</span><span class="edi-vi-lbl-sub">Leer <code>deliveryCenterId</code></span><span class="edi-vi-comm">GET · cuenta</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Comunicación</strong><p class="edi-if-ls-desc">BRE → Accounts: campo en contrato POC–vendor (no payload EDI).</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--diamond"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Resultado</strong><p class="edi-if-ls-desc">Ausente → <strong>Bloqueado</strong> <code>missing_dc_assignment</code>.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-diamond">¿DC<br>presente?</div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+<div class="edi-if-row edi-if-row--fork-split edi-poc-fork">
+    <div class="edi-if-cell edi-if-cell--fork-note-no"><p class="edi-if-fork-note"><strong>No:</strong> hold hasta corrección BU.</p></div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+            <span class="edi-vi-tag">No</span>
+            <div class="edi-vi-pill edi-vi-pill--err">Bloqueado · DC</div>
+            <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">End</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+            <span class="edi-vi-tag">Sí</span>
+            <div class="edi-vi-pill edi-vi-pill--ok">Enrutar flujo</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-note-yes"><p class="edi-if-fork-note"><strong>Sí:</strong> comparar lista DC remoto.</p></div>
+</div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Motor BRE</strong><p class="edi-if-ls-desc">Flujo 2 → solo reglas FR + logs <code>skipped — remote billing</code>.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">2</span><span class="edi-vi-lbl">Enrutado de flujo</span><span class="edi-vi-lbl-sub">Lista DC remoto vs <code>deliveryCenterId</code></span></div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right edi-if-row--diamond"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-diamond">¿DC<br>remoto?</div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Resultado</strong><p class="edi-if-ls-desc">Sí → Flujo 2 (ej. AR DC 60). No → Flujo 1 completo.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+<div class="edi-if-row edi-if-row--fork-split edi-poc-fork">
+    <div class="edi-if-cell edi-if-cell--fork-note-no"><p class="edi-if-fork-note"><strong>Remoto:</strong> UPC, precio, DC según config.</p></div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+            <span class="edi-vi-tag">Sí</span>
+            <div class="edi-vi-pill edi-vi-pill--err">Flujo 2 · subconjunto FR</div>
+            <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">End</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+            <span class="edi-vi-tag">No</span>
+            <div class="edi-vi-pill edi-vi-pill--ok">Flujo 1 · set completo</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-note-yes"><p class="edi-if-fork-note"><strong>Directo:</strong> todas las reglas activas.</p></div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RULE_FLOW_T9_ES_END -->
 
                 <h3 class="tech-slide-h3">Resiliencia y logging</h3>
                 <ul>
@@ -12380,13 +12746,59 @@
                 <p class="section-intro" style="margin-top:0.25rem;">Líneas con <code>resolutionSource</code> catálogo o mapping POC. Resolución de <code>zoneChainId</code>, factor activo y <code>cajas = cantidad ÷ factor</code> entero positivo. Factor declarado opcional debe coincidir si se envía.</p>
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight" id="section-tech-package-flow-es">Flujo</h3>
-                <div class="e2e-row" style="margin:1rem 0">
-                    <div class="e2e-gate">Toggle + blacklist</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-gate">Factor + scope comercial</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-onpass"><strong>¿Cajas enteras?</strong> Reescribir qty · si no rechazar pedido</div>
+                <p class="tech-diagram-intro tech-diagram-intro--flow-section">Conversión por línea a cajas de facturación — fallo rechaza el <strong>pedido completo</strong>.</p>
+<!-- RULE_FLOW_T10_ES_START -->
+
+<div class="edi-integ-flow edi-integ-flow--e2e-detailed" role="region" aria-labelledby="section-tech-package-flow-es-diagram">
+    <div class="edi-integ-flow-title" id="section-tech-package-flow-es-diagram">Validación paquete — Link BRE → params comerciales</div>
+    <div class="edi-integ-flow-body">
+        <div class="edi-if-visual">
+            <div class="edi-if-visual-head">
+                <span class="edi-if-visual-caption">Flujo + puntos clave</span>
+                <div class="edi-vi-shape-key" aria-hidden="true">
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-bre"></span> Link BRE</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-accounts"></span> Accounts</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-cart"></span> Cart</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-catalog"></span> Catalog / chain</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-pricem"></span> Price MS</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-step"></span> Step</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-diamond"></span> Decision</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-err"></span> Error</div>
                 </div>
+            </div>
+            <div class="edi-if-flow-track edi-if-flow-track--e2e">
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">1</span><span class="edi-vi-lbl">Validación de paquete</span><span class="edi-vi-lbl-sub">Por línea · tras UPC</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Intención</strong><p class="edi-if-ls-desc">Convertir cantidad minorista a cajas ABI vía <code>pack_conversion_factor</code>.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--svc"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Comunicación</strong><p class="edi-if-ls-desc">BRE → alcance cadena + factor activo para SKU + zona.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--catalog"><span class="edi-vi-bubble edi-vi-bubble--call">↔</span><span class="edi-vi-lbl">Params comerciales / cadena</span><span class="edi-vi-lbl-sub">Resolver <code>zoneChainId</code> + factor</span><span class="edi-vi-comm">GET · EDI_SKU_COMMERCIAL_PARAMS</span></div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">2</span><span class="edi-vi-lbl">Calcular cajas</span><span class="edi-vi-lbl-sub"><code>qty ÷ pack_conversion_factor</code></span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">EDI BRE</strong><p class="edi-if-ls-desc">Chequeo opcional del factor declarado por minorista.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--diamond"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Resultado</strong><p class="edi-if-ls-desc">Fallo → <strong>rechazar pedido completo</strong>.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-diamond">¿Cajas<br>enteras?</div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+<div class="edi-if-row edi-if-row--fork-split edi-poc-fork">
+    <div class="edi-if-cell edi-if-cell--fork-note-no"><p class="edi-if-fork-note"><strong>No:</strong> sin aceptación parcial.</p></div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+            <span class="edi-vi-tag">No</span>
+            <div class="edi-vi-pill edi-vi-pill--err">Rechazado · paquete</div>
+            <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">End</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+            <span class="edi-vi-tag">Sí</span>
+            <div class="edi-vi-pill edi-vi-pill--ok">Reescribir qty línea</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-note-yes"><p class="edi-if-fork-note"><strong>Sí:</strong> persistir cajas; siguiente compuerta.</p></div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RULE_FLOW_T10_ES_END -->
 
                 <h3 class="tech-slide-h3">Requisitos funcionales (resumen)</h3>
                 <div class="tech-trans-grid">
@@ -12417,11 +12829,59 @@
                 <p class="section-intro" style="margin-top:0.25rem;">Tras UPC; toggle <code>SKU_AVAILABILITY</code> y blacklist estándar. BRE no duplica reglas ATP.</p>
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight" id="section-tech-sku-flow-es">Flujo</h3>
-                <div class="e2e-row" style="margin:1rem 0">
-                    <div class="e2e-gate">cart-validation por línea</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-onpass">Stock completo · parcial · cero (drop)</div>
+                <p class="tech-diagram-intro tech-diagram-intro--flow-section">Cada línea llama a <strong>Cart</strong> — mantener, ajustar o descartar línea.</p>
+<!-- RULE_FLOW_T11_ES_START -->
+
+<div class="edi-integ-flow edi-integ-flow--e2e-detailed" role="region" aria-labelledby="section-tech-sku-flow-es-diagram">
+    <div class="edi-integ-flow-title" id="section-tech-sku-flow-es-diagram">Disponibilidad SKU — Link BRE → Cart</div>
+    <div class="edi-integ-flow-body">
+        <div class="edi-if-visual">
+            <div class="edi-if-visual-head">
+                <span class="edi-if-visual-caption">Flujo + puntos clave</span>
+                <div class="edi-vi-shape-key" aria-hidden="true">
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-bre"></span> Link BRE</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-accounts"></span> Accounts</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-cart"></span> Cart</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-catalog"></span> Catalog / chain</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-pricem"></span> Price MS</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-step"></span> Step</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-diamond"></span> Decision</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-err"></span> Error</div>
                 </div>
+            </div>
+            <div class="edi-if-flow-track edi-if-flow-track--e2e">
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">1</span><span class="edi-vi-lbl">Disponibilidad SKU</span><span class="edi-vi-lbl-sub">Por línea · cart-validation</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Intención</strong><p class="edi-if-ls-desc">Delegar stock al mismo path que checkout app.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--svc"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Comunicación</strong><p class="edi-if-ls-desc">BRE → Cart: ATP / disponibilidad para SKU + cant.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--cart"><span class="edi-vi-bubble edi-vi-bubble--call">↔</span><span class="edi-vi-lbl">Cart</span><span class="edi-vi-lbl-sub">API validación stock</span><span class="edi-vi-comm">POST · stock</span></div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right edi-if-row--diamond"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-diamond">¿Resultado<br>stock?</div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Resultados línea</strong><p class="edi-if-ls-desc">Completo · ajuste parcial · cero (descartar línea).</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+<div class="edi-if-row edi-if-row--fork-split edi-poc-fork">
+    <div class="edi-if-cell edi-if-cell--fork-note-no"><p class="edi-if-fork-note"><strong>Cero:</strong> quitar línea; seguir pedido.</p></div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+            <span class="edi-vi-tag">Zero</span>
+            <div class="edi-vi-pill edi-vi-pill--warn">Descartar línea</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next line</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+            <span class="edi-vi-tag">Parcial</span>
+            <div class="edi-vi-pill edi-vi-pill--ok">Ajustar qty</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-note-yes"><p class="edi-if-fork-note"><strong>Parcial/Completo:</strong> mantener o ajustar línea.</p></div>
+</div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Estado pedido</strong><p class="edi-if-ls-desc">≥1 línea → aceptación parcial o total; 0 → rechazo.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">2</span><span class="edi-vi-lbl">Agregar líneas</span><span class="edi-vi-lbl-sub">Tras todas las líneas</span></div></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RULE_FLOW_T11_ES_END -->
 
                 <h3 class="tech-slide-h3">Requisitos funcionales (resumen)</h3>
                 <ul>
@@ -12452,15 +12912,83 @@
                 <p class="section-intro" style="margin-top:0.25rem;">MVP MX; mismas exenciones y patrón de toggle que MOQ.</p>
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight" id="section-tech-moq-max-flow-es">Flujo MOQ / MAX</h3>
-                <div class="e2e-row" style="margin:1rem 0">
-                    <div class="e2e-gate">≥ 1 línea en Etapa 2</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-gate">MOQ</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-gate">MAX</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-onpass">Creación de pedido</div>
+                <p class="tech-diagram-intro tech-diagram-intro--flow-section">Etapa 3 — cada regla consulta umbrales en <strong>Cart</strong> antes de crear el pedido.</p>
+<!-- RULE_FLOW_T12_ES_START -->
+
+<div class="edi-integ-flow edi-integ-flow--e2e-detailed" role="region" aria-labelledby="section-tech-moq-max-flow-es-diagram">
+    <div class="edi-integ-flow-title" id="section-tech-moq-max-flow-es-diagram">MOQ / MAX — Link BRE → Cart</div>
+    <div class="edi-integ-flow-body">
+        <div class="edi-if-visual">
+            <div class="edi-if-visual-head">
+                <span class="edi-if-visual-caption">Flujo + puntos clave</span>
+                <div class="edi-vi-shape-key" aria-hidden="true">
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-bre"></span> Link BRE</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-accounts"></span> Accounts</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-cart"></span> Cart</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-catalog"></span> Catalog / chain</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-pricem"></span> Price MS</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-step"></span> Step</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-diamond"></span> Decision</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-err"></span> Error</div>
                 </div>
+            </div>
+            <div class="edi-if-flow-track edi-if-flow-track--e2e">
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">1</span><span class="edi-vi-lbl">Cantidad mínima (MOQ)</span><span class="edi-vi-lbl-sub">3ª capa · agregado pedido</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Prerrequisito</strong><p class="edi-if-ls-desc">≥1 línea sobrevivió Etapa 2.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--svc"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Comunicación</strong><p class="edi-if-ls-desc">BRE → Cart: umbrales MOQ por tienda/vendor.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--cart"><span class="edi-vi-bubble edi-vi-bubble--call">↔</span><span class="edi-vi-lbl">Cart</span><span class="edi-vi-lbl-sub">Validación MOQ</span><span class="edi-vi-comm">POST · MOQ</span></div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right edi-if-row--diamond"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-diamond">¿Cumple MOQ?</div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Resultado</strong><p class="edi-if-ls-desc">Bajo MOQ → <strong>rechazar pedido</strong>.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+<div class="edi-if-row edi-if-row--fork-split edi-poc-fork">
+    <div class="edi-if-cell edi-if-cell--fork-note-no"><p class="edi-if-fork-note"><strong>No:</strong> razón MOQ canónica.</p></div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+            <span class="edi-vi-tag">No</span>
+            <div class="edi-vi-pill edi-vi-pill--err">Rechazado · MOQ</div>
+            <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">End</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+            <span class="edi-vi-tag">Sí</span>
+            <div class="edi-vi-pill edi-vi-pill--ok">Compuerta MAX</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-note-yes"><p class="edi-if-fork-note"><strong>Sí:</strong> continuar a MAX.</p></div>
+</div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">2</span><span class="edi-vi-lbl">Cantidad máxima (MAX)</span><span class="edi-vi-lbl-sub">3ª capa · agregado pedido</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Intención</strong><p class="edi-if-ls-desc">MVP MX; omitido T4 / CEDIS según HLR.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--svc"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Comunicación</strong><p class="edi-if-ls-desc">BRE → Cart: cantidad máxima permitida.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--cart"><span class="edi-vi-bubble edi-vi-bubble--call">↔</span><span class="edi-vi-lbl">Cart</span><span class="edi-vi-lbl-sub">Validación MAX</span><span class="edi-vi-comm">POST · MAX</span></div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right edi-if-row--diamond"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-diamond">¿Dentro MAX?</div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Resultado</strong><p class="edi-if-ls-desc">Sobre MAX → <strong>rechazar pedido</strong>.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+
+<div class="edi-if-row edi-if-row--fork-split edi-poc-fork">
+    <div class="edi-if-cell edi-if-cell--fork-note-no"><p class="edi-if-fork-note"><strong>No:</strong> razón MAX canónica.</p></div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-no">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--no">
+            <span class="edi-vi-tag">No</span>
+            <div class="edi-vi-pill edi-vi-pill--err">Rechazado · MAX</div>
+            <div class="edi-vi-terminus"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">End</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-arm-yes">
+        <div class="edi-vi-fork-arm edi-vi-fork-arm--yes">
+            <span class="edi-vi-tag">Sí</span>
+            <div class="edi-vi-pill edi-vi-pill--ok">Creación pedido</div>
+            <div class="edi-vi-terminus edi-vi-terminus--continue"><span class="edi-vi-terminus-bar" aria-hidden="true"></span><span class="edi-vi-terminus-lbl">Next</span></div>
+        </div>
+    </div>
+    <div class="edi-if-cell edi-if-cell--fork-note-yes"><p class="edi-if-fork-note"><strong>Sí:</strong> proceder a creación pedido.</p></div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RULE_FLOW_T12_ES_END -->
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight">Lo que necesitamos del BU</h3>
                 <div class="tech-bu-req">
@@ -12495,14 +13023,40 @@
                     </div>
                 </div>
 
-                <h3 class="tech-slide-h3 tech-slide-h3--tight">Conexión con BRE</h3>
-                <div class="e2e-row" style="margin:1rem 0">
-                    <div class="e2e-gate">Eventos BRE</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-gate">Índice Central Tracking</div>
-                    <div class="e2e-arr">→</div>
-                    <div class="e2e-onpass">Lectura · triage · reproceso</div>
+                <h3 class="tech-slide-h3 tech-slide-h3--tight" id="section-tech-central-tracking-flow-es">Conexión con BRE</h3>
+                <p class="tech-diagram-intro tech-diagram-intro--flow-section">Superficie complementaria — eventos BRE, índice y acciones minorista / ops.</p>
+<!-- RULE_FLOW_T13_ES_START -->
+
+<div class="edi-integ-flow edi-integ-flow--e2e-detailed" role="region" aria-labelledby="section-tech-central-tracking-flow-es-diagram">
+    <div class="edi-integ-flow-title" id="section-tech-central-tracking-flow-es-diagram">Central Tracking — eventos BRE → índice → ops / minorista</div>
+    <div class="edi-integ-flow-body">
+        <div class="edi-if-visual">
+            <div class="edi-if-visual-head">
+                <span class="edi-if-visual-caption">Flujo + puntos clave</span>
+                <div class="edi-vi-shape-key" aria-hidden="true">
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-bre"></span> Link BRE</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-accounts"></span> Accounts</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-cart"></span> Cart</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-catalog"></span> Catalog / chain</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-pricem"></span> Price MS</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-step"></span> Step</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-diamond"></span> Decision</div>
+                    <div class="edi-vi-sk-item"><span class="edi-vi-sk-shape edi-vi-sk-err"></span> Error</div>
                 </div>
+            </div>
+            <div class="edi-if-flow-track edi-if-flow-track--e2e">
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">1</span><span class="edi-vi-lbl">Eventos de resultado BRE</span><span class="edi-vi-lbl-sub">Logging estructurado</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Emisión</strong><p class="edi-if-ls-desc">Id regla, resultado, diagnósticos línea, <code>requestTraceID</code>.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--svc"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Comunicación</strong><p class="edi-if-ls-desc">BRE → Central Tracking: Aceptado / Parcial / Rechazado / Pendiente.</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--tracking"><span class="edi-vi-bubble edi-vi-bubble--call">↔</span><span class="edi-vi-lbl">Central Tracking</span><span class="edi-vi-lbl-sub">Indexar pedido + estado</span><span class="edi-vi-comm">POST · índice</span></div></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-right"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--bre"><span class="edi-vi-bubble">2</span><span class="edi-vi-lbl">Superficies consumidoras</span><span class="edi-vi-lbl-sub">51859 · 51860 · 57198</span></div></div><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Rutas</strong><p class="edi-if-ls-desc">Lectura minorista · reproceso ops · Fase 2 líneas.</p></div></div>
+<div class="edi-if-row edi-if-row--arrow" aria-hidden="true"><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-arrow"></div></div></div>
+<div class="edi-if-row edi-if-row--note-left edi-if-row--svc"><div class="edi-if-cell edi-if-cell--note-side"><strong class="edi-if-ls-title">Comunicación</strong><p class="edi-if-ls-desc">Ruta paralela: pedidos aceptados/parciales hacia ERP (no es toggle BRE).</p></div><div class="edi-if-cell edi-if-cell--graph"><div class="edi-vi-node edi-vi-node--oms"><span class="edi-vi-bubble edi-vi-bubble--call">↔</span><span class="edi-vi-lbl">OMS</span><span class="edi-vi-lbl-sub">Handoff pedidos aceptados</span><span class="edi-vi-comm">POST · pedido</span></div></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RULE_FLOW_T13_ES_END -->
 
                 <h3 class="tech-slide-h3 tech-slide-h3--tight">Lo que necesitamos del BU</h3>
                 <div class="tech-bu-req">
@@ -12685,8 +13239,9 @@
             var es = lang === 'es';
             html.setAttribute('lang', es ? 'es' : 'en');
             html.setAttribute('data-doc-lang', lang);
-            document.querySelectorAll('div.doc-i18n[data-doc-lang]').forEach(function (el) {
-                el.hidden = el.getAttribute('data-doc-lang') !== lang;
+            document.querySelectorAll('#main-panel-exec > .doc-i18n[data-doc-lang], #main-panel-tech > .doc-i18n[data-doc-lang]').forEach(function (el) {
+                var panelLang = el.getAttribute('data-doc-lang');
+                el.hidden = panelLang !== lang;
             });
             var btnEn = document.getElementById('doc-lang-en');
             var btnEs = document.getElementById('doc-lang-es');
