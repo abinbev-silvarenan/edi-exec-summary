@@ -4104,29 +4104,22 @@
             font-weight: 600;
         }
 
-        html[data-doc-lang="es"] .doc-i18n--en,
-        html[data-doc-lang="en"] .doc-i18n--es {
+        /* Inline UI strings (header, TOC, tabs) — not full document panels */
+        html[data-doc-lang="es"] span.doc-i18n.doc-i18n--en,
+        html[data-doc-lang="en"] span.doc-i18n.doc-i18n--es {
             display: none !important;
         }
-        /* Language panels: one visible block per tab (EN or ES) */
-        #main-panel-exec > .doc-i18n,
-        #main-panel-tech > .doc-i18n {
-            display: block;
-        }
-        html[data-doc-lang="en"] #main-panel-exec > .doc-i18n--es,
-        html[data-doc-lang="en"] #main-panel-tech > .doc-i18n--es,
-        html[data-doc-lang="es"] #main-panel-exec > .doc-i18n--en,
-        html[data-doc-lang="es"] #main-panel-tech > .doc-i18n--en {
-            display: none !important;
-        }
-        #main-panel-exec > .doc-i18n[hidden],
-        #main-panel-tech > .doc-i18n[hidden] {
-            display: none !important;
-        }
-        /* Inline chrome labels stay inline when visible */
         html[data-doc-lang="en"] span.doc-i18n.doc-i18n--en,
         html[data-doc-lang="es"] span.doc-i18n.doc-i18n--es {
             display: inline !important;
+        }
+        /* Full document body: exactly one language panel visible per tab */
+        .doc-lang-panel {
+            display: none !important;
+        }
+        html[data-doc-lang="en"] .doc-lang-panel[data-doc-lang="en"],
+        html[data-doc-lang="es"] .doc-lang-panel[data-doc-lang="es"] {
+            display: block !important;
         }
     </style>
 </head>
@@ -4216,7 +4209,7 @@
     <div class="yellow-divider" aria-hidden="true"></div>
     <div class="container doc-main">
                 <div id="main-panel-exec" class="main-tab-panel" role="tabpanel" aria-labelledby="main-tab-exec">
-            <div class="doc-i18n doc-i18n--en" data-doc-lang="en">
+            <div class="doc-lang-panel doc-i18n doc-i18n--en" data-doc-lang="en">
 <!-- Executive summary -->
         <!-- ================================================================ -->
         <!-- Slide 1: Context & Problem                                       -->
@@ -5334,7 +5327,7 @@
             </div>
         </section>
             </div>
-            <div class="doc-i18n doc-i18n--es" data-doc-lang="es" hidden>
+            <div class="doc-lang-panel doc-i18n doc-i18n--es" data-doc-lang="es" hidden>
 <!-- Executive summary -->
         <!-- ================================================================ -->
         <!-- Slide 1: Context & Problem                                       -->
@@ -6455,7 +6448,7 @@
         </div>
 
         <div id="main-panel-tech" class="main-tab-panel" role="tabpanel" aria-labelledby="main-tab-tech" hidden>
-            <div class="doc-i18n doc-i18n--en" data-doc-lang="en">
+            <div class="doc-lang-panel doc-i18n doc-i18n--en" data-doc-lang="en">
 <section class="slide slide--bre-matrix" id="section-tech-bu-matrix">
                 <p class="slide-num">Technical · BU scope &amp; prerequisites matrix</p>
                 <div class="bre-bu-matrix">
@@ -9853,7 +9846,7 @@
                 <div class="tech-req-note"><span class="badge-tbd">Scope</span> Validator MVP listed “force reprocess” as out of scope for BRE itself — <strong>Central Tracking</strong> is the owning surface for re-queues. HLRs: <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6220185829" target="_blank" rel="noopener noreferrer">51859</a> · <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6218907975" target="_blank" rel="noopener noreferrer">51860</a> · <a href="https://ab-inbev.atlassian.net/wiki/spaces/BLK/pages/6611174016" target="_blank" rel="noopener noreferrer">57198</a>.</div>
             </section>
             </div>
-            <div class="doc-i18n doc-i18n--es" data-doc-lang="es" hidden>
+            <div class="doc-lang-panel doc-i18n doc-i18n--es" data-doc-lang="es" hidden>
 <section class="slide slide--bre-matrix" id="section-tech-bu-matrix-es">
                 <p class="slide-num">Técnico · Matriz BU</p>
                 <div class="bre-bu-matrix">
@@ -13239,9 +13232,11 @@
             var es = lang === 'es';
             html.setAttribute('lang', es ? 'es' : 'en');
             html.setAttribute('data-doc-lang', lang);
-            document.querySelectorAll('#main-panel-exec > .doc-i18n[data-doc-lang], #main-panel-tech > .doc-i18n[data-doc-lang]').forEach(function (el) {
+            document.querySelectorAll('.doc-lang-panel[data-doc-lang]').forEach(function (el) {
                 var panelLang = el.getAttribute('data-doc-lang');
-                el.hidden = panelLang !== lang;
+                var active = panelLang === lang;
+                el.hidden = !active;
+                el.classList.toggle('doc-lang-panel--active', active);
             });
             var btnEn = document.getElementById('doc-lang-en');
             var btnEs = document.getElementById('doc-lang-es');
